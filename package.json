@@ -24,10 +24,12 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "clean": "rimraf dist docs",
+    "lint": "tslint --project ./tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "clean": "rimraf dist",
+    "predocs": "rimraf docs",
+    "docs": "typedoc --out docs --excludeExternals --target es6 --includeDeclarations --excludePrivate --mode modules src",
     "prebuild": "npm run clean",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && npm run docs",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:watch": "jest --watch",

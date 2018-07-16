@@ -3,7 +3,8 @@ import {
   AllProjectsResponse,
   ArtifactResponse,
   FollowProjectResponse,
-  MeResponse
+  MeResponse,
+  Me
 } from "./types/api";
 import {
   CircleRequest,
@@ -78,11 +79,19 @@ export async function postFollowNewProject(
 
 /* Client Factory */
 
+export interface CircleCIFactory {
+  addToken: (url: string) => string;
+  me: () => Promise<Me>;
+  projects: () => Promise<AllProjectsResponse>;
+  followProject: (opts: GitRequiredRequest) => Promise<FollowProjectResponse>;
+  latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
+}
+
 export function circleci({
   token,
   vcs: { type = "", owner = "", repo = "" } = {},
   options = {}
-}: FactoryOptions) {
+}: FactoryOptions): CircleCIFactory {
   const validateRequest = (
     func: (token: string, req: GitRequiredRequest) => any,
     opts: CircleRequest = {}
@@ -100,7 +109,7 @@ export function circleci({
     throw Error("Github credentials are missing!");
   };
 
-  return {
+  const factory: CircleCIFactory = {
     addToken: (url: string) => `${url}?circle-token=${token}`,
 
     me: () => getMe(token),
@@ -113,4 +122,6 @@ export function circleci({
     latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> =>
       validateRequest(getLatestArtifacts, opts)
   };
+
+  return factory;
 }

@@ -35,7 +35,7 @@ export function circleGet<T>(
   url: string,
   options: AxiosRequestConfig = {}
 ): AxiosPromise<T> {
-  return client(token).get(url, options) as AxiosPromise<T>;
+  return client(token).get(url, options);
 }
 
 export function circlePost<T>(
@@ -44,11 +44,20 @@ export function circlePost<T>(
   body?: any,
   options: AxiosRequestConfig = {}
 ): AxiosPromise<T> {
-  return client(token).post(url, body, options) as AxiosPromise<T>;
+  return client(token).post(url, body, options);
+}
+
+export interface ClientFactory {
+  get: <T>(url: string, options?: AxiosRequestConfig) => AxiosPromise<T>;
+  post: <T>(
+    url: string,
+    body?: any,
+    options?: AxiosRequestConfig
+  ) => AxiosPromise<T>;
 }
 
 export function client(token: string) {
-  return {
+  const factory: ClientFactory = {
     get: <T>(
       url: string,
       options: AxiosRequestConfig = {}
@@ -63,4 +72,6 @@ export function client(token: string) {
       return post(token, url, body, options);
     }
   };
+
+  return factory;
 }
