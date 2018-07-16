@@ -1,0 +1,24 @@
+{
+  "$id": "http://circleci.com/",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "path": {
+      "$id": "/properties/path",
+      "type": "string"
+    },
+    "pretty_path": {
+      "$id": "/properties/pretty_path",
+      "type": "string"
+    },
+    "node_index": {
+      "$id": "/properties/node_index",
+      "type": "integer"
+    },
+    "url": {
+      "$id": "/properties/url",
+      "type": "string"
+    }
+  }
+}

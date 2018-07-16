@@ -1,0 +1,97 @@
+{
+  "irc_server": null,
+  "ssh_keys": [],
+  "branches": {
+    "master": {
+      "pusher_logins": ["greenkeeper[bot]"],
+      "running_builds": [],
+      "recent_builds": [
+        {
+          "outcome": "failed",
+          "status": "failed",
+          "build_num": 121,
+          "vcs_revision": "9a070e6b256ddf99336e8058083a5496637a69fb",
+          "pushed_at": "2018-06-24T04:21:59.619Z",
+          "is_workflow_job": false,
+          "added_at": "2018-06-24T04:23:01.792Z"
+        }
+      ],
+      "last_non_success": {
+        "outcome": "failed",
+        "status": "failed",
+        "build_num": 121,
+        "vcs_revision": "9a070e6b256ddf99336e8058083a5496637a69fb",
+        "pushed_at": "2018-06-24T04:21:59.619Z",
+        "is_workflow_job": false,
+        "added_at": "2018-06-24T04:23:01.792Z"
+      }
+    }
+  },
+  "irc_keyword": null,
+  "oss": true,
+  "slack_channel": null,
+  "hipchat_notify_prefs": null,
+  "reponame": "",
+  "dependencies": "",
+  "aws": {
+    "keypair": null
+  },
+  "slack_webhook_url": null,
+  "irc_channel": null,
+  "parallel": 1,
+  "campfire_subdomain": null,
+  "slack_integration_access_token": null,
+  "username": "",
+  "campfire_notify_prefs": null,
+  "slack_integration_team": null,
+  "slack_integration_channel": null,
+  "hipchat_notify": null,
+  "heroku_deploy_user": null,
+  "irc_username": null,
+  "slack_notify_prefs": null,
+  "scopes": [
+    "write-settings",
+    "view-builds",
+    "read-settings",
+    "trigger-builds",
+    "all",
+    "status",
+    "none"
+  ],
+  "campfire_room": null,
+  "hipchat_api_token": null,
+  "campfire_token": null,
+  "slack_subdomain": null,
+  "has_usable_key": true,
+  "setup": "",
+  "vcs_type": "github",
+  "feature_flags": {
+    "trusty-beta": true,
+    "osx": false,
+    "set-github-status": true,
+    "build-prs-only": false,
+    "forks-receive-secret-env-vars": false,
+    "fleet": null,
+    "build-fork-prs": false,
+    "autocancel-builds": true,
+    "oss": true
+  },
+  "irc_password": null,
+  "compile": "",
+  "slack_integration_notify_prefs": null,
+  "slack_integration_webhook_url": null,
+  "irc_notify_prefs": null,
+  "slack_integration_team_id": null,
+  "extra": "",
+  "jira": null,
+  "slack_integration_channel_id": null,
+  "language": "TypeScript",
+  "hipchat_room": null,
+  "flowdock_api_token": null,
+  "slack_channel_override": null,
+  "vcs_url": "",
+  "following": true,
+  "default_branch": "develop",
+  "slack_api_token": null,
+  "test": ""
+}

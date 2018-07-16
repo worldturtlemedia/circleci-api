@@ -1,0 +1,28 @@
+{
+  "body": "",
+  "branch": "master",
+  "build_num": 23,
+  "build_time_millis": 23505,
+  "build_url": "https://circleci.com/gh/circleci/mongofinil/23",
+  "canceled": false,
+  "committer_email": "arohner@gmail.com",
+  "committer_name": "Allen Rohner",
+  "dont_build": null,
+  "lifecycle": "queued",
+  "outcome": null,
+  "previous": {
+    "build_num": 22,
+    "status": "failed"
+  },
+  "queued_at": "2013-04-12T21:33:30Z",
+  "reponame": "mongofinil",
+  "retry_of": 22,
+  "start_time": "2013-04-12T21:33:38Z",
+  "status": "queued",
+  "stop_time": "2013-04-12T21:34:01Z",
+  "subject": "Don't explode when the system clock shifts backwards",
+  "username": "circleci",
+  "vcs_revision": "1d231626ba1d2838e599c5c598d28e2306ad4e48",
+  "vcs_url": "https://github.com/circleci/mongofinil",
+  "why": "retry"
+}

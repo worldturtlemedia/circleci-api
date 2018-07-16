@@ -1,0 +1,110 @@
+{
+  "$id": "http://circleci.com/api/v1.1",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "body": {
+      "$id": "/properties/body",
+      "type": "string"
+    },
+    "branch": {
+      "$id": "/properties/branch",
+      "type": "string"
+    },
+    "build_num": {
+      "$id": "/properties/build_num",
+      "type": "integer"
+    },
+    "build_time_millis": {
+      "$id": "/properties/build_time_millis",
+      "type": "integer"
+    },
+    "build_url": {
+      "$id": "/properties/build_url",
+      "type": "string"
+    },
+    "canceled": {
+      "$id": "/properties/canceled",
+      "type": "boolean"
+    },
+    "committer_email": {
+      "$id": "/properties/committer_email",
+      "type": "string"
+    },
+    "committer_name": {
+      "$id": "/properties/committer_name",
+      "type": "string"
+    },
+    "dont_build": {
+      "$id": "/properties/dont_build",
+      "type": "null"
+    },
+    "lifecycle": {
+      "$id": "/properties/lifecycle",
+      "type": "string"
+    },
+    "outcome": {
+      "$id": "/properties/outcome",
+      "type": "null"
+    },
+    "previous": {
+      "$id": "/properties/previous",
+      "type": "object",
+      "properties": {
+        "build_num": {
+          "$id": "/properties/previous/properties/build_num",
+          "type": "integer"
+        },
+        "status": {
+          "$id": "/properties/previous/properties/status",
+          "type": "string"
+        }
+      }
+    },
+    "queued_at": {
+      "$id": "/properties/queued_at",
+      "type": "string"
+    },
+    "reponame": {
+      "$id": "/properties/reponame",
+      "type": "string"
+    },
+    "retry_of": {
+      "$id": "/properties/retry_of",
+      "type": "integer"
+    },
+    "start_time": {
+      "$id": "/properties/start_time",
+      "type": "string"
+    },
+    "status": {
+      "$id": "/properties/status",
+      "type": "string"
+    },
+    "stop_time": {
+      "$id": "/properties/stop_time",
+      "type": "string"
+    },
+    "subject": {
+      "$id": "/properties/subject",
+      "type": "string"
+    },
+    "username": {
+      "$id": "/properties/username",
+      "type": "string"
+    },
+    "vcs_revision": {
+      "$id": "/properties/vcs_revision",
+      "type": "string"
+    },
+    "vcs_url": {
+      "$id": "/properties/vcs_url",
+      "type": "string"
+    },
+    "why": {
+      "$id": "/properties/why",
+      "type": "string"
+    }
+  }
+}

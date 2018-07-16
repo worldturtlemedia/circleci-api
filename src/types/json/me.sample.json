@@ -1,0 +1,56 @@
+{
+  "enrolled_betas": [""],
+  "in_beta_program": false,
+  "selected_email": "",
+  "avatar_url": "",
+  "trial_end": "2017-10-19T21:09:35.903Z",
+  "basic_email_prefs": "smart",
+  "sign_in_count": 23,
+  "github_oauth_scopes": ["user:email", "repo"],
+  "analytics_id": "3a54d29a-dd85-4b65-aad8-f9c3017418d0",
+  "name": "Jordon de Hoog",
+  "gravatar_id": "",
+  "first_vcs_authorized_client_id": "1507237586887",
+  "days_left_in_trial": -267,
+  "parallelism": 1,
+  "student": false,
+  "bitbucket_authorized": false,
+  "github_id": 528792,
+  "bitbucket": "",
+  "dev_admin": false,
+  "all_emails": [""],
+  "created_at": "2017-10-05T21:09:35.903Z",
+  "plan": "",
+  "heroku_api_key": "",
+  "identities": {
+    "github": {
+      "avatar_url": "",
+      "external_id": 528792,
+      "id": 528792,
+      "name": "",
+      "user?": true,
+      "domain": "",
+      "type": "github",
+      "authorized?": true,
+      "provider_id": "bcc68be8-ef10-34f19e0db930",
+      "login": ""
+    }
+  },
+  "projects": {
+    "https://github.com/test/repo": {
+      "on_dashboard": true,
+      "emails": "default"
+    }
+  },
+  "login": "",
+  "organization_prefs": {
+    "github": {
+      "RoomRoster": {
+        "email": ""
+      }
+    }
+  },
+  "containers": 1,
+  "pusher_id": "",
+  "num_projects_followed": 4
+}

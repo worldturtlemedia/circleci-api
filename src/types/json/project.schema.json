@@ -1,0 +1,369 @@
+{
+  "$id": "http://circleci.com/",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "irc_server": {
+      "$id": "/properties/irc_server",
+      "type": "null"
+    },
+    "ssh_keys": {
+      "$id": "/properties/ssh_keys",
+      "type": "array"
+    },
+    "branches": {
+      "$id": "/properties/branches",
+      "type": "object",
+      "properties": {
+        "master": {
+          "$id": "/properties/branches/properties/master",
+          "type": "object",
+          "properties": {
+            "pusher_logins": {
+              "$id":
+                "/properties/branches/properties/master/properties/pusher_logins",
+              "type": "array",
+              "items": {
+                "$id":
+                  "/properties/branches/properties/master/properties/pusher_logins/items",
+                "type": "string"
+              }
+            },
+            "running_builds": {
+              "$id":
+                "/properties/branches/properties/master/properties/running_builds",
+              "type": "array"
+            },
+            "recent_builds": {
+              "$id":
+                "/properties/branches/properties/master/properties/recent_builds",
+              "type": "array",
+              "items": {
+                "$id":
+                  "/properties/branches/properties/master/properties/recent_builds/items",
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/outcome",
+                    "type": "string"
+                  },
+                  "status": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/status",
+                    "type": "string"
+                  },
+                  "build_num": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/build_num",
+                    "type": "integer"
+                  },
+                  "vcs_revision": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/vcs_revision",
+                    "type": "string"
+                  },
+                  "pushed_at": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/pushed_at",
+                    "type": "string"
+                  },
+                  "is_workflow_job": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/is_workflow_job",
+                    "type": "boolean"
+                  },
+                  "added_at": {
+                    "$id":
+                      "/properties/branches/properties/master/properties/recent_builds/items/properties/added_at",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "last_non_success": {
+              "$id":
+                "/properties/branches/properties/master/properties/last_non_success",
+              "type": "object",
+              "properties": {
+                "outcome": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/outcome",
+                  "type": "string"
+                },
+                "status": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/status",
+                  "type": "string"
+                },
+                "build_num": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/build_num",
+                  "type": "integer"
+                },
+                "vcs_revision": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/vcs_revision",
+                  "type": "string"
+                },
+                "pushed_at": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/pushed_at",
+                  "type": "string"
+                },
+                "is_workflow_job": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/is_workflow_job",
+                  "type": "boolean"
+                },
+                "added_at": {
+                  "$id":
+                    "/properties/branches/properties/master/properties/last_non_success/properties/added_at",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "irc_keyword": {
+      "$id": "/properties/irc_keyword",
+      "type": "null"
+    },
+    "oss": {
+      "$id": "/properties/oss",
+      "type": "boolean"
+    },
+    "slack_channel": {
+      "$id": "/properties/slack_channel",
+      "type": "null"
+    },
+    "hipchat_notify_prefs": {
+      "$id": "/properties/hipchat_notify_prefs",
+      "type": "null"
+    },
+    "reponame": {
+      "$id": "/properties/reponame",
+      "type": "string"
+    },
+    "dependencies": {
+      "$id": "/properties/dependencies",
+      "type": "string"
+    },
+    "aws": {
+      "$id": "/properties/aws",
+      "type": "object",
+      "properties": {
+        "keypair": {
+          "$id": "/properties/aws/properties/keypair",
+          "type": "null"
+        }
+      }
+    },
+    "slack_webhook_url": {
+      "$id": "/properties/slack_webhook_url",
+      "type": "null"
+    },
+    "irc_channel": {
+      "$id": "/properties/irc_channel",
+      "type": "null"
+    },
+    "parallel": {
+      "$id": "/properties/parallel",
+      "type": "integer"
+    },
+    "campfire_subdomain": {
+      "$id": "/properties/campfire_subdomain",
+      "type": "null"
+    },
+    "slack_integration_access_token": {
+      "$id": "/properties/slack_integration_access_token",
+      "type": "null"
+    },
+    "username": {
+      "$id": "/properties/username",
+      "type": "string"
+    },
+    "campfire_notify_prefs": {
+      "$id": "/properties/campfire_notify_prefs",
+      "type": "null"
+    },
+    "slack_integration_team": {
+      "$id": "/properties/slack_integration_team",
+      "type": "null"
+    },
+    "slack_integration_channel": {
+      "$id": "/properties/slack_integration_channel",
+      "type": "null"
+    },
+    "hipchat_notify": {
+      "$id": "/properties/hipchat_notify",
+      "type": "null"
+    },
+    "heroku_deploy_user": {
+      "$id": "/properties/heroku_deploy_user",
+      "type": "null"
+    },
+    "irc_username": {
+      "$id": "/properties/irc_username",
+      "type": "null"
+    },
+    "slack_notify_prefs": {
+      "$id": "/properties/slack_notify_prefs",
+      "type": "null"
+    },
+    "scopes": {
+      "$id": "/properties/scopes",
+      "type": "array",
+      "items": {
+        "$id": "/properties/scopes/items",
+        "type": "string"
+      }
+    },
+    "campfire_room": {
+      "$id": "/properties/campfire_room",
+      "type": "null"
+    },
+    "hipchat_api_token": {
+      "$id": "/properties/hipchat_api_token",
+      "type": "null"
+    },
+    "campfire_token": {
+      "$id": "/properties/campfire_token",
+      "type": "null"
+    },
+    "slack_subdomain": {
+      "$id": "/properties/slack_subdomain",
+      "type": "null"
+    },
+    "has_usable_key": {
+      "$id": "/properties/has_usable_key",
+      "type": "boolean"
+    },
+    "setup": {
+      "$id": "/properties/setup",
+      "type": "string"
+    },
+    "vcs_type": {
+      "$id": "/properties/vcs_type",
+      "type": "string"
+    },
+    "feature_flags": {
+      "$id": "/properties/feature_flags",
+      "type": "object",
+      "properties": {
+        "trusty-beta": {
+          "$id": "/properties/feature_flags/properties/trusty-beta",
+          "type": "boolean"
+        },
+        "osx": {
+          "$id": "/properties/feature_flags/properties/osx",
+          "type": "boolean"
+        },
+        "set-github-status": {
+          "$id": "/properties/feature_flags/properties/set-github-status",
+          "type": "boolean"
+        },
+        "build-prs-only": {
+          "$id": "/properties/feature_flags/properties/build-prs-only",
+          "type": "boolean"
+        },
+        "forks-receive-secret-env-vars": {
+          "$id":
+            "/properties/feature_flags/properties/forks-receive-secret-env-vars",
+          "type": "boolean"
+        },
+        "fleet": {
+          "$id": "/properties/feature_flags/properties/fleet",
+          "type": "null"
+        },
+        "build-fork-prs": {
+          "$id": "/properties/feature_flags/properties/build-fork-prs",
+          "type": "boolean"
+        },
+        "autocancel-builds": {
+          "$id": "/properties/feature_flags/properties/autocancel-builds",
+          "type": "boolean"
+        },
+        "oss": {
+          "$id": "/properties/feature_flags/properties/oss",
+          "type": "boolean"
+        }
+      }
+    },
+    "irc_password": {
+      "$id": "/properties/irc_password",
+      "type": "null"
+    },
+    "compile": {
+      "$id": "/properties/compile",
+      "type": "string"
+    },
+    "slack_integration_notify_prefs": {
+      "$id": "/properties/slack_integration_notify_prefs",
+      "type": "null"
+    },
+    "slack_integration_webhook_url": {
+      "$id": "/properties/slack_integration_webhook_url",
+      "type": "null"
+    },
+    "irc_notify_prefs": {
+      "$id": "/properties/irc_notify_prefs",
+      "type": "null"
+    },
+    "slack_integration_team_id": {
+      "$id": "/properties/slack_integration_team_id",
+      "type": "null"
+    },
+    "extra": {
+      "$id": "/properties/extra",
+      "type": "string"
+    },
+    "jira": {
+      "$id": "/properties/jira",
+      "type": "null"
+    },
+    "slack_integration_channel_id": {
+      "$id": "/properties/slack_integration_channel_id",
+      "type": "null"
+    },
+    "language": {
+      "$id": "/properties/language",
+      "type": "string"
+    },
+    "hipchat_room": {
+      "$id": "/properties/hipchat_room",
+      "type": "null"
+    },
+    "flowdock_api_token": {
+      "$id": "/properties/flowdock_api_token",
+      "type": "null"
+    },
+    "slack_channel_override": {
+      "$id": "/properties/slack_channel_override",
+      "type": "null"
+    },
+    "vcs_url": {
+      "$id": "/properties/vcs_url",
+      "type": "string"
+    },
+    "following": {
+      "$id": "/properties/following",
+      "type": "boolean"
+    },
+    "default_branch": {
+      "$id": "/properties/default_branch",
+      "type": "string"
+    },
+    "slack_api_token": {
+      "$id": "/properties/slack_api_token",
+      "type": "null"
+    },
+    "test": {
+      "$id": "/properties/test",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "$id": "http://circleci.com/",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "followed": {
+      "$id": "/properties/followed",
+      "type": "boolean"
+    },
+    "first_build": {
+      "$id": "/properties/first_build",
+      "type": "object",
+      "properties": {
+        "compare": {
+          "$id": "/properties/first_build/properties/compare",
+          "type": "null"
+        },
+        "previous_successful_build": {
+          "$id": "/properties/first_build/properties/previous_successful_build",
+          "type": "null"
+        },
+        "build_parameters": {
+          "$id": "/properties/first_build/properties/build_parameters",
+          "type": "null"
+        },
+        "oss": {
+          "$id": "/properties/first_build/properties/oss",
+          "type": "boolean"
+        },
+        "committer_date": {
+          "$id": "/properties/first_build/properties/committer_date",
+          "type": "null"
+        },
+        "body": {
+          "$id": "/properties/first_build/properties/body",
+          "type": "null"
+        },
+        "usage_queued_at": {
+          "$id": "/properties/first_build/properties/usage_queued_at",
+          "type": "string"
+        },
+        "fail_reason": {
+          "$id": "/properties/first_build/properties/fail_reason",
+          "type": "null"
+        },
+        "retry_of": {
+          "$id": "/properties/first_build/properties/retry_of",
+          "type": "null"
+        },
+        "reponame": {
+          "$id": "/properties/first_build/properties/reponame",
+          "type": "string"
+        },
+        "ssh_users": {
+          "$id": "/properties/first_build/properties/ssh_users",
+          "type": "array"
+        },
+        "build_url": {
+          "$id": "/properties/first_build/properties/build_url",
+          "type": "string"
+        },
+        "parallel": {
+          "$id": "/properties/first_build/properties/parallel",
+          "type": "integer"
+        },
+        "failed": {
+          "$id": "/properties/first_build/properties/failed",
+          "type": "null"
+        },
+        "branch": {
+          "$id": "/properties/first_build/properties/branch",
+          "type": "string"
+        },
+        "username": {
+          "$id": "/properties/first_build/properties/username",
+          "type": "string"
+        },
+        "author_date": {
+          "$id": "/properties/first_build/properties/author_date",
+          "type": "null"
+        },
+        "why": {
+          "$id": "/properties/first_build/properties/why",
+          "type": "string"
+        },
+        "user": {
+          "$id": "/properties/first_build/properties/user",
+          "type": "object",
+          "properties": {
+            "is_user": {
+              "$id":
+                "/properties/first_build/properties/user/properties/is_user",
+              "type": "boolean"
+            },
+            "login": {
+              "$id": "/properties/first_build/properties/user/properties/login",
+              "type": "string"
+            },
+            "avatar_url": {
+              "$id":
+                "/properties/first_build/properties/user/properties/avatar_url",
+              "type": "string"
+            },
+            "name": {
+              "$id": "/properties/first_build/properties/user/properties/name",
+              "type": "string"
+            },
+            "vcs_type": {
+              "$id":
+                "/properties/first_build/properties/user/properties/vcs_type",
+              "type": "string"
+            },
+            "id": {
+              "$id": "/properties/first_build/properties/user/properties/id",
+              "type": "integer"
+            }
+          }
+        },
+        "vcs_revision": {
+          "$id": "/properties/first_build/properties/vcs_revision",
+          "type": "string"
+        },
+        "vcs_tag": {
+          "$id": "/properties/first_build/properties/vcs_tag",
+          "type": "null"
+        },
+        "build_num": {
+          "$id": "/properties/first_build/properties/build_num",
+          "type": "integer"
+        },
+        "infrastructure_fail": {
+          "$id": "/properties/first_build/properties/infrastructure_fail",
+          "type": "boolean"
+        },
+        "committer_email": {
+          "$id": "/properties/first_build/properties/committer_email",
+          "type": "null"
+        },
+        "previous": {
+          "$id": "/properties/first_build/properties/previous",
+          "type": "null"
+        },
+        "status": {
+          "$id": "/properties/first_build/properties/status",
+          "type": "string"
+        },
+        "committer_name": {
+          "$id": "/properties/first_build/properties/committer_name",
+          "type": "null"
+        },
+        "retries": {
+          "$id": "/properties/first_build/properties/retries",
+          "type": "null"
+        },
+        "subject": {
+          "$id": "/properties/first_build/properties/subject",
+          "type": "null"
+        },
+        "vcs_type": {
+          "$id": "/properties/first_build/properties/vcs_type",
+          "type": "string"
+        },
+        "timedout": {
+          "$id": "/properties/first_build/properties/timedout",
+          "type": "boolean"
+        },
+        "dont_build": {
+          "$id": "/properties/first_build/properties/dont_build",
+          "type": "null"
+        },
+        "lifecycle": {
+          "$id": "/properties/first_build/properties/lifecycle",
+          "type": "string"
+        },
+        "no_dependency_cache": {
+          "$id": "/properties/first_build/properties/no_dependency_cache",
+          "type": "boolean"
+        },
+        "stop_time": {
+          "$id": "/properties/first_build/properties/stop_time",
+          "type": "null"
+        },
+        "ssh_disabled": {
+          "$id": "/properties/first_build/properties/ssh_disabled",
+          "type": "boolean"
+        },
+        "build_time_millis": {
+          "$id": "/properties/first_build/properties/build_time_millis",
+          "type": "null"
+        },
+        "circle_yml": {
+          "$id": "/properties/first_build/properties/circle_yml",
+          "type": "null"
+        },
+        "messages": {
+          "$id": "/properties/first_build/properties/messages",
+          "type": "array"
+        },
+        "is_first_green_build": {
+          "$id": "/properties/first_build/properties/is_first_green_build",
+          "type": "boolean"
+        },
+        "job_name": {
+          "$id": "/properties/first_build/properties/job_name",
+          "type": "null"
+        },
+        "start_time": {
+          "$id": "/properties/first_build/properties/start_time",
+          "type": "null"
+        },
+        "canceler": {
+          "$id": "/properties/first_build/properties/canceler",
+          "type": "null"
+        },
+        "outcome": {
+          "$id": "/properties/first_build/properties/outcome",
+          "type": "null"
+        },
+        "vcs_url": {
+          "$id": "/properties/first_build/properties/vcs_url",
+          "type": "string"
+        },
+        "author_name": {
+          "$id": "/properties/first_build/properties/author_name",
+          "type": "null"
+        },
+        "node": {
+          "$id": "/properties/first_build/properties/node",
+          "type": "null"
+        },
+        "canceled": {
+          "$id": "/properties/first_build/properties/canceled",
+          "type": "boolean"
+        },
+        "author_email": {
+          "$id": "/properties/first_build/properties/author_email",
+          "type": "null"
+        }
+      }
+    }
+  }
+}

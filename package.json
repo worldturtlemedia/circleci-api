@@ -1,15 +1,20 @@
 {
-  "name": "circleci-api2",
+  "name": "circleci-api",
   "version": "0.0.0",
   "description": "",
-  "keywords": [],
-  "main": "dist/circleci-api2.umd.js",
-  "module": "dist/circleci-api2.es5.js",
-  "typings": "dist/types/circleci-api2.d.ts",
+  "keywords": [
+    "circleci",
+    "ci",
+    "api",
+    "typescript"
+  ],
+  "main": "dist/circleci-api.umd.js",
+  "module": "dist/circleci-api.es5.js",
+  "typings": "dist/types/circleci-api.d.ts",
   "files": [
     "dist"
   ],
-  "author": "Jordon de Hoog <jordon.dehoog@roomroster.com>",
+  "author": "Jordon de Hoog <jordon.dehoog@gmail.com>",
   "repository": {
     "type": "git",
     "url": ""
@@ -20,7 +25,8 @@
   },
   "scripts": {
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist",
+    "clean": "rimraf dist docs",
+    "prebuild": "npm run clean",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
@@ -32,6 +38,43 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.6",
+    "@types/node": "^10.0.3",
+    "colors": "^1.1.2",
+    "commitizen": "^2.9.6",
+    "coveralls": "^3.0.0",
+    "cross-env": "^5.0.1",
+    "cz-conventional-changelog": "^2.0.0",
+    "greenkeeper-lockfile": "^1.15.1",
+    "husky": "^0.14.0",
+    "jest": "^23.4.1",
+    "lint-staged": "^7.1.3",
+    "lodash.camelcase": "^4.3.0",
+    "prettier": "^1.13.4",
+    "prompt": "^1.0.0",
+    "replace-in-file": "^3.0.0-beta.2",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.62.0",
+    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-json": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.15.1",
+    "semantic-release": "^15.0.0",
+    "source-map-support": "^0.5.6",
+    "ts-jest": "22.0.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.1.0",
+    "tslint-config-standard": "^7.0.0",
+    "typedoc": "^0.11.0",
+    "typescript": "^2.9.2",
+    "validate-commit-msg": "^2.12.2"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -49,63 +92,38 @@
     }
   },
   "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "./tsconfig.test.json"
+      }
     },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "coverageDirectory": "coverage/",
+    "coverageReporters": [
+      "lcov",
+      "html",
+      "text-summary"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
     ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
-      }
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
     },
-    "collectCoverage": true
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "devDependencies": {
-    "@types/jest": "^22.0.0",
-    "@types/node": "^10.0.3",
-    "colors": "^1.1.2",
-    "commitizen": "^2.9.6",
-    "coveralls": "^3.0.0",
-    "cross-env": "^5.0.1",
-    "cz-conventional-changelog": "^2.0.0",
-    "husky": "^0.14.0",
-    "jest": "^22.0.2",
-    "lint-staged": "^7.1.3",
-    "lodash.camelcase": "^4.3.0",
-    "prettier": "^1.13.4",
-    "prompt": "^1.0.0",
-    "replace-in-file": "^3.0.0-beta.2",
-    "rimraf": "^2.6.1",
-    "rollup": "^0.58.0",
-    "rollup-plugin-commonjs": "^9.0.0",
-    "rollup-plugin-json": "^3.0.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.11.1",
-    "semantic-release": "^15.0.0",
-    "ts-jest": "^22.0.0",
-    "ts-node": "^6.0.0",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.1.0",
-    "tslint-config-standard": "^7.0.0",
-    "typedoc": "^0.11.0",
-    "typescript": "^2.6.2",
-    "validate-commit-msg": "^2.12.2"
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/test/"
+    ],
+    "testMatch": [
+      "<rootDir>/test/**/?(*.)(spec|test).ts?(x)"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
+    ]
   }
 }

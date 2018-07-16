@@ -1,0 +1,164 @@
+{
+  "all_commit_details": [
+    {
+      "author_date": "2018-07-13T14:51:43-04:00",
+      "author_email": "",
+      "author_login": "",
+      "author_name": "",
+      "body": "",
+      "branch": "master",
+      "commit": "d884761c978ebc92a64f703802d9e72e2fe2abc3",
+      "commit_url": "",
+      "committer_date": "2018-07-13T14:51:43-04:00",
+      "committer_email": "",
+      "committer_login": "",
+      "committer_name": "",
+      "subject": "Develop (#119)"
+    }
+  ],
+  "all_commit_details_truncated": false,
+  "author_date": "2018-07-13T14:51:43-04:00",
+  "author_email": "",
+  "author_name": "",
+  "body": "",
+  "branch": "master",
+  "build_num": 698,
+  "build_parameters": null,
+  "build_time_millis": 325199,
+  "build_url": "",
+  "canceled": false,
+  "canceler": null,
+  "circle_yml": {
+    "string": ""
+  },
+  "committer_date": "2018-07-13T14:51:43-04:00",
+  "committer_email": "",
+  "committer_name": "",
+  "compare": "",
+  "dont_build": null,
+  "fail_reason": null,
+  "failed": false,
+  "has_artifacts": true,
+  "infrastructure_fail": false,
+  "is_first_green_build": false,
+  "job_name": null,
+  "lifecycle": "finished",
+  "messages": [],
+  "no_dependency_cache": false,
+  "node": null,
+  "oss": false,
+  "outcome": "success",
+  "parallel": 1,
+  "picard": {
+    "build_agent": {
+      "image": null,
+      "properties": {
+        "build_agent": "0.0.7400-c4f46116",
+        "executor": "docker"
+      }
+    },
+    "executor": "docker",
+    "resource_class": {
+      "class": "medium",
+      "cpu": 2,
+      "ram": 4096
+    }
+  },
+  "platform": "2.0",
+  "previous": {
+    "build_num": 683,
+    "build_time_millis": 402294,
+    "status": "success"
+  },
+  "previous_successful_build": {
+    "build_num": 683,
+    "build_time_millis": 402294,
+    "status": "success"
+  },
+  "queued_at": "2018-07-13T18:51:51.359Z",
+  "reponame": "",
+  "retries": null,
+  "retry_of": null,
+  "ssh_disabled": true,
+  "ssh_users": [],
+  "start_time": "2018-07-13T18:51:52.866Z",
+  "status": "success",
+  "steps": [
+    {
+      "actions": [
+        {
+          "allocation_id": "5b476105ea1b610013c28426-0-build/31727C2E",
+          "background": false,
+          "bash_command": null,
+          "canceled": null,
+          "continue": null,
+          "end_time": "2018-07-12T14:10:47.277Z",
+          "exit_code": null,
+          "failed": null,
+          "has_output": true,
+          "index": 0,
+          "infrastructure_fail": null,
+          "insignificant": false,
+          "name": "Spin up Environment",
+          "output_url": "",
+          "parallel": true,
+          "run_time_millis": 6350,
+          "start_time": "2018-07-12T14:10:40.927Z",
+          "status": "success",
+          "step": 0,
+          "timedout": null,
+          "truncated": false,
+          "type": "test"
+        }
+      ],
+      "name": "Spin up Environment"
+    },
+    {
+      "actions": [
+        {
+          "allocation_id": "fgfg23432-0-build/31727C2E",
+          "background": false,
+          "bash_command": "",
+          "canceled": null,
+          "continue": null,
+          "end_time": "2018-07-12T14:10:49.205Z",
+          "exit_code": 0,
+          "failed": null,
+          "has_output": true,
+          "index": 0,
+          "infrastructure_fail": null,
+          "insignificant": false,
+          "name": "Checkout code",
+          "output_url": "",
+          "parallel": true,
+          "run_time_millis": 1847,
+          "start_time": "2018-07-12T14:10:47.358Z",
+          "status": "success",
+          "step": 101,
+          "timedout": null,
+          "truncated": false,
+          "type": "test"
+        }
+      ],
+      "name": "Checkout code"
+    }
+  ],
+  "stop_time": "2018-07-13T18:57:18.065Z",
+  "subject": "Develop (#119)",
+  "timedout": false,
+  "usage_queued_at": "2018-07-13T18:51:45.068Z",
+  "user": {
+    "avatar_url": "",
+    "id": 528792,
+    "is_user": true,
+    "login": "",
+    "name": "",
+    "vcs_type": "github"
+  },
+  "username": "",
+  "vcs_revision": "d884761c978ebc92a64f703802d9e72e2fe2abc3",
+  "vcs_tag": null,
+  "vcs_type": "github",
+  "vcs_url": "",
+  "why": "github"
+}

@@ -1,0 +1,233 @@
+{
+  "$id": "http://circleci.com/api/v1.1",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "enrolled_betas": {
+      "$id": "/properties/enrolled_betas",
+      "type": "array",
+      "items": {
+        "$id": "/properties/enrolled_betas/items",
+        "type": "string"
+      }
+    },
+    "in_beta_program": {
+      "$id": "/properties/in_beta_program",
+      "type": "boolean"
+    },
+    "selected_email": {
+      "$id": "/properties/selected_email",
+      "type": "string"
+    },
+    "avatar_url": {
+      "$id": "/properties/avatar_url",
+      "type": "string"
+    },
+    "trial_end": {
+      "$id": "/properties/trial_end",
+      "type": "string"
+    },
+    "basic_email_prefs": {
+      "$id": "/properties/basic_email_prefs",
+      "type": "string"
+    },
+    "sign_in_count": {
+      "$id": "/properties/sign_in_count",
+      "type": "integer"
+    },
+    "github_oauth_scopes": {
+      "$id": "/properties/github_oauth_scopes",
+      "type": "array",
+      "items": {
+        "$id": "/properties/github_oauth_scopes/items",
+        "type": "string"
+      }
+    },
+    "analytics_id": {
+      "$id": "/properties/analytics_id",
+      "type": "string"
+    },
+    "name": {
+      "$id": "/properties/name",
+      "type": "string"
+    },
+    "gravatar_id": {
+      "$id": "/properties/gravatar_id",
+      "type": "string"
+    },
+    "first_vcs_authorized_client_id": {
+      "$id": "/properties/first_vcs_authorized_client_id",
+      "type": "string"
+    },
+    "days_left_in_trial": {
+      "$id": "/properties/days_left_in_trial",
+      "type": "integer"
+    },
+    "parallelism": {
+      "$id": "/properties/parallelism",
+      "type": "integer"
+    },
+    "student": {
+      "$id": "/properties/student",
+      "type": "boolean"
+    },
+    "bitbucket_authorized": {
+      "$id": "/properties/bitbucket_authorized",
+      "type": "boolean"
+    },
+    "github_id": {
+      "$id": "/properties/github_id",
+      "type": "integer"
+    },
+    "bitbucket": {
+      "$id": "/properties/bitbucket",
+      "type": "string"
+    },
+    "dev_admin": {
+      "$id": "/properties/dev_admin",
+      "type": "boolean"
+    },
+    "all_emails": {
+      "$id": "/properties/all_emails",
+      "type": "array",
+      "items": {
+        "$id": "/properties/all_emails/items",
+        "type": "string"
+      }
+    },
+    "created_at": {
+      "$id": "/properties/created_at",
+      "type": "string"
+    },
+    "plan": {
+      "$id": "/properties/plan",
+      "type": "string"
+    },
+    "heroku_api_key": {
+      "$id": "/properties/heroku_api_key",
+      "type": "string"
+    },
+    "identities": {
+      "$id": "/properties/identities",
+      "type": "object",
+      "properties": {
+        "github": {
+          "$id": "/properties/identities/properties/github",
+          "type": "object",
+          "properties": {
+            "avatar_url": {
+              "$id":
+                "/properties/identities/properties/github/properties/avatar_url",
+              "type": "string"
+            },
+            "external_id": {
+              "$id":
+                "/properties/identities/properties/github/properties/external_id",
+              "type": "integer"
+            },
+            "id": {
+              "$id": "/properties/identities/properties/github/properties/id",
+              "type": "integer"
+            },
+            "name": {
+              "$id": "/properties/identities/properties/github/properties/name",
+              "type": "string"
+            },
+            "user?": {
+              "$id":
+                "/properties/identities/properties/github/properties/user?",
+              "type": "boolean"
+            },
+            "domain": {
+              "$id":
+                "/properties/identities/properties/github/properties/domain",
+              "type": "string"
+            },
+            "type": {
+              "$id": "/properties/identities/properties/github/properties/type",
+              "type": "string"
+            },
+            "authorized?": {
+              "$id":
+                "/properties/identities/properties/github/properties/authorized?",
+              "type": "boolean"
+            },
+            "provider_id": {
+              "$id":
+                "/properties/identities/properties/github/properties/provider_id",
+              "type": "string"
+            },
+            "login": {
+              "$id":
+                "/properties/identities/properties/github/properties/login",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "projects": {
+      "$id": "/properties/projects",
+      "type": "object",
+      "properties": {
+        "https://github.com/test/repo": {
+          "$id": "/properties/projects/properties/https://github.com/test/repo",
+          "type": "object",
+          "properties": {
+            "on_dashboard": {
+              "$id":
+                "/properties/projects/properties/https://github.com/test/repo/properties/on_dashboard",
+              "type": "boolean"
+            },
+            "emails": {
+              "$id":
+                "/properties/projects/properties/https://github.com/test/repo/properties/emails",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "login": {
+      "$id": "/properties/login",
+      "type": "string"
+    },
+    "organization_prefs": {
+      "$id": "/properties/organization_prefs",
+      "type": "object",
+      "properties": {
+        "github": {
+          "$id": "/properties/organization_prefs/properties/github",
+          "type": "object",
+          "properties": {
+            "RoomRoster": {
+              "$id":
+                "/properties/organization_prefs/properties/github/properties/RoomRoster",
+              "type": "object",
+              "properties": {
+                "email": {
+                  "$id":
+                    "/properties/organization_prefs/properties/github/properties/RoomRoster/properties/email",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "containers": {
+      "$id": "/properties/containers",
+      "type": "integer"
+    },
+    "pusher_id": {
+      "$id": "/properties/pusher_id",
+      "type": "string"
+    },
+    "num_projects_followed": {
+      "$id": "/properties/num_projects_followed",
+      "type": "integer"
+    }
+  }
+}

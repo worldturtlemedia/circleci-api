@@ -1,0 +1,544 @@
+{
+  "$id": "http://circleci.com/api/v1.1",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "all_commit_details": {
+      "$id": "/properties/all_commit_details",
+      "type": "array",
+      "items": {
+        "$id": "/properties/all_commit_details/items",
+        "type": "object",
+        "properties": {
+          "author_date": {
+            "$id":
+              "/properties/all_commit_details/items/properties/author_date",
+            "type": "string"
+          },
+          "author_email": {
+            "$id":
+              "/properties/all_commit_details/items/properties/author_email",
+            "type": "string"
+          },
+          "author_login": {
+            "$id":
+              "/properties/all_commit_details/items/properties/author_login",
+            "type": "string"
+          },
+          "author_name": {
+            "$id":
+              "/properties/all_commit_details/items/properties/author_name",
+            "type": "string"
+          },
+          "body": {
+            "$id": "/properties/all_commit_details/items/properties/body",
+            "type": "string"
+          },
+          "branch": {
+            "$id": "/properties/all_commit_details/items/properties/branch",
+            "type": "string"
+          },
+          "commit": {
+            "$id": "/properties/all_commit_details/items/properties/commit",
+            "type": "string"
+          },
+          "commit_url": {
+            "$id": "/properties/all_commit_details/items/properties/commit_url",
+            "type": "string"
+          },
+          "committer_date": {
+            "$id":
+              "/properties/all_commit_details/items/properties/committer_date",
+            "type": "string"
+          },
+          "committer_email": {
+            "$id":
+              "/properties/all_commit_details/items/properties/committer_email",
+            "type": "string"
+          },
+          "committer_login": {
+            "$id":
+              "/properties/all_commit_details/items/properties/committer_login",
+            "type": "string"
+          },
+          "committer_name": {
+            "$id":
+              "/properties/all_commit_details/items/properties/committer_name",
+            "type": "string"
+          },
+          "subject": {
+            "$id": "/properties/all_commit_details/items/properties/subject",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "all_commit_details_truncated": {
+      "$id": "/properties/all_commit_details_truncated",
+      "type": "boolean"
+    },
+    "author_date": {
+      "$id": "/properties/author_date",
+      "type": "string"
+    },
+    "author_email": {
+      "$id": "/properties/author_email",
+      "type": "string"
+    },
+    "author_name": {
+      "$id": "/properties/author_name",
+      "type": "string"
+    },
+    "body": {
+      "$id": "/properties/body",
+      "type": "string"
+    },
+    "branch": {
+      "$id": "/properties/branch",
+      "type": "string"
+    },
+    "build_num": {
+      "$id": "/properties/build_num",
+      "type": "integer"
+    },
+    "build_parameters": {
+      "$id": "/properties/build_parameters",
+      "type": "null"
+    },
+    "build_time_millis": {
+      "$id": "/properties/build_time_millis",
+      "type": "integer"
+    },
+    "build_url": {
+      "$id": "/properties/build_url",
+      "type": "string"
+    },
+    "canceled": {
+      "$id": "/properties/canceled",
+      "type": "boolean"
+    },
+    "canceler": {
+      "$id": "/properties/canceler",
+      "type": "null"
+    },
+    "circle_yml": {
+      "$id": "/properties/circle_yml",
+      "type": "object",
+      "properties": {
+        "string": {
+          "$id": "/properties/circle_yml/properties/string",
+          "type": "string"
+        }
+      }
+    },
+    "committer_date": {
+      "$id": "/properties/committer_date",
+      "type": "string"
+    },
+    "committer_email": {
+      "$id": "/properties/committer_email",
+      "type": "string"
+    },
+    "committer_name": {
+      "$id": "/properties/committer_name",
+      "type": "string"
+    },
+    "compare": {
+      "$id": "/properties/compare",
+      "type": "string"
+    },
+    "dont_build": {
+      "$id": "/properties/dont_build",
+      "type": "null"
+    },
+    "fail_reason": {
+      "$id": "/properties/fail_reason",
+      "type": "null"
+    },
+    "failed": {
+      "$id": "/properties/failed",
+      "type": "boolean"
+    },
+    "has_artifacts": {
+      "$id": "/properties/has_artifacts",
+      "type": "boolean"
+    },
+    "infrastructure_fail": {
+      "$id": "/properties/infrastructure_fail",
+      "type": "boolean"
+    },
+    "is_first_green_build": {
+      "$id": "/properties/is_first_green_build",
+      "type": "boolean"
+    },
+    "job_name": {
+      "$id": "/properties/job_name",
+      "type": "null"
+    },
+    "lifecycle": {
+      "$id": "/properties/lifecycle",
+      "type": "string"
+    },
+    "messages": {
+      "$id": "/properties/messages",
+      "type": "array"
+    },
+    "no_dependency_cache": {
+      "$id": "/properties/no_dependency_cache",
+      "type": "boolean"
+    },
+    "node": {
+      "$id": "/properties/node",
+      "type": "null"
+    },
+    "oss": {
+      "$id": "/properties/oss",
+      "type": "boolean"
+    },
+    "outcome": {
+      "$id": "/properties/outcome",
+      "type": "string"
+    },
+    "parallel": {
+      "$id": "/properties/parallel",
+      "type": "integer"
+    },
+    "picard": {
+      "$id": "/properties/picard",
+      "type": "object",
+      "properties": {
+        "build_agent": {
+          "$id": "/properties/picard/properties/build_agent",
+          "type": "object",
+          "properties": {
+            "image": {
+              "$id":
+                "/properties/picard/properties/build_agent/properties/image",
+              "type": "null"
+            },
+            "properties": {
+              "$id":
+                "/properties/picard/properties/build_agent/properties/properties",
+              "type": "object",
+              "properties": {
+                "build_agent": {
+                  "$id":
+                    "/properties/picard/properties/build_agent/properties/properties/properties/build_agent",
+                  "type": "string"
+                },
+                "executor": {
+                  "$id":
+                    "/properties/picard/properties/build_agent/properties/properties/properties/executor",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "executor": {
+          "$id": "/properties/picard/properties/executor",
+          "type": "string"
+        },
+        "resource_class": {
+          "$id": "/properties/picard/properties/resource_class",
+          "type": "object",
+          "properties": {
+            "class": {
+              "$id":
+                "/properties/picard/properties/resource_class/properties/class",
+              "type": "string"
+            },
+            "cpu": {
+              "$id":
+                "/properties/picard/properties/resource_class/properties/cpu",
+              "type": "integer"
+            },
+            "ram": {
+              "$id":
+                "/properties/picard/properties/resource_class/properties/ram",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "platform": {
+      "$id": "/properties/platform",
+      "type": "string"
+    },
+    "previous": {
+      "$id": "/properties/previous",
+      "type": "object",
+      "properties": {
+        "build_num": {
+          "$id": "/properties/previous/properties/build_num",
+          "type": "integer"
+        },
+        "build_time_millis": {
+          "$id": "/properties/previous/properties/build_time_millis",
+          "type": "integer"
+        },
+        "status": {
+          "$id": "/properties/previous/properties/status",
+          "type": "string"
+        }
+      }
+    },
+    "previous_successful_build": {
+      "$id": "/properties/previous_successful_build",
+      "type": "object",
+      "properties": {
+        "build_num": {
+          "$id": "/properties/previous_successful_build/properties/build_num",
+          "type": "integer"
+        },
+        "build_time_millis": {
+          "$id":
+            "/properties/previous_successful_build/properties/build_time_millis",
+          "type": "integer"
+        },
+        "status": {
+          "$id": "/properties/previous_successful_build/properties/status",
+          "type": "string"
+        }
+      }
+    },
+    "queued_at": {
+      "$id": "/properties/queued_at",
+      "type": "string"
+    },
+    "reponame": {
+      "$id": "/properties/reponame",
+      "type": "string"
+    },
+    "retries": {
+      "$id": "/properties/retries",
+      "type": "null"
+    },
+    "retry_of": {
+      "$id": "/properties/retry_of",
+      "type": "null"
+    },
+    "ssh_disabled": {
+      "$id": "/properties/ssh_disabled",
+      "type": "boolean"
+    },
+    "ssh_users": {
+      "$id": "/properties/ssh_users",
+      "type": "array"
+    },
+    "start_time": {
+      "$id": "/properties/start_time",
+      "type": "string"
+    },
+    "status": {
+      "$id": "/properties/status",
+      "type": "string"
+    },
+    "steps": {
+      "$id": "/properties/steps",
+      "type": "array",
+      "items": {
+        "$id": "/properties/steps/items",
+        "type": "object",
+        "properties": {
+          "actions": {
+            "$id": "/properties/steps/items/properties/actions",
+            "type": "array",
+            "items": {
+              "$id": "/properties/steps/items/properties/actions/items",
+              "type": "object",
+              "properties": {
+                "allocation_id": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/allocation_id",
+                  "type": "string"
+                },
+                "background": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/background",
+                  "type": "boolean"
+                },
+                "bash_command": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/bash_command",
+                  "type": "null"
+                },
+                "canceled": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/canceled",
+                  "type": "null"
+                },
+                "continue": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/continue",
+                  "type": "null"
+                },
+                "end_time": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/end_time",
+                  "type": "string"
+                },
+                "exit_code": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/exit_code",
+                  "type": "null"
+                },
+                "failed": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/failed",
+                  "type": "null"
+                },
+                "has_output": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/has_output",
+                  "type": "boolean"
+                },
+                "index": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/index",
+                  "type": "integer"
+                },
+                "infrastructure_fail": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/infrastructure_fail",
+                  "type": "null"
+                },
+                "insignificant": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/insignificant",
+                  "type": "boolean"
+                },
+                "name": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/name",
+                  "type": "string"
+                },
+                "output_url": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/output_url",
+                  "type": "string"
+                },
+                "parallel": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/parallel",
+                  "type": "boolean"
+                },
+                "run_time_millis": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/run_time_millis",
+                  "type": "integer"
+                },
+                "start_time": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/start_time",
+                  "type": "string"
+                },
+                "status": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/status",
+                  "type": "string"
+                },
+                "step": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/step",
+                  "type": "integer"
+                },
+                "timedout": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/timedout",
+                  "type": "null"
+                },
+                "truncated": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/truncated",
+                  "type": "boolean"
+                },
+                "type": {
+                  "$id":
+                    "/properties/steps/items/properties/actions/items/properties/type",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "name": {
+            "$id": "/properties/steps/items/properties/name",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "stop_time": {
+      "$id": "/properties/stop_time",
+      "type": "string"
+    },
+    "subject": {
+      "$id": "/properties/subject",
+      "type": "string"
+    },
+    "timedout": {
+      "$id": "/properties/timedout",
+      "type": "boolean"
+    },
+    "usage_queued_at": {
+      "$id": "/properties/usage_queued_at",
+      "type": "string"
+    },
+    "user": {
+      "$id": "/properties/user",
+      "type": "object",
+      "properties": {
+        "avatar_url": {
+          "$id": "/properties/user/properties/avatar_url",
+          "type": "string"
+        },
+        "id": {
+          "$id": "/properties/user/properties/id",
+          "type": "integer"
+        },
+        "is_user": {
+          "$id": "/properties/user/properties/is_user",
+          "type": "boolean"
+        },
+        "login": {
+          "$id": "/properties/user/properties/login",
+          "type": "string"
+        },
+        "name": {
+          "$id": "/properties/user/properties/name",
+          "type": "string"
+        },
+        "vcs_type": {
+          "$id": "/properties/user/properties/vcs_type",
+          "type": "string"
+        }
+      }
+    },
+    "username": {
+      "$id": "/properties/username",
+      "type": "string"
+    },
+    "vcs_revision": {
+      "$id": "/properties/vcs_revision",
+      "type": "string"
+    },
+    "vcs_tag": {
+      "$id": "/properties/vcs_tag",
+      "type": "null"
+    },
+    "vcs_type": {
+      "$id": "/properties/vcs_type",
+      "type": "string"
+    },
+    "vcs_url": {
+      "$id": "/properties/vcs_url",
+      "type": "string"
+    },
+    "why": {
+      "$id": "/properties/why",
+      "type": "string"
+    }
+  }
+}
