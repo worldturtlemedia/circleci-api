@@ -1,6 +1,6 @@
 # CircleCi API Wrapper
 
-[![Build Status](https://travis-ci.org/jordond/circlci-api.svg?branch=master)](https://travis-ci.org/jordond/circlci-api)
+[![Build Status](https://travis-ci.org/jordond/circlci-api.svg?branch=master)](https://travis-ci.org/jordond/circlci-api) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
 
 A wrapper around the [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
