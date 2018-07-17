@@ -1,2 +1,5 @@
-export * from "./client";
-export * from "./circleci";
+import { circleci } from "./circleci";
+
+export default {
+  circleci
+};

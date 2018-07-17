@@ -22,6 +22,7 @@ export const API_BASE = "https://circleci.com/api/v1.1";
 export const API_ME = `${API_BASE}/me`;
 export const API_PROJECT = `${API_BASE}/project`;
 export const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
 
 export function createVcsUrl({ type, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
@@ -48,7 +49,7 @@ export function getAllProjects(token: string): Promise<AllProjectsResponse> {
 }
 
 export function getRecentBuilds(token: string): Promise<BuildSummaryResponse> {
-  return client(token).get<BuildSummaryResponse>("");
+  return client(token).get<BuildSummaryResponse>(API_RECENT_BUILDS);
 }
 
 /**
@@ -126,6 +127,7 @@ export function circleci({
 
   const factory: CircleCIFactory = {
     defaults: () => ({ token, vcs: { type, owner, repo }, options }),
+
     addToken: (url: string) => `${url}?circle-token=${token}`,
 
     me: () => getMe(token),
@@ -136,9 +138,7 @@ export function circleci({
       return validateRequest(postFollowNewProject, opts);
     },
 
-    recentBuilds: (opts?: Options) => {
-      throw new Error("Not yet implemented");
-    },
+    recentBuilds: (opts?: Options) => getRecentBuilds(token),
 
     latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> => {
       return validateRequest(getLatestArtifacts, opts);
