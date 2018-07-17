@@ -45,14 +45,26 @@ export interface CircleRequest {
   options?: Options;
 }
 
+/**
+ * @description Required options for the CircleCI factory
+ * @property {string} token - CircleCI API key
+ */
 export interface FactoryOptions extends CircleRequest {
   token: string;
 }
 
+/**
+ * @description Required settings for requests regarding a git project
+ * @property {GitInfo} vcs - Git information
+ */
 export interface GitRequiredRequest extends CircleRequest {
   vcs: GitInfo;
 }
 
+/**
+ * @description Required properties for CircleRequest
+ * @see {@link CircleRequest}
+ */
 export interface FullRequest extends CircleRequest {
   token: string;
   vcs: GitInfo;

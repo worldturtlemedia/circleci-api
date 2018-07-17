@@ -1,12 +1,5 @@
 import { client } from "./client";
 import {
-  AllProjectsResponse,
-  ArtifactResponse,
-  FollowProjectResponse,
-  MeResponse,
-  Me
-} from "./types/api";
-import {
   CircleRequest,
   FactoryOptions,
   GitInfo,
@@ -15,11 +8,18 @@ import {
   GitType
 } from "./types/lib";
 import { queryParams, validateVCSRequest } from "./util";
+import {
+  MeResponse,
+  AllProjectsResponse,
+  ArtifactResponse,
+  FollowProjectResponse,
+  Me
+} from "./types/api";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
-export const API_ME = `${API_BASE}/me`;
-export const API_PROJECT = `${API_BASE}/project`;
-export const API_ALL_PROJECTS = `${API_BASE}/projects`;
+const API_ME = `${API_BASE}/me`;
+const API_PROJECT = `${API_BASE}/project`;
+const API_ALL_PROJECTS = `${API_BASE}/projects`;
 
 export function createVcsUrl({ type, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
