@@ -6,7 +6,7 @@ jest.mock("../../src/client");
 
 const mock = client as any;
 
-describe("CircleCI", () => {
+describe("API - Me", () => {
   const TOKEN = "test-token";
   const me: Me = {
     name: "Test",
@@ -27,5 +27,12 @@ describe("CircleCI", () => {
     expect(mock.client).toBeCalledWith(TOKEN);
     expect(mock.__getMock).toBeCalledWith(API_ME);
     expect(result).toEqual(me);
+  });
+
+  it("should throw an error if request fails", async () => {
+    mock.__setError({ code: 404 });
+
+    const check = circle.me();
+    await expect(check).rejects.toEqual({ code: 404 });
   });
 });

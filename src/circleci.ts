@@ -131,11 +131,13 @@ export function circleci({
 
     projects: () => getAllProjects(token),
 
-    followProject: (opts: GitRequiredRequest) =>
-      validateRequest(postFollowNewProject, opts),
+    followProject: (opts: GitRequiredRequest) => {
+      return validateRequest(postFollowNewProject, opts);
+    },
 
-    latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> =>
-      validateRequest(getLatestArtifacts, opts)
+    latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> => {
+      return validateRequest(getLatestArtifacts, opts);
+    }
   };
 
   return factory;

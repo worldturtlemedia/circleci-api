@@ -11,13 +11,13 @@ export enum GitType {
  * @description Settings for git project.  Used for endpoints such as builds, and artifacts
  * @see https://circleci.com/docs/api/v1-reference/#version-control-system-vcs-type
  * @property {GitType} [type] - Type of VCS (github, bitbucket, etc)
- * @property {string} owner - Owner of the target repository
- * @property {repo} repo - Target repository name
+ * @property {string} [owner] - Owner of the target repository
+ * @property {repo} [repo] - Target repository name
  */
 export interface GitInfo {
   type?: GitType;
-  owner: string;
-  repo: string;
+  owner?: string;
+  repo?: string;
 }
 
 // TODO change to enum
