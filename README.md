@@ -1,6 +1,6 @@
 # CircleCi API Wrapper
 
-[![Build Status](https://travis-ci.org/jordond/circlci-api.svg?branch=master)](https://travis-ci.org/jordond/circlci-api) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
+[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
 
 A wrapper around the [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
@@ -34,10 +34,7 @@ Get instance of the factory.
 
 ```typescript
 // Module
-import { circleci } from "circleci-api";
-
-// Default export
-import circleci from "circleci-api";
+import { circleci, GitType } from "circleci-api";
 
 // Configure the factory with some defaults
 const options: FactoryOptions = {
@@ -49,7 +46,7 @@ const options: FactoryOptions = {
 
   // Git information is required for project/build/etc endpoints
   vcs: {
-    type: "github", // default: github
+    type: GitType.GITHUB, // default: github
     owner: "jordond",
     repo: "circleci-api"
   }
