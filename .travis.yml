@@ -8,7 +8,6 @@ notifications:
 node_js:
   - node
 script:
-  - npm run lint
   - npm run test:prod
   - npm run build
 after_success:
