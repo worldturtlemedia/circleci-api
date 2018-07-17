@@ -2,16 +2,16 @@
  * CircleCI API Definitions
  * Jordon de Hoog, 2018
  *
- * API: https://circleci.com/api/v1.1/
+ * Route: https://circleci.com/api/v1.1/
  *
- * API reference:
+ * Reference:
  * @see https://circleci.com/docs/api/v1-reference/
  */
 
 /**
  * Authenticated user info
  *
- * GET - https://circleci.com/api/v1.1/me
+ * @example GET : https://circleci.com/api/v1.1/me
  * @see https://circleci.com/docs/api/v1-reference/#getting-started
  */
 export type MeResponse = Me;
@@ -19,8 +19,8 @@ export type MeResponse = Me;
 /**
  * Projects
  *
- * All followed projects:
- * GET - https://circleci.com/api/v1.1/projects
+ * All followed projects
+ * @example GET : https://circleci.com/api/v1.1/projects
  * @see https://circleci.com/docs/api/v1-reference/#projects
  */
 export type AllProjectsResponse = Project[];
@@ -28,24 +28,38 @@ export type AllProjectsResponse = Project[];
 /**
  * Follow Project
  *
- * POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/follow
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @see GitInfo
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/follow
  * @see https://circleci.com/docs/api/v1-reference/#follow-project
  */
 export type FollowProjectResponse = FollowNewResult;
 
 /**
- * Builds
+ * Recent Builds
+ *
+ * @property {number} [limit=30] - The number of builds to return. Maximum 100, defaults to 30.
+ * @property {number} [offset=0] - The API returns builds starting from this offset, defaults to 0.
  *
  * Recent builds for all projects
- * GET - https://circleci.com/api/v1.1/recent-builds?limit=20&offset=5
+ * @example GET : https://circleci.com/api/v1.1/recent-builds?limit=20&offset=5
  * @see https://circleci.com/docs/api/v1-reference/#recent-builds
  *
- * For Single project:
- * GET - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project?&limit=20&offset=5&filter=completed
+ * For Single project
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project?&limit=20&offset=5&filter=completed
  * @see https://circleci.com/docs/api/v1-reference/#recent-builds-project
  *
- * For single branch on project:
- * GET - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/tree/:branch
+ * For single branch on project
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} branch - The branch to get the builds from
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/tree/:branch
  * @see https://circleci.com/docs/api/v1-reference/#recent-builds-project-branch
  */
 export type BuildSummaryResponse = BuildSummary[];
@@ -54,21 +68,35 @@ export type BuildSummaryResponse = BuildSummary[];
  * Build
  *
  * Details for build
- * GET - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {number} build_num - Number of the build to fetch
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num
  * @see https://circleci.com/docs/api/v1-reference/#build
  */
 export type FetchBuildResponse = BuildWithSteps;
 
 /**
- * Build Artifacts
+ * Artifacts
+ *
+ * Get build artifacts
  *
  * For build:
- * GET - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/artifacts
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {number} build_num - Number of the build to fetch
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/artifacts
  * @see https://circleci.com/docs/api/v1-reference/#build-artifacts
  *
  * Latest build:
- *
- * GET - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/latest/artifacts?branch=:branch&filter=:filter
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} [branch="master"] - Branch to fetch artifacts from
+ * @property {string} [filter] - Filter out certain builds (successful, failed, completed)
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/latest/artifacts?branch=:branch&filter=:filter
  * @see https://circleci.com/docs/api/v1-reference/#build-artifacts-latest
  */
 export type ArtifactResponse = Artifact[];
@@ -79,25 +107,40 @@ export type ArtifactResponse = Artifact[];
 
 /**
  * Retry build
- * POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/retry
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {number} build_num - Number of the build to fetch
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/retry
  * @see https://circleci.com/docs/api/v1-reference/#retry-build
  */
 export type RetryBuildResponse = BuildSummary;
 
 /**
  * Cancel build
- * POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/cancel
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {number} build_num - Number of the build to fetch
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/cancel
  * @see https://circleci.com/docs/api/v1-reference/#cancel-build
  */
 export type CancelBuildResponse = BuildSummary;
 
 /**
  * Trigger new build
- * POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project
  * @see https://circleci.com/docs/api/v1-reference/#new-build
  *
  * Triger new build on specific branch
- * POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/tree/:branch
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} branch - Branch to trigger a new build of
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/tree/:branch
  * @see https://circleci.com/docs/api/v1-reference/#new-build-branch
  */
 export type TriggerBuildResponse = Build;
@@ -136,7 +179,8 @@ export interface Me {
 }
 
 export interface Identity {
-  [vcs: string]: IdentityDetails;
+  github?: IdentityDetails;
+  bitbucket?: IdentityDetails;
 }
 
 export interface IdentityDetails {

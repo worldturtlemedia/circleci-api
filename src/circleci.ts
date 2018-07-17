@@ -11,7 +11,8 @@ import {
   FactoryOptions,
   GitInfo,
   GitRequiredRequest,
-  FullRequest
+  FullRequest,
+  GitType
 } from "./types/lib";
 import { queryParams, validateVCSRequest } from "./util";
 
@@ -87,9 +88,22 @@ export interface CircleCIFactory {
   latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
 }
 
+/**
+ * CircleCI API Wrapper
+ * A wrapper for all of the circleci api calls.
+ * Most values can be overridden by individual methods
+ *
+ * @param token - CircleCI API token
+ * @param [vcs] - Default git information
+ * @param [vcs.type] - Git project type ex "github" | "bitbucket"
+ * @param [vcs.owner] - Owner of the git repository
+ * @param [vcs.repo] - Git repository name
+ * @param [options] - Additional query parameters
+ * @returns {CircleCIFactory} wrapper for CircleCI
+ */
 export function circleci({
   token,
-  vcs: { type = "", owner = "", repo = "" } = {},
+  vcs: { type = GitType.GITHUB, owner = "", repo = "" } = {},
   options = {}
 }: FactoryOptions): CircleCIFactory {
   const validateRequest = (

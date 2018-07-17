@@ -34,10 +34,7 @@ Get instance of the factory.
 
 ```typescript
 // Module
-import { circleci } from "circleci-api";
-
-// Default export
-import circleci from "circleci-api";
+import { circleci, GitType } from "circleci-api";
 
 // Configure the factory with some defaults
 const options: FactoryOptions = {
@@ -49,7 +46,7 @@ const options: FactoryOptions = {
 
   // Git information is required for project/build/etc endpoints
   vcs: {
-    type: "github", // default: github
+    type: GitType.GITHUB, // default: github
     owner: "jordond",
     repo: "circleci-api"
   }
