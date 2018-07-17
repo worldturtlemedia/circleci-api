@@ -3,7 +3,7 @@ import { Options, FullRequest } from "./types/lib";
 export function validateVCSRequest({
   token,
   vcs: { type, owner, repo }
-}: FullRequest): boolean {
+}: FullRequest) {
   if (!token) {
     throw new Error("CircleCiApi - No token was provided");
   }
@@ -24,8 +24,6 @@ export function validateVCSRequest({
   if (missing.length) {
     throw new Error(`CircleCiApi - Missing options ${missing}`);
   }
-
-  return true;
 }
 
 // TODO - Remove default value for filter
