@@ -1,5 +1,5 @@
 import { queryParams, validateVCSRequest } from "../src/util";
-import { FullRequest } from "../src/types/lib";
+import { FullRequest, GitType } from "../src/types/lib";
 
 describe("Util", () => {
   describe("Validate Git required request", () => {
@@ -21,9 +21,9 @@ describe("Util", () => {
     it("should successfully validate", () => {
       const valid: FullRequest = {
         token: "token",
-        vcs: { type: "t", owner: "o", repo: "r" }
+        vcs: { type: GitType.GITHUB, owner: "o", repo: "r" }
       };
-      expect(validateVCSRequest(valid)).toBeTruthy();
+      expect(() => validateVCSRequest(valid)).not.toThrow();
     });
   });
 

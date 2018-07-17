@@ -17,9 +17,9 @@ import {
 } from "./types/api";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
-const API_ME = `${API_BASE}/me`;
-const API_PROJECT = `${API_BASE}/project`;
-const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_ME = `${API_BASE}/me`;
+export const API_PROJECT = `${API_BASE}/project`;
+export const API_ALL_PROJECTS = `${API_BASE}/projects`;
 
 export function createVcsUrl({ type, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
@@ -81,6 +81,7 @@ export async function postFollowNewProject(
 /* Client Factory */
 
 export interface CircleCIFactory {
+  defaults: () => FactoryOptions;
   addToken: (url: string) => string;
   me: () => Promise<Me>;
   projects: () => Promise<AllProjectsResponse>;
@@ -116,14 +117,14 @@ export function circleci({
       vcs: { type, owner, repo, ...opts.vcs }
     };
 
-    if (validateVCSRequest(request)) {
-      return func(token, request);
-    }
+    /* throws */
+    validateVCSRequest(request);
 
-    throw Error("Github credentials are missing!");
+    return func(token, request);
   };
 
   const factory: CircleCIFactory = {
+    defaults: () => ({ token, vcs: { type, owner, repo }, options }),
     addToken: (url: string) => `${url}?circle-token=${token}`,
 
     me: () => getMe(token),
