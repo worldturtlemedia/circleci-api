@@ -21,7 +21,7 @@ describe("API - Me", () => {
   });
 
   it('should call the "me" endpoint', async () => {
-    mock.__setResponse({ data: me });
+    mock.__setResponse(me);
     const result = await circle.me();
 
     expect(mock.client).toBeCalledWith(TOKEN);

@@ -29,7 +29,7 @@ describe("API - Projects", () => {
     });
 
     it('should call the "allProjects" endpoint', async () => {
-      mock.__setResponse({ data: response });
+      mock.__setResponse(response);
       const result = await circle.projects();
 
       expect(mock.client).toBeCalledWith(TOKEN);

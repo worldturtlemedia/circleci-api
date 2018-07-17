@@ -27,9 +27,17 @@ export function validateVCSRequest({
 }
 
 // TODO - Remove default value for filter
-export function queryParams({
-  branch = "master",
-  filter = "successful"
-}: Options = {}) {
-  return `?branch=${branch}&filter=${filter}`;
+export function queryParams(
+  { branch = "master", ...opts }: Options = {},
+  ignoreBranch: boolean = false
+) {
+  const map = ignoreBranch ? opts : { ...opts, branch };
+  const params = Object.keys(map)
+    .reduce(
+      (prev: string[], key: string) => [...prev, `${key}=${map[key]}`],
+      []
+    )
+    .join("&");
+
+  return params.length ? `?${params}` : "";
 }

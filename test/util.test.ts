@@ -30,7 +30,7 @@ describe("Util", () => {
   describe("Query Parameters", () => {
     it("should add default query params", () => {
       const t = queryParams();
-      expect(t).toEqual("?branch=master&filter=successful");
+      expect(t).toEqual("?branch=master");
     });
 
     it("should set branch", () => {
@@ -39,6 +39,10 @@ describe("Util", () => {
 
     it("should set the filter", () => {
       expect(queryParams({ filter: "failed" })).toContain("filter=failed");
+    });
+
+    it("should return nothing", () => {
+      expect(queryParams({}, true));
     });
   });
 });

@@ -28,7 +28,7 @@ describe("API - Artifacts", () => {
   });
 
   it("should fetch latest artifact for project", async () => {
-    mock.__setResponse({ data: artifact });
+    mock.__setResponse(artifact);
     const result = await getLatestArtifacts(TOKEN, {
       vcs: { owner: "t", repo: "r" }
     });
@@ -41,7 +41,7 @@ describe("API - Artifacts", () => {
   });
 
   it("should fetch aritfacts for different project", async () => {
-    mock.__setResponse({ data: artifact });
+    mock.__setResponse(artifact);
     const result = await circle.latestArtifacts({
       vcs: { owner: "test2" }
     });
@@ -54,7 +54,7 @@ describe("API - Artifacts", () => {
   });
 
   it("should fetch latest aritfacts specific branch", async () => {
-    mock.__setResponse({ data: artifact });
+    mock.__setResponse(artifact);
     const result = await getLatestArtifacts(TOKEN, {
       vcs: { owner: "test", repo: "test" },
       options: { branch: "develop" }

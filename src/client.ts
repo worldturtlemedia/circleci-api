@@ -48,28 +48,30 @@ export function circlePost<T>(
 }
 
 export interface ClientFactory {
-  get: <T>(url: string, options?: AxiosRequestConfig) => AxiosPromise<T>;
+  get: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>;
   post: <T>(
     url: string,
     body?: any,
     options?: AxiosRequestConfig
-  ) => AxiosPromise<T>;
+  ) => Promise<T>;
 }
 
 export function client(token: string) {
   const factory: ClientFactory = {
-    get: <T>(
+    get: async <T>(
       url: string,
       options: AxiosRequestConfig = {}
-    ): AxiosPromise<T> => {
-      return get(token, url, options);
+    ): Promise<T> => {
+      const result = await get<T>(token, url, options);
+      return result.data;
     },
-    post: <T>(
+    post: async <T>(
       url: string,
       body?: any,
       options: AxiosRequestConfig = {}
-    ): AxiosPromise<T> => {
-      return post(token, url, body, options);
+    ): Promise<T> => {
+      const result = await post<any, T>(token, url, body, options);
+      return result.data;
     }
   };
 

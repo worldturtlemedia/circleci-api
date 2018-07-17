@@ -5,7 +5,8 @@ import {
   GitInfo,
   GitRequiredRequest,
   FullRequest,
-  GitType
+  GitType,
+  Options
 } from "./types/lib";
 import { queryParams, validateVCSRequest } from "./util";
 import {
@@ -13,7 +14,8 @@ import {
   AllProjectsResponse,
   ArtifactResponse,
   FollowProjectResponse,
-  Me
+  Me,
+  BuildSummaryResponse
 } from "./types/api";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
@@ -32,9 +34,8 @@ export function createVcsUrl({ type, owner, repo }: GitInfo) {
  * GET - /me
  * @see https://circleci.com/docs/api/v1-reference/#getting-started
  */
-export async function getMe(token: string): Promise<MeResponse> {
-  const result = await client(token).get<MeResponse>(API_ME);
-  return result.data;
+export function getMe(token: string): Promise<MeResponse> {
+  return client(token).get<MeResponse>(API_ME);
 }
 
 /**
@@ -42,11 +43,12 @@ export async function getMe(token: string): Promise<MeResponse> {
  * GET - /projects
  * @see https://circleci.com/docs/api/v1-reference/#projects
  */
-export async function getAllProjects(
-  token: string
-): Promise<AllProjectsResponse> {
-  const result = await client(token).get<AllProjectsResponse>(API_ALL_PROJECTS);
-  return result.data;
+export function getAllProjects(token: string): Promise<AllProjectsResponse> {
+  return client(token).get<AllProjectsResponse>(API_ALL_PROJECTS);
+}
+
+export function getRecentBuilds(token: string): Promise<BuildSummaryResponse> {
+  return client(token).get<BuildSummaryResponse>("");
 }
 
 /**
@@ -54,13 +56,12 @@ export async function getAllProjects(
  * GET - /project/:vcs-type/:username/:project/latest/artifacts?branch=:branch&filter=:filter
  * @see https://circleci.com/docs/api/v1-reference/#build-artifacts-latest
  */
-export async function getLatestArtifacts(
+export function getLatestArtifacts(
   token: string,
   { vcs, options = {} }: GitRequiredRequest
 ): Promise<ArtifactResponse> {
   const url = `${createVcsUrl(vcs)}/latest/artifacts${queryParams(options)}`;
-  const result = await client(token).get<ArtifactResponse>(url);
-  return result.data;
+  return client(token).get<ArtifactResponse>(url);
 }
 
 /* POST Methods */
@@ -69,13 +70,12 @@ export async function getLatestArtifacts(
  * POST - /project/:vcs-type/:username/:project/follow
  * @see https://circleci.com/docs/api/v1-reference/#follow-project
  */
-export async function postFollowNewProject(
+export function postFollowNewProject(
   token: string,
   { vcs }: GitRequiredRequest
 ): Promise<FollowProjectResponse> {
   const url = `${createVcsUrl(vcs)}/follow`;
-  const result = await client(token).post<FollowProjectResponse>(url);
-  return result.data;
+  return client(token).post<FollowProjectResponse>(url);
 }
 
 /* Client Factory */
@@ -86,6 +86,7 @@ export interface CircleCIFactory {
   me: () => Promise<Me>;
   projects: () => Promise<AllProjectsResponse>;
   followProject: (opts: GitRequiredRequest) => Promise<FollowProjectResponse>;
+  recentBuilds: (opts?: Options) => Promise<BuildSummaryResponse>;
   latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
 }
 
@@ -133,6 +134,10 @@ export function circleci({
 
     followProject: (opts: GitRequiredRequest) => {
       return validateRequest(postFollowNewProject, opts);
+    },
+
+    recentBuilds: (opts?: Options) => {
+      throw new Error("Not yet implemented");
     },
 
     latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> => {

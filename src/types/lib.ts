@@ -31,6 +31,8 @@ export type Filter = "completed" | "successful" | "failed";
 export interface Options {
   branch?: string;
   filter?: Filter;
+  limit?: number;
+  offset?: number;
 }
 
 /**

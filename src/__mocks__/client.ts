@@ -1,9 +1,7 @@
-import { AxiosResponse, AxiosError } from "axios";
-
 const mockClient: any = jest.genMockFromModule("./client");
 
-let mockResponse: AxiosResponse | null;
-let mockErrorResponse: AxiosError | null;
+let mockResponse: any | null;
+let mockErrorResponse: any | null;
 
 export function __reset() {
   mockResponse = null;
@@ -11,20 +9,17 @@ export function __reset() {
 }
 
 /* tslint:disable-next-line:function-name */
-export function __setResponse(result: AxiosResponse) {
+export function __setResponse(result: any) {
   mockResponse = result;
 }
 
 /* tslint:disable-next-line:function-name */
-export function __setError(result: AxiosError) {
+export function __setError(result: any) {
   mockErrorResponse = result;
 }
 
 function handleResponse() {
-  if (
-    mockResponse !== null &&
-    (mockResponse.status === 200 || mockResponse.data)
-  ) {
+  if (mockResponse !== null) {
     return Promise.resolve(mockResponse);
   }
   return Promise.reject(mockErrorResponse || mockResponse);
