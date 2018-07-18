@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
 
+**Warning:** This is still a work-in-progress, so not all the endpoints are available
+
 A wrapper around the [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
 I recommend using this library if you are writing a tool or website in TypeScript. I have created definitions for each of the CircleCi endpoints. There may still be some errors, but I am open to contributions on making them better.
