@@ -40,7 +40,6 @@
     "semantic-release": "semantic-release",
     "precommit": "lint-staged",
     "travis-deploy-once": "travis-deploy-once",
-    "prepush": "npm run test:prod && npm run build",
     "commitmsg": "commitlint -E GIT_PARAMS"
   },
   "dependencies": {
