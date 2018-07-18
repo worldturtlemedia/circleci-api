@@ -1,6 +1,8 @@
 # CircleCi API Wrapper
 
-[![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api)[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api)[![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
+[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
+
+**Warning:** This is still a work-in-progress, so not all the endpoints are available
 
 A wrapper around the [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
@@ -178,9 +180,16 @@ yarn build
 ```
 Copyright 2018 Jordon de Hoog
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```

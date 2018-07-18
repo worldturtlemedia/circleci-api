@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore:
+        - gh-pages
     docker:
       - image: circleci/node:latest
         environment:
@@ -29,6 +32,9 @@ jobs:
       - run:
           name: Build
           command: yarn build
+      - run:
+          name: Report Coverage
+          command: yarn report-coverage
       - run:
           name: Upload yarn lockfile
           command: ./node_modules/.bin/greenkeeper-lockfile-upload
