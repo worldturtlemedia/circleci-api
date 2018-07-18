@@ -1,9 +1,9 @@
-import { Options, FullRequest } from "./types/lib";
+import { Options, FullRequest, GitType } from "./types";
 
 export function validateVCSRequest({
   token,
   vcs: { type, owner, repo }
-}: FullRequest): boolean {
+}: FullRequest) {
   if (!token) {
     throw new Error("CircleCiApi - No token was provided");
   }
@@ -24,14 +24,28 @@ export function validateVCSRequest({
   if (missing.length) {
     throw new Error(`CircleCiApi - Missing options ${missing}`);
   }
-
-  return true;
 }
 
 // TODO - Remove default value for filter
-export function queryParams({
-  branch = "master",
-  filter = "successful"
-}: Options = {}) {
-  return `?branch=${branch}&filter=${filter}`;
+export function queryParams(
+  { branch = "master", ...opts }: Options = {},
+  ignoreBranch: boolean = false
+) {
+  const map = ignoreBranch ? opts : { ...opts, branch };
+  const params = Object.keys(map)
+    .reduce(
+      (prev: string[], key: string) => [...prev, `${key}=${map[key]}`],
+      []
+    )
+    .join("&");
+
+  return params.length ? `?${params}` : "";
+}
+
+export function getGitType(type: string): GitType {
+  if (type === GitType.BITBUCKET) {
+    return type as GitType;
+  }
+
+  return GitType.GITHUB;
 }

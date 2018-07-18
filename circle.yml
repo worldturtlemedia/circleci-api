@@ -24,10 +24,7 @@ jobs:
           name: Update yarn lockfile
           command: ./node_modules/.bin/greenkeeper-lockfile-update
       - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Test
+          name: Lint & Test
           command: yarn test:prod
       - run:
           name: Build

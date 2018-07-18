@@ -277,8 +277,8 @@ export interface Branch {
 
 export interface BranchDetails {
   pusher_logins?: string[];
-  running_builds: BuildSummary[];
-  recent_builds: BuildSummary[];
+  running_builds?: BuildSummary[];
+  recent_builds?: BuildSummary[];
   last_non_success?: BuildSummary;
 }
 
@@ -467,7 +467,7 @@ export interface FollowNewResult {
 
 export interface Artifact {
   path: string;
-  pretty_path: string;
-  node_index: number;
+  pretty_path?: string;
+  node_index?: number;
   url: string;
 }

@@ -1,5 +1,5 @@
 import { queryParams, validateVCSRequest } from "../src/util";
-import { FullRequest } from "../src/types/lib";
+import { FullRequest, GitType } from "../src/types/lib";
 
 describe("Util", () => {
   describe("Validate Git required request", () => {
@@ -21,16 +21,16 @@ describe("Util", () => {
     it("should successfully validate", () => {
       const valid: FullRequest = {
         token: "token",
-        vcs: { type: "t", owner: "o", repo: "r" }
+        vcs: { type: GitType.GITHUB, owner: "o", repo: "r" }
       };
-      expect(validateVCSRequest(valid)).toBeTruthy();
+      expect(() => validateVCSRequest(valid)).not.toThrow();
     });
   });
 
   describe("Query Parameters", () => {
     it("should add default query params", () => {
       const t = queryParams();
-      expect(t).toEqual("?branch=master&filter=successful");
+      expect(t).toEqual("?branch=master");
     });
 
     it("should set branch", () => {
@@ -39,6 +39,10 @@ describe("Util", () => {
 
     it("should set the filter", () => {
       expect(queryParams({ filter: "failed" })).toContain("filter=failed");
+    });
+
+    it("should return nothing", () => {
+      expect(queryParams({}, true));
     });
   });
 });

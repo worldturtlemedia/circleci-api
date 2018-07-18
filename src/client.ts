@@ -3,8 +3,9 @@ import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
 function get<T>(
   token: string,
   url: string,
-  options: AxiosRequestConfig = {}
+  options?: AxiosRequestConfig
 ): AxiosPromise<T> {
+  console.log(Array.from([]));
   return axios.get(url, createAuthorizedOptions(token, options));
 }
 
@@ -12,7 +13,7 @@ function post<T, R>(
   token: string,
   url: string,
   body: T,
-  options: AxiosRequestConfig = {}
+  options?: AxiosRequestConfig
 ): AxiosPromise<R> {
   return axios.post(url, body, createAuthorizedOptions(token, options));
 }
@@ -33,7 +34,7 @@ function createAuthorizedOptions(
 export function circleGet<T>(
   token: string,
   url: string,
-  options: AxiosRequestConfig = {}
+  options?: AxiosRequestConfig
 ): AxiosPromise<T> {
   return client(token).get(url, options);
 }
@@ -42,34 +43,36 @@ export function circlePost<T>(
   token: string,
   url: string,
   body?: any,
-  options: AxiosRequestConfig = {}
+  options?: AxiosRequestConfig
 ): AxiosPromise<T> {
   return client(token).post(url, body, options);
 }
 
 export interface ClientFactory {
-  get: <T>(url: string, options?: AxiosRequestConfig) => AxiosPromise<T>;
+  get: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>;
   post: <T>(
     url: string,
     body?: any,
     options?: AxiosRequestConfig
-  ) => AxiosPromise<T>;
+  ) => Promise<T>;
 }
 
 export function client(token: string) {
   const factory: ClientFactory = {
-    get: <T>(
+    get: async <T>(
       url: string,
       options: AxiosRequestConfig = {}
-    ): AxiosPromise<T> => {
-      return get(token, url, options);
+    ): Promise<T> => {
+      const result = await get<T>(token, url, options);
+      return result.data;
     },
-    post: <T>(
+    post: async <T>(
       url: string,
       body?: any,
       options: AxiosRequestConfig = {}
-    ): AxiosPromise<T> => {
-      return post(token, url, body, options);
+    ): Promise<T> => {
+      const result = await post<any, T>(token, url, body, options);
+      return result.data;
     }
   };
 

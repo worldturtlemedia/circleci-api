@@ -1,0 +1,14 @@
+.rpt2_cache/
+.vscode/
+coverage/
+demo/
+docs/
+src/
+test/
+tools/
+.editorconfig
+.travis.yml
+circle.yml
+rollup.config.ts
+tsconfig.*
+tslint.json

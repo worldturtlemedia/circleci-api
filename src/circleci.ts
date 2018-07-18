@@ -1,25 +1,26 @@
 import { client } from "./client";
+import { queryParams, validateVCSRequest } from "./util";
 import {
   CircleRequest,
   FactoryOptions,
   GitInfo,
   GitRequiredRequest,
   FullRequest,
-  GitType
-} from "./types/lib";
-import { queryParams, validateVCSRequest } from "./util";
-import {
+  GitType,
+  Options,
   MeResponse,
   AllProjectsResponse,
   ArtifactResponse,
   FollowProjectResponse,
-  Me
-} from "./types/api";
+  Me,
+  BuildSummaryResponse
+} from "./types";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
-const API_ME = `${API_BASE}/me`;
-const API_PROJECT = `${API_BASE}/project`;
-const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_ME = `${API_BASE}/me`;
+export const API_PROJECT = `${API_BASE}/project`;
+export const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
 
 export function createVcsUrl({ type, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
@@ -32,9 +33,8 @@ export function createVcsUrl({ type, owner, repo }: GitInfo) {
  * GET - /me
  * @see https://circleci.com/docs/api/v1-reference/#getting-started
  */
-export async function getMe(token: string): Promise<MeResponse> {
-  const result = await client(token).get<MeResponse>(API_ME);
-  return result.data;
+export function getMe(token: string): Promise<MeResponse> {
+  return client(token).get<MeResponse>(API_ME);
 }
 
 /**
@@ -42,11 +42,12 @@ export async function getMe(token: string): Promise<MeResponse> {
  * GET - /projects
  * @see https://circleci.com/docs/api/v1-reference/#projects
  */
-export async function getAllProjects(
-  token: string
-): Promise<AllProjectsResponse> {
-  const result = await client(token).get<AllProjectsResponse>(API_ALL_PROJECTS);
-  return result.data;
+export function getAllProjects(token: string): Promise<AllProjectsResponse> {
+  return client(token).get<AllProjectsResponse>(API_ALL_PROJECTS);
+}
+
+export function getRecentBuilds(token: string): Promise<BuildSummaryResponse> {
+  return client(token).get<BuildSummaryResponse>(API_RECENT_BUILDS);
 }
 
 /**
@@ -54,13 +55,12 @@ export async function getAllProjects(
  * GET - /project/:vcs-type/:username/:project/latest/artifacts?branch=:branch&filter=:filter
  * @see https://circleci.com/docs/api/v1-reference/#build-artifacts-latest
  */
-export async function getLatestArtifacts(
+export function getLatestArtifacts(
   token: string,
   { vcs, options = {} }: GitRequiredRequest
 ): Promise<ArtifactResponse> {
   const url = `${createVcsUrl(vcs)}/latest/artifacts${queryParams(options)}`;
-  const result = await client(token).get<ArtifactResponse>(url);
-  return result.data;
+  return client(token).get<ArtifactResponse>(url);
 }
 
 /* POST Methods */
@@ -69,22 +69,23 @@ export async function getLatestArtifacts(
  * POST - /project/:vcs-type/:username/:project/follow
  * @see https://circleci.com/docs/api/v1-reference/#follow-project
  */
-export async function postFollowNewProject(
+export function postFollowNewProject(
   token: string,
   { vcs }: GitRequiredRequest
 ): Promise<FollowProjectResponse> {
   const url = `${createVcsUrl(vcs)}/follow`;
-  const result = await client(token).post<FollowProjectResponse>(url);
-  return result.data;
+  return client(token).post<FollowProjectResponse>(url);
 }
 
 /* Client Factory */
 
 export interface CircleCIFactory {
+  defaults: () => FactoryOptions;
   addToken: (url: string) => string;
   me: () => Promise<Me>;
   projects: () => Promise<AllProjectsResponse>;
   followProject: (opts: GitRequiredRequest) => Promise<FollowProjectResponse>;
+  recentBuilds: (opts?: Options) => Promise<BuildSummaryResponse>;
   latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
 }
 
@@ -116,25 +117,30 @@ export function circleci({
       vcs: { type, owner, repo, ...opts.vcs }
     };
 
-    if (validateVCSRequest(request)) {
-      return func(token, request);
-    }
+    /* throws */
+    validateVCSRequest(request);
 
-    throw Error("Github credentials are missing!");
+    return func(token, request);
   };
 
   const factory: CircleCIFactory = {
+    defaults: () => ({ token, vcs: { type, owner, repo }, options }),
+
     addToken: (url: string) => `${url}?circle-token=${token}`,
 
     me: () => getMe(token),
 
     projects: () => getAllProjects(token),
 
-    followProject: (opts: GitRequiredRequest) =>
-      validateRequest(postFollowNewProject, opts),
+    followProject: (opts: GitRequiredRequest) => {
+      return validateRequest(postFollowNewProject, opts);
+    },
 
-    latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> =>
-      validateRequest(getLatestArtifacts, opts)
+    recentBuilds: (opts?: Options) => getRecentBuilds(token),
+
+    latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> => {
+      return validateRequest(getLatestArtifacts, opts);
+    }
   };
 
   return factory;
