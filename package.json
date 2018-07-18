@@ -17,7 +17,7 @@
   "author": "Jordon de Hoog <jordon.dehoog@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jordond/circleci-api"
   },
   "license": "MIT",
   "engines": {
