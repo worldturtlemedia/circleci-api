@@ -1,4 +1,4 @@
-import { Options, FullRequest } from "./types";
+import { Options, FullRequest, GitType } from "./types";
 
 export function validateVCSRequest({
   token,
@@ -40,4 +40,12 @@ export function queryParams(
     .join("&");
 
   return params.length ? `?${params}` : "";
+}
+
+export function getGitType(type: string): GitType {
+  if (type === GitType.BITBUCKET) {
+    return type as GitType;
+  }
+
+  return GitType.GITHUB;
 }
