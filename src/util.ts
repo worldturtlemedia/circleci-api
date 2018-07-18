@@ -1,4 +1,4 @@
-import { Options, FullRequest } from "./types/lib";
+import { Options, FullRequest } from "./types";
 
 export function validateVCSRequest({
   token,

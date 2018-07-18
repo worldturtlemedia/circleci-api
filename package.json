@@ -10,7 +10,7 @@
   ],
   "main": "dist/circleci-api.umd.js",
   "module": "dist/circleci-api.es5.js",
-  "typings": "dist/types/circleci-api.d.ts",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],

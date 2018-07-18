@@ -1,2 +1,3 @@
-export * from "./client";
+export * from "./types/api";
+export * from "./types/lib";
 export * from "./circleci";

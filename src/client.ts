@@ -5,6 +5,7 @@ function get<T>(
   url: string,
   options?: AxiosRequestConfig
 ): AxiosPromise<T> {
+  console.log(Array.from([]));
   return axios.get(url, createAuthorizedOptions(token, options));
 }
 

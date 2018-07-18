@@ -1,4 +1,5 @@
 import { client } from "./client";
+import { queryParams, validateVCSRequest } from "./util";
 import {
   CircleRequest,
   FactoryOptions,
@@ -6,17 +7,14 @@ import {
   GitRequiredRequest,
   FullRequest,
   GitType,
-  Options
-} from "./types/lib";
-import { queryParams, validateVCSRequest } from "./util";
-import {
+  Options,
   MeResponse,
   AllProjectsResponse,
   ArtifactResponse,
   FollowProjectResponse,
   Me,
   BuildSummaryResponse
-} from "./types/api";
+} from "./types";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
 export const API_ME = `${API_BASE}/me`;
