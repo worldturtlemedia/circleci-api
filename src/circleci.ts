@@ -15,7 +15,6 @@ import {
   Me,
   BuildSummaryResponse,
   FetchBuildResponse,
-  RetryBuildResponse,
   BuildActionResponse,
   TriggerBuildResponse
 } from "./types";
