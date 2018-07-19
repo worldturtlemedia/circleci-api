@@ -14,7 +14,10 @@ import {
   FollowProjectResponse,
   Me,
   BuildSummaryResponse,
-  FetchBuildResponse
+  FetchBuildResponse,
+  RetryBuildResponse,
+  BuildActionResponse,
+  TriggerBuildResponse
 } from "./types";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
@@ -22,6 +25,11 @@ export const API_ME = `${API_BASE}/me`;
 export const API_PROJECT = `${API_BASE}/project`;
 export const API_ALL_PROJECTS = `${API_BASE}/projects`;
 export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
+
+export enum BuildAction {
+  RETRY = "retry",
+  CANCEL = "cancel"
+}
 
 function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
@@ -106,23 +114,50 @@ export function getBuildSummaries({
  * @example /project/:vcs-type/:username/:project/:build_num
  *
  * @param token - CircleCI API token
+ * @param vcs - Project's git information
  * @param buildNumber - Target build number
  * @returns Full build details including build steps
  */
 export function getFullBuild(
   token: string,
-  buildNumber: number,
-  vcs: GitInfo
+  vcs: GitInfo,
+  buildNumber: number
 ): Promise<FetchBuildResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}`;
   return client(token).get<FetchBuildResponse>(url);
 }
 
 /**
+ * Get artifacts for single project build
+ *
+ * @see https://circleci.com/docs/api/v1-reference/#build-artifacts
+ * @example /project/:vcs-type/:username/:project/:build_num/artifacts
+ *
+ * @param token - CircleCI API token
+ * @param vcs - Project's git information
+ * @param buildNumber - Target build number
+ * @returns Promise of an array of build artifacs
+ */
+export function getBuildArtifacts(
+  token: string,
+  vcs: GitInfo,
+  buildNumber: number
+): Promise<ArtifactResponse> {
+  const url = `${createVcsUrl(vcs)}/${buildNumber}/artifacts`;
+  return client(token).get<ArtifactResponse>(url);
+}
+
+/**
  * Get the latest build artifacts for a project
+ *
+ * @example branch - The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
+ * @example filter -Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
  *
  * @see https://circleci.com/docs/api/v1-reference/#build-artifacts-latest
  * @example GET - /project/:vcs-type/:username/:project/latest/artifacts?branch=:branch&filter=:filter
+ * @param token - CircleCI API token
+ * @param vcs - Project's git information
+ * @param options - Query parameters
  */
 export function getLatestArtifacts(
   token: string,
@@ -133,6 +168,49 @@ export function getLatestArtifacts(
 }
 
 /* POST Methods */
+
+/**
+ * Commit a build action, returns a summary of the new build.
+ *
+ * Retry a build
+ * @see https://circleci.com/docs/api/v1-reference/#retry-build
+ * @example POST - /project/:vcs-type/:username/:project/:build_num/retry
+ *
+ * Cancel a build
+ * @see https://circleci.com/docs/api/v1-reference/#cancel-build
+ * @example POST - /project/:vcs-type/:username/:project/:build_num/cancel
+ *
+ * @param token - CircleCI API token
+ * @param vcs - Project's git information that you'd like to retry
+ * @param buildNumber - Target build number to retry
+ * @param action - Action to perform on the build
+ */
+export function buildActions(
+  token: string,
+  vcs: GitInfo,
+  buildNumber: number,
+  action: BuildAction
+): Promise<BuildActionResponse> {
+  const url = `${createVcsUrl(vcs)}/${buildNumber}/${action}`;
+  return client(token).post(url);
+}
+
+/**
+ * Triggers a new build, returns a summary of the build.
+ * @see https://circleci.com/docs/api/v1-reference/#new-build
+ * @example /project/:vcs-type/:username/:project
+ *
+ * Triggers a new build, returns a summary of the build.
+ * @see https://circleci.com/docs/api/v1-reference/#new-build-branch
+ * @example /project/:vcs-type/:username/:project/tree/:branch
+ */
+export function triggerNewBuild(
+  token: string,
+  { vcs, options: { branch = "", newBuildOptions = {} } = {} }: FullRequest
+): Promise<TriggerBuildResponse> {
+  const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
+  return client(token).post<TriggerBuildResponse>(url, newBuildOptions);
+}
 
 /**
  * POST - /project/:vcs-type/:username/:project/follow

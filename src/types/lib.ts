@@ -33,6 +33,7 @@ export interface Options {
   filter?: Filter;
   limit?: number;
   offset?: number;
+  newBuildOptions?: NewBuildOptions;
 }
 
 /**
@@ -70,4 +71,25 @@ export interface GitRequiredRequest extends CircleRequest {
 export interface FullRequest extends CircleRequest {
   token: string;
   vcs: GitInfo;
+}
+
+/**
+ * Options for triggering a new build
+ * @property revision - The specific revision to build. Default is null and the head of the branch is used. Cannot be used with tag parameter.
+ * @property tag - The tag to build. Default is null. Cannot be used with revision parameter.
+ * @property parallel - The number of containers to use to run the build. Default is null and the project default is used. This parameter is ignored for builds running on our 2.0 infrastructure.
+ * @property build_parameters - Additional environment variables to inject into the build environment. A map of names to values.
+ */
+export interface NewBuildOptions {
+  revision?: string;
+  tag?: string;
+  parallel?: number;
+  build_parameters?: BuildParameters;
+}
+
+/**
+ * Additional ENV parameters to pass to the build
+ */
+export interface BuildParameters {
+  [param: string]: string;
 }
