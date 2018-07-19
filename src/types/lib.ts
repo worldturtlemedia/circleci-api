@@ -21,7 +21,7 @@ export interface GitInfo {
 }
 
 // TODO change to enum
-export type Filter = "completed" | "successful" | "failed";
+export type Filter = "completed" | "successful" | "failed" | "running";
 
 /**
  * @description Additional options used as query params
