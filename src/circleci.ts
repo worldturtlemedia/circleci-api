@@ -11,11 +11,12 @@ import {
   ArtifactResponse,
   FollowProjectResponse,
   Me,
-  BuildSummaryResponse
+  BuildSummaryResponse,
+  FetchBuildResponse
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
-import { getRecentBuilds } from "./api/builds";
-import { getLatestArtifacts } from "./api/artifacts";
+import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
+import { getLatestArtifacts, getBuildArtifacts } from "./api/artifacts";
 import { getMe } from "./api/user";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
@@ -42,7 +43,20 @@ export interface CircleCIFactory {
   projects: () => Promise<AllProjectsResponse>;
   followProject: (opts: GitRequiredRequest) => Promise<FollowProjectResponse>;
   recentBuilds: (opts?: Options) => Promise<BuildSummaryResponse>;
+  builds: (opts?: CircleRequest) => Promise<BuildSummaryResponse>;
+  buildsFor: (
+    branch: string,
+    opts?: CircleRequest
+  ) => Promise<BuildSummaryResponse>;
+  build: (
+    buildNumber: number,
+    opts: CircleRequest
+  ) => Promise<FetchBuildResponse>;
   latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
+  artifacts: (
+    buildNumber: number,
+    opts?: CircleRequest
+  ) => Promise<ArtifactResponse>;
 }
 
 /**
@@ -63,20 +77,16 @@ export function circleci({
   vcs: { type = GitType.GITHUB, owner = "", repo = "" } = {},
   options = {}
 }: FactoryOptions): CircleCIFactory {
-  const validateRequest = (
-    func: (token: string, req: GitRequiredRequest) => any,
-    opts: CircleRequest = {}
-  ) => {
+  const createRequest = (opts: CircleRequest = {}): FullRequest => {
     const request: FullRequest = {
       token: opts.token || token,
       options: { ...options, ...opts.options },
       vcs: { type, owner, repo, ...opts.vcs }
     };
 
-    /* throws */
     validateVCSRequest(request);
 
-    return func(token, request);
+    return request;
   };
 
   const factory: CircleCIFactory = {
@@ -89,13 +99,35 @@ export function circleci({
     projects: () => getAllProjects(token),
 
     followProject: (opts: GitRequiredRequest) => {
-      return validateRequest(postFollowNewProject, opts);
+      const { token, ...rest } = createRequest(opts);
+      return postFollowNewProject(token, rest);
     },
 
     recentBuilds: (opts?: Options) => getRecentBuilds(token, opts),
 
-    latestArtifacts: (opts?: CircleRequest): Promise<ArtifactResponse> => {
-      return validateRequest(getLatestArtifacts, opts);
+    builds: (opts?: CircleRequest) => {
+      const request = createRequest(opts);
+      return getBuildSummaries(request);
+    },
+
+    buildsFor: (branch: string = "master", opts?: CircleRequest) => {
+      const request = createRequest({ ...opts, options: { branch } });
+      return getBuildSummaries(request);
+    },
+
+    build: (buildNumber: number, opts?: CircleRequest) => {
+      const { token, vcs } = createRequest(opts);
+      return getFullBuild(token, vcs, buildNumber);
+    },
+
+    latestArtifacts: (opts?: CircleRequest) => {
+      const { token, ...rest } = createRequest(opts);
+      return getLatestArtifacts(token, rest);
+    },
+
+    artifacts: (buildNumber: number, opts?: CircleRequest) => {
+      const { token, vcs } = createRequest(opts);
+      return getBuildArtifacts(token, vcs, buildNumber);
     }
   };
 
