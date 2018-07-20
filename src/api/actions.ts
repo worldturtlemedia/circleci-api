@@ -1,11 +1,11 @@
 import {
   GitInfo,
   BuildActionResponse,
-  FullRequest,
   TriggerBuildResponse,
-  GitRequiredRequest
+  GitRequiredRequest,
+  BuildAction,
+  createVcsUrl
 } from "../types";
-import { BuildAction, createVcsUrl } from "../circleci";
 import { client } from "../client";
 
 /**

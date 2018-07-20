@@ -14,7 +14,8 @@ import {
   BuildSummaryResponse,
   FetchBuildResponse,
   BuildActionResponse,
-  TriggerBuildResponse
+  TriggerBuildResponse,
+  BuildAction
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -27,21 +28,6 @@ import { postBuildActions, postTriggerNewBuild } from "./api";
   For the endpoints that accept filters/offset/etc
   modify factory functions to pass in only required options
 */
-
-export const API_BASE = "https://circleci.com/api/v1.1";
-export const API_ME = `${API_BASE}/me`;
-export const API_PROJECT = `${API_BASE}/project`;
-export const API_ALL_PROJECTS = `${API_BASE}/projects`;
-export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
-
-export enum BuildAction {
-  RETRY = "retry",
-  CANCEL = "cancel"
-}
-
-export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
-  return `${API_PROJECT}/${type}/${owner}/${repo}`;
-}
 
 /* Client Factory */
 

@@ -3,10 +3,10 @@ import {
   FetchBuildResponse,
   Options,
   BuildSummaryResponse,
-  FullRequest,
-  GitRequiredRequest
+  GitRequiredRequest,
+  API_RECENT_BUILDS,
+  createVcsUrl
 } from "../types";
-import { createVcsUrl, API_RECENT_BUILDS } from "../circleci";
 import { client } from "../client";
 import { queryParams } from "../util";
 

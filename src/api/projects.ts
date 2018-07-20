@@ -2,9 +2,10 @@ import { client } from "../client";
 import {
   AllProjectsResponse,
   GitRequiredRequest,
-  FollowProjectResponse
+  FollowProjectResponse,
+  API_ALL_PROJECTS,
+  createVcsUrl
 } from "../types";
-import { API_ALL_PROJECTS, createVcsUrl } from "../circleci";
 
 /**
  * All followed projects:

@@ -1,3 +1,9 @@
+export const API_BASE = "https://circleci.com/api/v1.1";
+export const API_ME = `${API_BASE}/me`;
+export const API_PROJECT = `${API_BASE}/project`;
+export const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
+
 /**
  * @description Currently supported VCS types
  * @see GitInfo
@@ -5,6 +11,21 @@
 export enum GitType {
   GITHUB = "github",
   BITBUCKET = "bitbucket"
+}
+
+/**
+ * Create a base project url
+ * @param type - Type of version control, default "github"
+ * @param owner - Owner of the repository
+ * @param repo - Target repository
+ */
+export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
+  return `${API_PROJECT}/${type}/${owner}/${repo}`;
+}
+
+export enum BuildAction {
+  RETRY = "retry",
+  CANCEL = "cancel"
 }
 
 /**

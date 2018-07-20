@@ -1,5 +1,4 @@
-import { MeResponse } from "../types";
-import { API_ME } from "../circleci";
+import { MeResponse, API_ME } from "../types";
 import { client } from "../client";
 
 /**

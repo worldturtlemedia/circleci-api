@@ -1,5 +1,9 @@
-import { GitInfo, ArtifactResponse, GitRequiredRequest } from "../types";
-import { createVcsUrl } from "../circleci";
+import {
+  GitInfo,
+  ArtifactResponse,
+  GitRequiredRequest,
+  createVcsUrl
+} from "../types";
 import { client } from "../client";
 import { queryParams } from "../util";
 
