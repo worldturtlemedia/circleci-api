@@ -3,7 +3,8 @@ import {
   FetchBuildResponse,
   Options,
   BuildSummaryResponse,
-  FullRequest
+  FullRequest,
+  GitRequiredRequest
 } from "../types";
 import { createVcsUrl, API_RECENT_BUILDS } from "../circleci";
 import { client } from "../client";
@@ -51,11 +52,10 @@ export function getRecentBuilds(
  * @param opts - Optional - Query parameters
  * @returns A list of build summaries
  */
-export function getBuildSummaries({
-  token,
-  vcs,
-  options: { branch = "", ...opts } = {}
-}: FullRequest): Promise<BuildSummaryResponse> {
+export function getBuildSummaries(
+  token: string,
+  { vcs, options: { branch = "", ...opts } = {} }: GitRequiredRequest
+): Promise<BuildSummaryResponse> {
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
   const params = queryParams(opts, true);
   return client(token).get<BuildSummaryResponse>(`${url}${params}`);

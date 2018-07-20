@@ -2,7 +2,8 @@ import {
   GitInfo,
   BuildActionResponse,
   FullRequest,
-  TriggerBuildResponse
+  TriggerBuildResponse,
+  GitRequiredRequest
 } from "../types";
 import { BuildAction, createVcsUrl } from "../circleci";
 import { client } from "../client";
@@ -23,7 +24,7 @@ import { client } from "../client";
  * @param buildNumber - Target build number to retry
  * @param action - Action to perform on the build
  */
-export function buildActions(
+export function postBuildActions(
   token: string,
   vcs: GitInfo,
   buildNumber: number,
@@ -42,9 +43,12 @@ export function buildActions(
  * @see https://circleci.com/docs/api/v1-reference/#new-build-branch
  * @example /project/:vcs-type/:username/:project/tree/:branch
  */
-export function triggerNewBuild(
+export function postTriggerNewBuild(
   token: string,
-  { vcs, options: { branch = "", newBuildOptions = {} } = {} }: FullRequest
+  {
+    vcs,
+    options: { branch = "", newBuildOptions = {} } = {}
+  }: GitRequiredRequest
 ): Promise<TriggerBuildResponse> {
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
   return client(token).post<TriggerBuildResponse>(url, newBuildOptions);

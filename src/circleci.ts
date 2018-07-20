@@ -12,12 +12,21 @@ import {
   FollowProjectResponse,
   Me,
   BuildSummaryResponse,
-  FetchBuildResponse
+  FetchBuildResponse,
+  BuildActionResponse,
+  TriggerBuildResponse
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
 import { getLatestArtifacts, getBuildArtifacts } from "./api/artifacts";
 import { getMe } from "./api/user";
+import { postBuildActions, postTriggerNewBuild } from "./api";
+
+// TODO
+/*
+  For the endpoints that accept filters/offset/etc
+  modify factory functions to pass in only required options
+*/
 
 export const API_BASE = "https://circleci.com/api/v1.1";
 export const API_ME = `${API_BASE}/me`;
@@ -36,7 +45,7 @@ export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
 
 /* Client Factory */
 
-export interface CircleCIFactory {
+interface CircleCIFactory {
   defaults: () => FactoryOptions;
   addToken: (url: string) => string;
   me: () => Promise<Me>;
@@ -57,6 +66,19 @@ export interface CircleCIFactory {
     buildNumber: number,
     opts?: CircleRequest
   ) => Promise<ArtifactResponse>;
+  retry: (
+    buildNum: number,
+    opts?: CircleRequest
+  ) => Promise<BuildActionResponse>;
+  cancel: (
+    buildNum: number,
+    opts?: CircleRequest
+  ) => Promise<BuildActionResponse>;
+  triggerBuild: (opts?: CircleRequest) => Promise<TriggerBuildResponse>;
+  triggerBuildFor: (
+    branch: string,
+    opts?: CircleRequest
+  ) => Promise<TriggerBuildResponse>;
 }
 
 /**
@@ -106,13 +128,16 @@ export function circleci({
     recentBuilds: (opts?: Options) => getRecentBuilds(token, opts),
 
     builds: (opts?: CircleRequest) => {
-      const request = createRequest(opts);
-      return getBuildSummaries(request);
+      const { token, ...rest } = createRequest(opts);
+      return getBuildSummaries(token, rest);
     },
 
     buildsFor: (branch: string = "master", opts?: CircleRequest) => {
-      const request = createRequest({ ...opts, options: { branch } });
-      return getBuildSummaries(request);
+      const { token, ...rest } = createRequest({
+        ...opts,
+        options: { branch }
+      });
+      return getBuildSummaries(token, rest);
     },
 
     build: (buildNumber: number, opts?: CircleRequest) => {
@@ -128,8 +153,35 @@ export function circleci({
     artifacts: (buildNumber: number, opts?: CircleRequest) => {
       const { token, vcs } = createRequest(opts);
       return getBuildArtifacts(token, vcs, buildNumber);
+    },
+
+    retry: (build: number, opts?: CircleRequest) => {
+      return performAction(createRequest(opts), build, BuildAction.RETRY);
+    },
+
+    cancel: (build: number, opts?: CircleRequest) => {
+      return performAction(createRequest(opts), build, BuildAction.CANCEL);
+    },
+
+    triggerBuild: (opts?: CircleRequest) => {
+      const { token, ...rest } = createRequest(opts);
+      return postTriggerNewBuild(token, rest);
+    },
+
+    triggerBuildFor: (branch: string = "master", opts?: CircleRequest) => {
+      const request = createRequest({ ...opts, options: { branch } });
+      return postTriggerNewBuild(token, request);
     }
   };
 
   return factory;
+}
+
+function performAction(
+  request: FullRequest,
+  build: number,
+  action: BuildAction
+): Promise<BuildActionResponse> {
+  const { token, vcs } = request;
+  return postBuildActions(token, vcs, build, action);
 }
