@@ -1,4 +1,3 @@
-import { client } from "./client";
 import { validateVCSRequest } from "./util";
 import {
   CircleRequest,
@@ -8,7 +7,6 @@ import {
   FullRequest,
   GitType,
   Options,
-  MeResponse,
   AllProjectsResponse,
   ArtifactResponse,
   FollowProjectResponse,
@@ -18,6 +16,7 @@ import {
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds } from "./api/builds";
 import { getLatestArtifacts } from "./api/artifacts";
+import { getMe } from "./api/user";
 
 export const API_BASE = "https://circleci.com/api/v1.1";
 export const API_ME = `${API_BASE}/me`;
@@ -32,15 +31,6 @@ export enum BuildAction {
 
 export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
   return `${API_PROJECT}/${type}/${owner}/${repo}`;
-}
-
-/**
- * Authenticated user info
- * @see https://circleci.com/docs/api/v1-reference/#getting-started
- * @example GET - /me
- */
-export function getMe(token: string): Promise<MeResponse> {
-  return client(token).get<MeResponse>(API_ME);
 }
 
 /* Client Factory */
