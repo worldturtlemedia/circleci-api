@@ -47,11 +47,11 @@ export interface CircleCIFactory {
     buildNumber: number,
     opts: CircleRequest
   ) => Promise<FetchBuildResponse>;
-  latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
   artifacts: (
     buildNumber: number,
     opts?: CircleRequest
   ) => Promise<ArtifactResponse>;
+  latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
   retry: (
     buildNum: number,
     opts?: CircleRequest
@@ -131,14 +131,14 @@ export function circleci({
       return getFullBuild(token, vcs, buildNumber);
     },
 
-    latestArtifacts: (opts?: CircleRequest) => {
-      const { token, ...rest } = createRequest(opts);
-      return getLatestArtifacts(token, rest);
-    },
-
     artifacts: (buildNumber: number, opts?: CircleRequest) => {
       const { token, vcs } = createRequest(opts);
       return getBuildArtifacts(token, vcs, buildNumber);
+    },
+
+    latestArtifacts: (opts?: CircleRequest) => {
+      const { token, ...rest } = createRequest(opts);
+      return getLatestArtifacts(token, rest);
     },
 
     retry: (build: number, opts?: CircleRequest) => {

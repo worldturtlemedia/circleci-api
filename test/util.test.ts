@@ -1,4 +1,4 @@
-import { queryParams, validateVCSRequest } from "../src/util";
+import { queryParams, validateVCSRequest, getGitType } from "../src/util";
 import { FullRequest, GitType } from "../src/types/lib";
 
 describe("Util", () => {
@@ -44,5 +44,11 @@ describe("Util", () => {
     it("should return nothing", () => {
       expect(queryParams({}, true));
     });
+  });
+
+  it("should properly convert git type", () => {
+    expect(getGitType("")).toEqual("github");
+    expect(getGitType("bitbucket")).toEqual("bitbucket");
+    expect(getGitType("BitB u ckeT ")).toEqual("bitbucket");
   });
 });

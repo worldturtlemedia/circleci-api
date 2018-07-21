@@ -2,7 +2,8 @@ import {
   circleci,
   CircleCIFactory,
   API_ALL_PROJECTS,
-  GitType
+  GitType,
+  postTriggerNewBuild
 } from "../../src";
 import {
   AllProjectsResponse,
@@ -167,6 +168,18 @@ describe("API - Actions", () => {
         expect.objectContaining({
           tag: "foo"
         })
+      );
+      expect(result).toEqual(response);
+    });
+
+    it("should handle no options", async () => {
+      mock.__setResponse(response);
+      const result = await postTriggerNewBuild(TOKEN, {
+        vcs: { owner: "foo", repo: "bar" }
+      });
+      expect(mock.__postMock).toBeCalledWith(
+        "https://circleci.com/api/v1.1/project/github/foo/bar",
+        expect.any(Object)
       );
       expect(result).toEqual(response);
     });

@@ -68,8 +68,12 @@ export function queryParams(
  * @param type - Raw string type
  */
 export function getGitType(type: string): GitType {
-  if (type === GitType.BITBUCKET) {
-    return type as GitType;
+  const formatted = type
+    .trim()
+    .replace(/ /g, "")
+    .toLowerCase();
+  if (formatted === GitType.BITBUCKET) {
+    return formatted as GitType;
   }
 
   return GitType.GITHUB;
