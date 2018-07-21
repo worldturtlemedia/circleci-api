@@ -173,6 +173,7 @@ I am working on adding support for the following remaining endpoints.
 | Test metadata           |        [ref](https://circleci.com/docs/api/v1-reference/#test-metadata)        |
 | SSH keys                |          [ref](https://circleci.com/docs/api/v1-reference/#ssh-keys)           |
 | Heroku keys             |         [ref](https://circleci.com/docs/api/v1-reference/#heroku-keys)         |
+| Add user to build       |        [ref](https://circleci.com/docs/api/v1-reference/#add-user-ssh)         |
 
 ## Contributing
 

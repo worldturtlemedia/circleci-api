@@ -143,16 +143,33 @@ export class CircleCI {
     return getFullBuild(token, vcs, buildNumber);
   }
 
+  /**
+   * Get artifacts for single project build
+   * @param buildNumber Target build number
+   * @param opts Optional settings to override class defaults
+   */
   artifacts(buildNumber: number, opts?: CircleRequest) {
     const { token, vcs } = this.createRequest(opts);
     return getBuildArtifacts(token, vcs, buildNumber);
   }
 
+  /**
+   * Get the latest build artifacts for a project
+   * Pass a branch in the options to target a specific branch
+   * @param opts Optional settings
+   * @param opts.options.branch - The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
+   * @param opts.options.filter - Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
+   */
   latestArtifacts(opts?: CircleRequest) {
     const { token, ...rest } = this.createRequest(opts);
     return getLatestArtifacts(token, rest);
   }
 
+  /**
+   * Retries the build, returns a summary of the new build.
+   * @param build Target build number
+   * @param opts Optional settings
+   */
   retry(build: number, opts?: CircleRequest) {
     return this.performAction(
       this.createRequest(opts),
@@ -161,6 +178,11 @@ export class CircleCI {
     );
   }
 
+  /**
+   * Cancels the build, returns a summary of the new build.
+   * @param build Target build number
+   * @param opts Optional settings
+   */
   cancel(build: number, opts?: CircleRequest) {
     return this.performAction(
       this.createRequest(opts),
@@ -169,11 +191,24 @@ export class CircleCI {
     );
   }
 
+  /**
+   * Triggers a new build, returns a summary of the build.
+   * @see https://circleci.com/docs/api/v1-reference/#new-build
+   * @param opts Optional settings
+   * @param opts.options.newBuildOptions Additional build settings
+   */
   triggerBuild(opts?: CircleRequest) {
     const { token, ...rest } = this.createRequest(opts);
     return postTriggerNewBuild(token, rest);
   }
 
+  /**
+   * Triggers a new build for a specific branch.
+   * @see https://circleci.com/docs/api/v1-reference/#new-build-branch
+   * @param branch Optional, branch to target, defaults to 'master'
+   * @param opts Optional settings
+   * @param opts.options.newBuildOptions Additional build settings
+   */
   triggerBuildFor(branch: string = "master", opts?: CircleRequest) {
     const request = this.createRequest({
       ...opts,
@@ -194,7 +229,7 @@ export class CircleCI {
     return request;
   }
 
-  performAction(
+  private performAction(
     request: FullRequest,
     build: number,
     action: BuildAction
