@@ -1,3 +1,9 @@
+export const API_BASE = "https://circleci.com/api/v1.1";
+export const API_ME = `${API_BASE}/me`;
+export const API_PROJECT = `${API_BASE}/project`;
+export const API_ALL_PROJECTS = `${API_BASE}/projects`;
+export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
+
 /**
  * @description Currently supported VCS types
  * @see GitInfo
@@ -5,6 +11,21 @@
 export enum GitType {
   GITHUB = "github",
   BITBUCKET = "bitbucket"
+}
+
+/**
+ * Create a base project url
+ * @param type - Type of version control, default "github"
+ * @param owner - Owner of the repository
+ * @param repo - Target repository
+ */
+export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
+  return `${API_PROJECT}/${type}/${owner}/${repo}`;
+}
+
+export enum BuildAction {
+  RETRY = "retry",
+  CANCEL = "cancel"
 }
 
 /**
@@ -21,7 +42,7 @@ export interface GitInfo {
 }
 
 // TODO change to enum
-export type Filter = "completed" | "successful" | "failed";
+export type Filter = "completed" | "successful" | "failed" | "running";
 
 /**
  * @description Additional options used as query params
@@ -33,6 +54,7 @@ export interface Options {
   filter?: Filter;
   limit?: number;
   offset?: number;
+  newBuildOptions?: NewBuildOptions;
 }
 
 /**
@@ -70,4 +92,25 @@ export interface GitRequiredRequest extends CircleRequest {
 export interface FullRequest extends CircleRequest {
   token: string;
   vcs: GitInfo;
+}
+
+/**
+ * Options for triggering a new build
+ * @property revision - The specific revision to build. Default is null and the head of the branch is used. Cannot be used with tag parameter.
+ * @property tag - The tag to build. Default is null. Cannot be used with revision parameter.
+ * @property parallel - The number of containers to use to run the build. Default is null and the project default is used. This parameter is ignored for builds running on our 2.0 infrastructure.
+ * @property build_parameters - Additional environment variables to inject into the build environment. A map of names to values.
+ */
+export interface NewBuildOptions {
+  revision?: string;
+  tag?: string;
+  parallel?: number;
+  build_parameters?: BuildParameters;
+}
+
+/**
+ * Additional ENV parameters to pass to the build
+ */
+export interface BuildParameters {
+  [param: string]: string;
 }

@@ -127,6 +127,8 @@ export type RetryBuildResponse = BuildSummary;
  */
 export type CancelBuildResponse = BuildSummary;
 
+export type BuildActionResponse = RetryBuildResponse | CancelBuildResponse;
+
 /**
  * Trigger new build
  * @property {string} vcstype - Type of VCS of project (github || bitbucket)

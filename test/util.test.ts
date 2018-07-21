@@ -1,11 +1,11 @@
-import { queryParams, validateVCSRequest } from "../src/util";
+import { queryParams, validateVCSRequest, getGitType } from "../src/util";
 import { FullRequest, GitType } from "../src/types/lib";
 
 describe("Util", () => {
   describe("Validate Git required request", () => {
     const blank: FullRequest = {
       token: "",
-      vcs: { type: "", owner: "", repo: "" }
+      vcs: { owner: "", repo: "" }
     };
 
     it("should throw with all empty values", () => {
@@ -42,7 +42,17 @@ describe("Util", () => {
     });
 
     it("should return nothing", () => {
-      expect(queryParams({}, true));
+      expect(queryParams({}, true)).toBe("");
     });
+
+    it("should handle keys with undefined values", () => {
+      expect(queryParams({ offset: undefined })).toBe("?branch=master");
+    });
+  });
+
+  it("should properly convert git type", () => {
+    expect(getGitType("")).toEqual("github");
+    expect(getGitType("bitbucket")).toEqual("bitbucket");
+    expect(getGitType("BitB u ckeT ")).toEqual("bitbucket");
   });
 });

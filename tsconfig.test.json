@@ -2,8 +2,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
-    "sourceMap": true,
     "inlineSourceMap": true,
     "inlineSources": true
-  }
+  },
+  "include": ["src", "test"]
 }

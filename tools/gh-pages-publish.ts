@@ -1,4 +1,4 @@
-const { cd, exec, echo, touch } = require("shelljs");
+const { cd, exec, echo, touch, cp } = require("shelljs");
 const { readFileSync } = require("fs");
 const url = require("url");
 
@@ -18,6 +18,7 @@ let repository = (parsedUrl.host || "") + (parsedUrl.path || "");
 let ghToken = process.env.GH_TOKEN;
 
 echo("Deploying docs!!!");
+cp("./circle.yml", "./docs/circle.yml");
 cd("docs");
 touch(".nojekyll");
 exec("git init");

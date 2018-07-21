@@ -1,5 +1,14 @@
 import { Options, FullRequest, GitType } from "./types";
 
+/**
+ * Validate a Request object for endpoints that require
+ * certain information
+ * @param token - CircleCI API token
+ * @param type - Git type
+ * @param owner - Repository owner
+ * @param repo - Target repository
+ * @throws If options passed in are not valid
+ */
 export function validateVCSRequest({
   token,
   vcs: { type, owner, repo }
@@ -26,15 +35,25 @@ export function validateVCSRequest({
   }
 }
 
-// TODO - Remove default value for filter
+/**
+ * Take a Options object and map it to query parameters
+ * @example { limit: 5, branch: "develop" } => /builds?branch=develop&limit=5
+ * @param opts - Query param object, branch is defaulted to master
+ * @param ignoreBranch - Ignore the 'branch' option
+ * @returns A string containing url encoded query params
+ */
 export function queryParams(
   { branch = "master", ...opts }: Options = {},
   ignoreBranch: boolean = false
 ) {
   const map = ignoreBranch ? opts : { ...opts, branch };
   const params = Object.keys(map)
+    .filter(key => typeof map[key] !== "undefined" && map[key] !== null)
     .reduce(
-      (prev: string[], key: string) => [...prev, `${key}=${map[key]}`],
+      (prev: string[], key: string, arr) => [
+        ...prev,
+        `${key}=${encodeURIComponent(map[key])}`
+      ],
       []
     )
     .join("&");
@@ -42,9 +61,20 @@ export function queryParams(
   return params.length ? `?${params}` : "";
 }
 
+/**
+ * Takes a string and will return the matching type, or
+ * default to GitType.GITHUB
+ * @default GitType.GITHUB
+ * @see GitType
+ * @param type - Raw string type
+ */
 export function getGitType(type: string): GitType {
-  if (type === GitType.BITBUCKET) {
-    return type as GitType;
+  const formatted = type
+    .trim()
+    .replace(/ /g, "")
+    .toLowerCase();
+  if (formatted === GitType.BITBUCKET) {
+    return formatted as GitType;
   }
 
   return GitType.GITHUB;

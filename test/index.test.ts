@@ -1,8 +1,9 @@
-import { circleci } from "../src/index";
+import { CircleCI } from "../src/index";
 
 describe("Lib", () => {
   it("should export the circleci wrapper", () => {
-    expect(circleci).toBeInstanceOf(Function);
-    expect(circleci({ token: "t" }).me).toBeInstanceOf(Function);
+    const circleci = new CircleCI({ token: "foo" });
+    expect(circleci).toBeInstanceOf(CircleCI);
+    expect(circleci.me).toBeInstanceOf(Function);
   });
 });

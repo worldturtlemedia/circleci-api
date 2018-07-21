@@ -1,4 +1,4 @@
-import { circleci, createVcsUrl } from "../src";
+import { CircleCI } from "../src";
 import * as client from "../src/client";
 import { GitType } from "../src/types/lib";
 
@@ -14,7 +14,7 @@ describe("CircleCI", () => {
     });
 
     it("should override all options", () => {
-      const circle = circleci({
+      const circle = new CircleCI({
         token,
         vcs: {
           type: GitType.BITBUCKET,
@@ -28,26 +28,28 @@ describe("CircleCI", () => {
       });
 
       // Override options, they shouldn't save
-      circle.latestArtifacts({
-        vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
-      });
+      circle
+        .latestArtifacts({
+          vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
+        })
+        .catch(jest.fn());
 
       expect(circle.defaults().vcs.owner).toBe("test");
     });
 
     it("should add token to url", () => {
-      const circle = circleci({ token });
+      const circle = new CircleCI({ token });
       const expected = `test?circle-token=${token}`;
       expect(circle.addToken("test")).toEqual(expected);
     });
 
     it("should throw credentials error", () => {
-      const circle = circleci({ token });
+      const circle = new CircleCI({ token });
       expect(() => circle.latestArtifacts()).toThrow();
     });
 
     it("should override request options and not fail", () => {
-      const circle = circleci({ token });
+      const circle = new CircleCI({ token });
       mock.__setResponse({ data: [1, 2, 3] });
 
       expect(() =>
