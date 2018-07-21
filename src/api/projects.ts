@@ -17,8 +17,9 @@ export function getAllProjects(token: string): Promise<AllProjectsResponse> {
 }
 
 /**
- * POST - /project/:vcs-type/:username/:project/follow
+ * Follow a new project. CircleCI will then monitor the project for automatic building of commits.
  * @see https://circleci.com/docs/api/v1-reference/#follow-project
+ * @example POST - /project/:vcs-type/:username/:project/follow
  */
 export function postFollowNewProject(
   token: string,

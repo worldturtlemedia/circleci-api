@@ -30,13 +30,13 @@ Get your API token from [CircleCi](https://circleci.com/account/api)
 
 There are two ways to use this library.
 
-## 1. Circle Ci factory object
+## 1. CircleCi class
 
 Get instance of the factory.
 
 ```typescript
 // Module
-import { circleci, GitType } from "circleci-api";
+import { CircleCI, GitType } from "circleci-api";
 
 // Configure the factory with some defaults
 const options: FactoryOptions = {
@@ -61,7 +61,7 @@ const options: FactoryOptions = {
 }
 
 // Create the api object
-const api = circleci(options)
+const api = new CircleCI(options)
 
 // Use the api
 
