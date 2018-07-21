@@ -61,6 +61,25 @@ describe("Client", () => {
       circleGet(TOKEN, URL, undefined).catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL, AUTH_OBJECT);
     });
+
+    it("should return data after awaiting promise", () => {
+      const catchFn = jest.fn();
+      const thenFn = jest.fn();
+
+      client(TOKEN)
+        .get("/biz/baz")
+        .then(thenFn)
+        .catch(catchFn);
+
+      expect(mockAxios.get).toHaveBeenCalledWith(
+        "/biz/baz",
+        expect.objectContaining({
+          auth: { username: TOKEN, password: "" }
+        })
+      );
+
+      mockAxios.mockResponse({ data: "okay" });
+    });
   });
 
   describe("circlePost", () => {
@@ -76,6 +95,26 @@ describe("Client", () => {
         { cat: "meow" },
         { ...AUTH_OBJECT, timeout: 1 }
       );
+    });
+
+    it("should return data after awaiting promise", () => {
+      const catchFn = jest.fn();
+      const thenFn = jest.fn();
+
+      client(TOKEN)
+        .post("/biz/baz", { foo: "bar" })
+        .then(thenFn)
+        .catch(catchFn);
+
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/biz/baz",
+        { foo: "bar" },
+        expect.objectContaining({
+          auth: { username: TOKEN, password: "" }
+        })
+      );
+
+      mockAxios.mockResponse({ data: "okay" });
     });
   });
 });

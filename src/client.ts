@@ -3,7 +3,7 @@ import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
 function get<T>(
   token: string,
   url: string,
-  options?: AxiosRequestConfig
+  options: AxiosRequestConfig
 ): AxiosPromise<T> {
   return axios.get(url, createAuthorizedOptions(token, options));
 }
@@ -12,14 +12,14 @@ function post<T, R>(
   token: string,
   url: string,
   body: T,
-  options?: AxiosRequestConfig
+  options: AxiosRequestConfig
 ): AxiosPromise<R> {
   return axios.post(url, body, createAuthorizedOptions(token, options));
 }
 
 function createAuthorizedOptions(
   token: string,
-  options: AxiosRequestConfig = {}
+  options: AxiosRequestConfig
 ): AxiosRequestConfig {
   return {
     auth: {
@@ -62,16 +62,14 @@ export function client(token: string) {
       url: string,
       options: AxiosRequestConfig = {}
     ): Promise<T> => {
-      const result = await get<T>(token, url, options);
-      return result.data;
+      return (await get<T>(token, url, options)).data;
     },
     post: async <T>(
       url: string,
       body?: any,
       options: AxiosRequestConfig = {}
     ): Promise<T> => {
-      const result = await post<any, T>(token, url, body, options);
-      return result.data;
+      return (await post<any, T>(token, url, body, options)).data;
     }
   };
 

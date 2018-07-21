@@ -1,16 +1,10 @@
 import {
   circleci,
   CircleCIFactory,
-  API_ALL_PROJECTS,
   GitType,
   postTriggerNewBuild
 } from "../../src";
-import {
-  AllProjectsResponse,
-  FollowNewResult,
-  BuildActionResponse,
-  TriggerBuildResponse
-} from "../../src/types/api";
+import { BuildActionResponse, TriggerBuildResponse } from "../../src/types/api";
 import * as client from "../../src/client";
 
 jest.mock("../../src/client");

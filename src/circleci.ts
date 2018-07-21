@@ -40,16 +40,16 @@ export interface CircleCIFactory {
   recentBuilds: (opts?: Options) => Promise<BuildSummaryResponse>;
   builds: (opts?: CircleRequest) => Promise<BuildSummaryResponse>;
   buildsFor: (
-    branch: string,
+    branch?: string,
     opts?: CircleRequest
   ) => Promise<BuildSummaryResponse>;
   build: (
     buildNumber: number,
-    opts: CircleRequest
+    opts?: GitRequiredRequest
   ) => Promise<FetchBuildResponse>;
   artifacts: (
     buildNumber: number,
-    opts?: CircleRequest
+    vcs?: CircleRequest
   ) => Promise<ArtifactResponse>;
   latestArtifacts: (opts?: CircleRequest) => Promise<ArtifactResponse>;
   retry: (
@@ -121,12 +121,12 @@ export function circleci({
     buildsFor: (branch: string = "master", opts?: CircleRequest) => {
       const { token, ...rest } = createRequest({
         ...opts,
-        options: { branch }
+        options: { ...(opts ? opts.options : {}), branch }
       });
       return getBuildSummaries(token, rest);
     },
 
-    build: (buildNumber: number, opts?: CircleRequest) => {
+    build: (buildNumber: number, opts?: GitRequiredRequest) => {
       const { token, vcs } = createRequest(opts);
       return getFullBuild(token, vcs, buildNumber);
     },

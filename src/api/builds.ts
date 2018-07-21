@@ -25,7 +25,7 @@ export function getRecentBuilds(
   token: string,
   { limit, offset }: Options = {}
 ): Promise<BuildSummaryResponse> {
-  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`;
+  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset }, true)}`;
   return client(token).get<BuildSummaryResponse>(url);
 }
 
