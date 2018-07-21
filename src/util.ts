@@ -48,8 +48,9 @@ export function queryParams(
 ) {
   const map = ignoreBranch ? opts : { ...opts, branch };
   const params = Object.keys(map)
+    .filter(key => typeof map[key] !== "undefined" && map[key] !== null)
     .reduce(
-      (prev: string[], key: string) => [
+      (prev: string[], key: string, arr) => [
         ...prev,
         `${key}=${encodeURIComponent(map[key])}`
       ],

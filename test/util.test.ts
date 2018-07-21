@@ -42,7 +42,11 @@ describe("Util", () => {
     });
 
     it("should return nothing", () => {
-      expect(queryParams({}, true));
+      expect(queryParams({}, true)).toBe("");
+    });
+
+    it("should handle keys with undefined values", () => {
+      expect(queryParams({ offset: undefined })).toBe("?branch=master");
     });
   });
 
