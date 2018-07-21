@@ -6,7 +6,6 @@
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "declaration": true,
-    "sourceMap": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
