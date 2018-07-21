@@ -1,4 +1,4 @@
-import { circleci, CircleCIFactory, API_ME } from "../../src";
+import { CircleCI, API_ME } from "../../src";
 import { Me } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -14,10 +14,11 @@ describe("API - Me", () => {
     login: "test@test.com"
   };
 
-  let circle: CircleCIFactory = circleci({ token: TOKEN });
+  let circle: CircleCI;
 
   beforeEach(() => {
     mock.__reset();
+    circle = new CircleCI({ token: TOKEN });
   });
 
   it('should call the "me" endpoint', async () => {

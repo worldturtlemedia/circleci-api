@@ -1,4 +1,4 @@
-import { circleci, CircleCIFactory, getLatestArtifacts } from "../../src";
+import { CircleCI, getLatestArtifacts } from "../../src";
 import { Artifact } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -13,13 +13,14 @@ describe("API - Artifacts", () => {
     path: "docs"
   };
 
-  let circle: CircleCIFactory = circleci({
-    token: TOKEN,
-    vcs: { owner: "test", repo: "proj" }
-  });
+  let circle: CircleCI;
 
   beforeEach(() => {
     mock.__reset();
+    circle = new CircleCI({
+      token: TOKEN,
+      vcs: { owner: "test", repo: "proj" }
+    });
   });
 
   describe("Build Artifacts", () => {

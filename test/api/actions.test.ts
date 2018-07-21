@@ -1,9 +1,4 @@
-import {
-  circleci,
-  CircleCIFactory,
-  GitType,
-  postTriggerNewBuild
-} from "../../src";
+import { CircleCI, GitType, postTriggerNewBuild } from "../../src";
 import { BuildActionResponse, TriggerBuildResponse } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -13,12 +8,12 @@ const mock = client as any;
 const TOKEN = "test-token";
 
 describe("API - Actions", () => {
-  let circle: CircleCIFactory;
+  let circle: CircleCI;
 
   beforeEach(() => {
     mock.__reset();
 
-    circle = circleci({
+    circle = new CircleCI({
       token: TOKEN,
       vcs: { owner: "test", repo: "repotest" }
     });

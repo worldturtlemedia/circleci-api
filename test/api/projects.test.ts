@@ -1,4 +1,4 @@
-import { circleci, CircleCIFactory, API_ALL_PROJECTS } from "../../src";
+import { CircleCI, API_ALL_PROJECTS } from "../../src";
 import { AllProjectsResponse, FollowNewResult } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -8,8 +8,12 @@ const mock = client as any;
 const TOKEN = "test-token";
 
 describe("API - Projects", () => {
+  let circle: CircleCI;
+
   beforeEach(() => {
     mock.__reset();
+
+    circle = new CircleCI({ token: TOKEN });
   });
 
   describe("All Projects", () => {
@@ -25,8 +29,6 @@ describe("API - Projects", () => {
         branches: { master: {} }
       }
     ];
-
-    let circle: CircleCIFactory = circleci({ token: TOKEN });
 
     it('should call the "allProjects" endpoint', async () => {
       mock.__setResponse(response);
@@ -52,8 +54,6 @@ describe("API - Projects", () => {
         branch: "master"
       }
     };
-
-    let circle: CircleCIFactory = circleci({ token: TOKEN });
 
     it("should follow a specific repository", async () => {
       mock.__setResponse({ data: response });

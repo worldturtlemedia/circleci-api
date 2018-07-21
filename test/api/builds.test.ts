@@ -1,10 +1,5 @@
-import {
-  circleci,
-  CircleCIFactory,
-  getLatestArtifacts,
-  getBuildSummaries
-} from "../../src";
-import { Artifact, BuildSummary } from "../../src/types/api";
+import { CircleCI, getBuildSummaries } from "../../src";
+import { BuildSummary } from "../../src/types/api";
 import * as client from "../../src/client";
 
 jest.mock("../../src/client");
@@ -15,13 +10,14 @@ describe("API - Builds", () => {
   const TOKEN = "test-token";
   const response: BuildSummary = { outcome: "success" };
 
-  let circle: CircleCIFactory = circleci({
-    token: TOKEN,
-    vcs: { owner: "foo", repo: "bar" }
-  });
+  let circle: CircleCI;
 
   beforeEach(() => {
     mock.__reset();
+    circle = new CircleCI({
+      token: TOKEN,
+      vcs: { owner: "foo", repo: "bar" }
+    });
   });
 
   describe("Recent Builds", () => {
