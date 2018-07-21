@@ -1,4 +1,4 @@
-import { circleci, createVcsUrl } from "../src";
+import { circleci } from "../src";
 import * as client from "../src/client";
 import { GitType } from "../src/types/lib";
 
@@ -28,9 +28,11 @@ describe("CircleCI", () => {
       });
 
       // Override options, they shouldn't save
-      circle.latestArtifacts({
-        vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
-      });
+      circle
+        .latestArtifacts({
+          vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
+        })
+        .catch(jest.fn());
 
       expect(circle.defaults().vcs.owner).toBe("test");
     });

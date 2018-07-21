@@ -1,10 +1,5 @@
-import {
-  circleci,
-  CircleCIFactory,
-  API_ME,
-  getLatestArtifacts
-} from "../../src";
-import { Me, Artifact } from "../../src/types/api";
+import { circleci, CircleCIFactory, getLatestArtifacts } from "../../src";
+import { Artifact } from "../../src/types/api";
 import * as client from "../../src/client";
 
 jest.mock("../../src/client");

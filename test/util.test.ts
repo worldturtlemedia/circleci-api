@@ -5,7 +5,7 @@ describe("Util", () => {
   describe("Validate Git required request", () => {
     const blank: FullRequest = {
       token: "",
-      vcs: { type: "", owner: "", repo: "" }
+      vcs: { owner: "", repo: "" }
     };
 
     it("should throw with all empty values", () => {

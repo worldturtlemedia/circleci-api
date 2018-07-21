@@ -1,5 +1,5 @@
-import { circleci, CircleCIFactory, API_ALL_PROJECTS } from "../../src";
-import { Me, AllProjectsResponse, FollowNewResult } from "../../src/types/api";
+import { circleci, CircleCIFactory } from "../../src";
+import { FollowNewResult } from "../../src/types/api";
 import * as client from "../../src/client";
 
 jest.mock("../../src/client");
@@ -23,7 +23,7 @@ describe("API - FollowProject", () => {
 
   it("should follow a specific repository", async () => {
     mock.__setResponse({ data: response });
-    const result = await circle.followProject({
+    await circle.followProject({
       vcs: {
         owner: "johnsmith",
         repo: "tinker"

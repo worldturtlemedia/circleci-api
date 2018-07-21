@@ -1,5 +1,5 @@
 import { circleci, CircleCIFactory, API_ALL_PROJECTS } from "../../src";
-import { Me, AllProjectsResponse } from "../../src/types/api";
+import { AllProjectsResponse } from "../../src/types/api";
 import * as client from "../../src/client";
 
 jest.mock("../../src/client");

@@ -31,7 +31,7 @@ import { postBuildActions, postTriggerNewBuild } from "./api";
 
 /* Client Factory */
 
-interface CircleCIFactory {
+export interface CircleCIFactory {
   defaults: () => FactoryOptions;
   addToken: (url: string) => string;
   me: () => Promise<Me>;
