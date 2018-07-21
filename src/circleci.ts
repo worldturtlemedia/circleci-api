@@ -62,7 +62,7 @@ export interface CircleCIFactory {
   ) => Promise<BuildActionResponse>;
   triggerBuild: (opts?: CircleRequest) => Promise<TriggerBuildResponse>;
   triggerBuildFor: (
-    branch: string,
+    branch?: string,
     opts?: CircleRequest
   ) => Promise<TriggerBuildResponse>;
 }
@@ -155,7 +155,10 @@ export function circleci({
     },
 
     triggerBuildFor: (branch: string = "master", opts?: CircleRequest) => {
-      const request = createRequest({ ...opts, options: { branch } });
+      const request = createRequest({
+        ...opts,
+        options: { ...(opts ? opts.options : {}), branch }
+      });
       return postTriggerNewBuild(token, request);
     }
   };
