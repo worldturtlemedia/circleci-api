@@ -53,7 +53,7 @@ describe("CircleCI", () => {
       mock.__setResponse({ data: [1, 2, 3] });
 
       expect(() =>
-        circle.latestArtifacts({
+        circle.latestArtifacts(null, {
           token: "new-token",
           vcs: { type: GitType.BITBUCKET, owner: "j", repo: "d" }
         })

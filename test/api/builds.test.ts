@@ -75,9 +75,13 @@ describe("API - Builds", () => {
 
     it("should fetch builds for branch with options", async () => {
       mock.__setResponse(response);
-      const result = await circle.buildsFor("master", {
-        options: { branch: "develop", limit: 5 }
-      });
+      const result = await circle.buildsFor(
+        "master",
+        { limit: 5 },
+        {
+          options: { branch: "develop" }
+        }
+      );
 
       expect(mock.__getMock).toBeCalledWith(
         "https://circleci.com/api/v1.1/project/github/foo/bar/tree/master?limit=5"

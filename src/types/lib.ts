@@ -57,6 +57,20 @@ export interface Options {
   newBuildOptions?: NewBuildOptions;
 }
 
+export interface RequestOptions {
+  readonly limit?: number;
+  readonly offset?: number;
+}
+
+export interface ArtifactsRequestOptions {
+  readonly filter?: Filter;
+  readonly branch?: string;
+}
+
+export interface FilterRequestOptions extends RequestOptions {
+  readonly filter?: Filter;
+}
+
 /**
  * @description Basic information required for a standard CircleCI request
  * @property {string} [token] - CircleCI API key

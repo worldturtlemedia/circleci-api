@@ -73,7 +73,7 @@ const api = new CircleCI(options)
 export async function getLatestArtifacts(branch: string = "master"): Promise<Artifact[]> {
   try {
     // Will use the repo defined in the options above
-    const result: Aritfact[] = await api.latestArtifacts({ options: { branch, filter: "successful" } })
+    const result: Aritfact[] = await api.latestArtifacts({ branch, filter: "successful" })
     console.log(`Found ${result.length} artifacts`)
     return result
   } catch (error) {
@@ -91,7 +91,13 @@ getLatestArtifacts("develop")
 
 // Or override settings set above
 api
-  .latestArtifacts({ vcs: { repo: "awesome-repo" } })
+  .latestArtifacts(
+    { branch: "develop" },
+    {
+      vcs: { repo: "awesome-repo" },
+      options: { filter: "successful" }
+    }
+  )
   .then((artifacts: Artifact[]) => console.log(`Found ${artifacts.length} artifacts`))
   .catch(error => console.error(error))
 ```

@@ -9,7 +9,10 @@ import {
   Options,
   BuildActionResponse,
   BuildAction,
-  Me
+  Me,
+  FilterRequestOptions,
+  RequestOptions,
+  ArtifactsRequestOptions
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -94,38 +97,48 @@ export class CircleCI {
 
   /**
    * Get all recent builds for CircleCI user
+   * @param reqOptions Optional, Request options
+   * @param reqOptions.options.limit Optional, Limit the number of builds returned, max=100
+   * @param reqOptions.options.offset Optional, builds starting from this offset
    * @param opts Optional settings
-   * @param opts.options.limit optional Limit the number of builds returned, max=100
-   * @param opts.options.offset optional builds starting from this offset
    */
-  recentBuilds(opts?: Options) {
-    return getRecentBuilds(this.token, opts);
+  recentBuilds(reqOptions: RequestOptions = {}, opts?: Options) {
+    return getRecentBuilds(this.token, { ...(opts || {}), ...reqOptions });
   }
 
   /**
    * Get recent build summaries for a project
+   * @param reqOptions Optional, request options for filtering, limiting, etc
+   * @param reqOptions.limit Optional, the number of builds to return. Maximum 100, defaults to 30.
+   * @param reqOptions.offset Optional, builds starting from this offset, defaults to 0.
+   * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
-   * @param opts.options.limit The number of builds to return. Maximum 100, defaults to 30.
-   * @param opts.options.offset builds starting from this offset, defaults to 0.
-   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
-  builds(opts?: CircleRequest) {
-    const { token, ...rest } = this.createRequest(opts);
+  builds(reqOptions: FilterRequestOptions = {}, opts?: CircleRequest) {
+    const { token, ...rest } = this.createRequest({
+      ...(opts || {}),
+      options: { ...(opts ? opts.options : {}), ...reqOptions }
+    });
     return getBuildSummaries(token, rest);
   }
 
   /**
    * Get recent builds for a project and branch
    * @param branch Target branch to fetch builds for
+   * @param reqOptions Optional, request options for filtering, limiting, etc
+   * @param reqOptions.limit Optional, the number of builds to return. Maximum 100, defaults to 30.
+   * @param reqOptions.offset Optional, builds starting from this offset, defaults to 0.
+   * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
-   * @param opts.options.limit The number of builds to return. Maximum 100, defaults to 30.
-   * @param opts.options.offset Builds starting from this offset, defaults to 0.
-   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
-  buildsFor(branch: string = "master", opts?: CircleRequest) {
+  buildsFor(
+    branch: string = "master",
+    reqOptions: FilterRequestOptions = {},
+    opts?: CircleRequest
+  ) {
     const { token, ...rest } = this.createRequest({
       ...opts,
-      options: { ...(opts ? opts.options : {}), branch }
+      options: { ...(opts ? opts.options : {}), ...reqOptions, branch }
     });
     return getBuildSummaries(token, rest);
   }
@@ -133,13 +146,24 @@ export class CircleCI {
   /**
    * Get full build details for a single build
    * @param buildNumber Target build number
+   * @param reqOptions Optional, request options for filtering, limiting, etc
+   * @param reqOptions.limit Optional, the number of builds to return. Maximum 100, defaults to 30.
+   * @param reqOptions.offset Optional, builds starting from this offset, defaults to 0.
+   * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
-   * @param opts.options.limit The number of builds to return. Maximum 100, defaults to 30.
-   * @param opts.options.offset Builds starting from this offset, defaults to 0.
-   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
-  build(buildNumber: number, opts?: GitRequiredRequest) {
-    const { token, vcs } = this.createRequest(opts);
+  build(
+    buildNumber: number,
+    reqOptions: FilterRequestOptions = {},
+    opts?: GitRequiredRequest
+  ) {
+    const { token, vcs } = this.createRequest({
+      ...(opts || {}),
+      options: {
+        ...(opts ? opts.options : {}),
+        ...reqOptions
+      }
+    });
     return getFullBuild(token, vcs, buildNumber);
   }
 
@@ -156,12 +180,19 @@ export class CircleCI {
   /**
    * Get the latest build artifacts for a project
    * Pass a branch in the options to target a specific branch
+   * @param reqOptions Optional, request options for filtering and specifying a branch
+   * @param reqOptions.branch The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
+   * @param reqOptions.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
-   * @param opts.options.branch The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
-   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
-  latestArtifacts(opts?: CircleRequest) {
-    const { token, ...rest } = this.createRequest(opts);
+  latestArtifacts(
+    reqOptions: ArtifactsRequestOptions = {},
+    opts: CircleRequest = {}
+  ) {
+    const { token, ...rest } = this.createRequest({
+      ...opts,
+      options: { ...opts.options, ...reqOptions }
+    });
     return getLatestArtifacts(token, rest);
   }
 

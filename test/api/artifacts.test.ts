@@ -61,7 +61,7 @@ describe("API - Artifacts", () => {
 
     it("should fetch aritfacts for different project", async () => {
       mock.__setResponse(artifact);
-      const result = await circle.latestArtifacts({
+      const result = await circle.latestArtifacts(null, {
         vcs: { owner: "test2" }
       });
 
