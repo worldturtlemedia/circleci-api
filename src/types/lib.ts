@@ -73,7 +73,7 @@ export interface CircleRequest {
  * @description Required options for the CircleCI factory
  * @property {string} token - CircleCI API key
  */
-export interface FactoryOptions extends CircleRequest {
+export interface CircleCIOptions extends CircleRequest {
   token: string;
 }
 

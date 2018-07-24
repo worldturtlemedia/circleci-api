@@ -1,7 +1,7 @@
 import { validateVCSRequest } from "./util";
 import {
   CircleRequest,
-  FactoryOptions,
+  CircleCIOptions,
   GitInfo,
   GitRequiredRequest,
   FullRequest,
@@ -36,19 +36,19 @@ export class CircleCI {
 
   /**
    *
-   * @param token - CircleCI API token
-   * @param [vcs] - Default git information
-   * @param [vcs.type] - Git project type ex "github" | "bitbucket"
-   * @param [vcs.owner] - Owner of the git repository
-   * @param [vcs.repo] - Git repository name
-   * @param [options] - Additional query parameters
+   * @param token CircleCI API token
+   * @param vcs Default git information
+   * @param vcs.type Git project type ex "github" | "bitbucket"
+   * @param vcs.owner Owner of the git repository
+   * @param vcs.repo Git repository name
+   * @param options Additional query parameters
    * @returns {CircleCI} wrapper for CircleCI
    */
   constructor({
     token,
     vcs: { type = GitType.GITHUB, owner = "", repo = "" } = {},
     options = {}
-  }: FactoryOptions) {
+  }: CircleCIOptions) {
     this.token = token;
     this.vcs = { type, owner, repo };
     this.options = options;
@@ -95,8 +95,8 @@ export class CircleCI {
   /**
    * Get all recent builds for CircleCI user
    * @param opts Optional settings
-   * @param opts.options.limit optional - Limit the number of builds returned, max=100
-   * @param opts.options.offset optional -builds starting from this offset
+   * @param opts.options.limit optional Limit the number of builds returned, max=100
+   * @param opts.options.offset optional builds starting from this offset
    */
   recentBuilds(opts?: Options) {
     return getRecentBuilds(this.token, opts);
@@ -105,9 +105,9 @@ export class CircleCI {
   /**
    * Get recent build summaries for a project
    * @param opts Optional settings
-   * @param opts.options.limit - The number of builds to return. Maximum 100, defaults to 30.
-   * @param opts.options.offset - builds starting from this offset, defaults to 0.
-   * @param opts.options.filter -Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
+   * @param opts.options.limit The number of builds to return. Maximum 100, defaults to 30.
+   * @param opts.options.offset builds starting from this offset, defaults to 0.
+   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
   builds(opts?: CircleRequest) {
     const { token, ...rest } = this.createRequest(opts);
@@ -157,8 +157,8 @@ export class CircleCI {
    * Get the latest build artifacts for a project
    * Pass a branch in the options to target a specific branch
    * @param opts Optional settings
-   * @param opts.options.branch - The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
-   * @param opts.options.filter - Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
+   * @param opts.options.branch The branch you would like to look in for the latest build. Returns artifacts for latest build in entire project if omitted.
+   * @param opts.options.filter Restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    */
   latestArtifacts(opts?: CircleRequest) {
     const { token, ...rest } = this.createRequest(opts);

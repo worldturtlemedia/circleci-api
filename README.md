@@ -36,10 +36,10 @@ Get instance of the factory.
 
 ```typescript
 // Module
-import { CircleCI, GitType } from "circleci-api";
+import { CircleCI, GitType, CircleCIOptions } from "circleci-api";
 
 // Configure the factory with some defaults
-const options: FactoryOptions = {
+const options: CircleCIOptions = {
   // Required for all requests
   token: "", // Set your CircleCi API token
 
