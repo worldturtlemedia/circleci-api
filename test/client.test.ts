@@ -3,8 +3,14 @@ import mockAxios from "jest-mock-axios";
 import { client, circleGet, circlePost } from "../src/client";
 import { AxiosRequestConfig } from "axios";
 
-const TOKEN = "test-token-123";
+/**
+ * TODO
+ * Add tests for the auth param adder
+ */
+
+const TOKEN = "test-token";
 const URL = "cats.com";
+const URL_WITH_TOKEN = `${URL}?circle-token=${TOKEN}`;
 const AUTH_OBJECT: AxiosRequestConfig = {
   auth: {
     username: TOKEN,
@@ -18,48 +24,46 @@ describe("Client", () => {
   });
 
   describe("Factory", () => {
-    it("should create an auth header for get", () => {
+    it("should add token param to url for get", () => {
       client(TOKEN)
         .get(URL)
         .catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL, AUTH_OBJECT);
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
     });
 
-    it("should create an auth header for post", () => {
+    it("should add token param to url for post", () => {
       client(TOKEN)
         .post(URL, null)
         .catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL, null, AUTH_OBJECT);
+      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, null, {});
     });
 
-    it("should merge options with auth header", () => {
+    it("should use options", () => {
       client(TOKEN)
         .post(URL, "test", { timeout: 1000 })
         .catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL, "test", {
-        ...AUTH_OBJECT,
+      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, "test", {
         timeout: 1000
       });
     });
   });
 
   describe("circleGet", () => {
-    it("should get url", () => {
+    it("should get url with auth token", () => {
       circleGet(TOKEN, URL).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL, AUTH_OBJECT);
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
     });
 
     it("should get url with options", () => {
       circleGet(TOKEN, URL, { timeout: 1000 }).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL, {
-        ...AUTH_OBJECT,
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
         timeout: 1000
       });
     });
 
     it("should handle null options", () => {
       circleGet(TOKEN, URL, undefined).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL, AUTH_OBJECT);
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
     });
 
     it("should return data after awaiting promise", () => {
@@ -72,10 +76,8 @@ describe("Client", () => {
         .catch(catchFn);
 
       expect(mockAxios.get).toHaveBeenCalledWith(
-        "/biz/baz",
-        expect.objectContaining({
-          auth: { username: TOKEN, password: "" }
-        })
+        `/biz/baz?circle-token=${TOKEN}`,
+        {}
       );
 
       mockAxios.mockResponse({ data: "okay" });
@@ -85,15 +87,15 @@ describe("Client", () => {
   describe("circlePost", () => {
     it("should post url", () => {
       circlePost(TOKEN, URL, null).catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL, null, AUTH_OBJECT);
+      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, null, {});
     });
 
     it("should post url with options", () => {
       circlePost(TOKEN, URL, { cat: "meow" }, { timeout: 1 }).catch(jest.fn());
       expect(mockAxios.post).toBeCalledWith(
-        URL,
+        URL_WITH_TOKEN,
         { cat: "meow" },
-        { ...AUTH_OBJECT, timeout: 1 }
+        { timeout: 1 }
       );
     });
 
@@ -107,11 +109,9 @@ describe("Client", () => {
         .catch(catchFn);
 
       expect(mockAxios.post).toHaveBeenCalledWith(
-        "/biz/baz",
+        `/biz/baz?circle-token=${TOKEN}`,
         { foo: "bar" },
-        expect.objectContaining({
-          auth: { username: TOKEN, password: "" }
-        })
+        {}
       );
 
       mockAxios.mockResponse({ data: "okay" });
