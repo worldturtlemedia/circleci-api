@@ -1,7 +1,6 @@
 import mockAxios from "jest-mock-axios";
 
 import { client, circleGet, circlePost } from "../src/client";
-import { AxiosRequestConfig } from "axios";
 
 /**
  * TODO

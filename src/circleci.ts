@@ -9,7 +9,6 @@ import {
   Options,
   BuildActionResponse,
   BuildAction,
-  Me,
   FilterRequestOptions,
   RequestOptions,
   ArtifactsRequestOptions
