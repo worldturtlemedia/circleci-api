@@ -29,7 +29,7 @@ describe("CircleCI", () => {
 
       // Override options, they shouldn't save
       circle
-        .latestArtifacts({
+        .latestArtifacts(null, {
           vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
         })
         .catch(jest.fn());
