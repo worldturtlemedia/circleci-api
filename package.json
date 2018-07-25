@@ -8,8 +8,9 @@
     "api",
     "typescript"
   ],
-  "main": "dist/circleci-api.umd.js",
+  "main": "dist/circleci-api.cjs.js",
   "module": "dist/circleci-api.es5.js",
+  "browser": "dist/circleci-api.umd.js",
   "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
@@ -31,8 +32,11 @@
     "predocs": "rimraf docs",
     "docs": "typedoc --out docs --exclude '**/__mocks__/**' --excludeExternals --target es6 --includeDeclarations --excludePrivate --mode modules src",
     "docs:watch": "watch 'yarn docs' ./src",
+    "tsc": "tsc --module commonjs",
+    "rollup": "rollup -c rollup.config.ts",
     "prebuild": "npm run clean",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && npm run docs",
+    "build": "npm run tsc && npm run rollup",
+    "postbuild": "npm run docs",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -72,6 +76,7 @@
     "rollup-plugin-commonjs": "^9.0.0",
     "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.2.1",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.16.0",
