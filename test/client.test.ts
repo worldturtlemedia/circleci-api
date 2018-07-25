@@ -11,12 +11,6 @@ import { AxiosRequestConfig } from "axios";
 const TOKEN = "test-token";
 const URL = "cats.com";
 const URL_WITH_TOKEN = `${URL}?circle-token=${TOKEN}`;
-const AUTH_OBJECT: AxiosRequestConfig = {
-  auth: {
-    username: TOKEN,
-    password: ""
-  }
-};
 
 describe("Client", () => {
   afterEach(() => {
