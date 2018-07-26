@@ -28,11 +28,6 @@ describe("Util", () => {
   });
 
   describe("Query Parameters", () => {
-    it("should add default query params", () => {
-      const t = queryParams();
-      expect(t).toEqual("?branch=master");
-    });
-
     it("should set branch", () => {
       expect(queryParams({ branch: "develop" })).toContain("branch=develop");
     });
@@ -42,11 +37,11 @@ describe("Util", () => {
     });
 
     it("should return nothing", () => {
-      expect(queryParams({}, true)).toBe("");
+      expect(queryParams({})).toBe("");
     });
 
     it("should handle keys with undefined values", () => {
-      expect(queryParams({ offset: undefined })).toBe("?branch=master");
+      expect(queryParams({ offset: undefined })).toBe("");
     });
   });
 
