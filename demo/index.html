@@ -17,6 +17,7 @@
   <div>
     <input id="owner" type="text" placeholder="Git Owner">
     <input id="repo" type="text" placeholder="Git Repo">
+    <input id="branch" type="text" value="master">
     <button id="demo">Demo</button>
     <button id="go">Latest Artifacts</button>
     <span id="error" class="block"></span>
@@ -34,32 +35,35 @@
 
     const ownerTxt = document.getElementById("owner")
     const repoTxt = document.getElementById("repo")
+    const branchTxt = document.getElementById("branch")
 
     document.getElementById("demo").onclick = () => {
       ownerTxt.value = "jordond"
       repoTxt.value = "circleci-api"
+      branchTxt.value = "develop"
     }
 
     document.getElementById("go").onclick = () => {
       const owner = ownerTxt.value
       const repo = repoTxt.value
+      const branch = branchTxt.value || "master"
 
       outputDiv.innerHTML = ""
 
       if (owner && repo) {
-        fetchArtifacts(owner, repo)
+        fetchArtifacts(owner, repo, branch)
         errorSpan.innerHTML = ""
       } else {
         errorSpan.innerHTML = "Missing some fields"
       }
     }
 
-    function fetchArtifacts(owner, repo) {
+    function fetchArtifacts(owner, repo, branch) {
       new window.circleciApi.CircleCI({
         token: "not-needed",
         vcs: { owner, repo }
       })
-        .latestArtifacts()
+        .latestArtifacts({ branch })
         .then(artifacts => {
           const nodes = artifacts
             .map(artifact => {
