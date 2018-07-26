@@ -1,4 +1,9 @@
-import { CircleCI, getBuildSummaries } from "../../src";
+import {
+  CircleCI,
+  getBuildSummaries,
+  getFullBuild,
+  getRecentBuilds
+} from "../../src";
 import { BuildSummary } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -40,6 +45,15 @@ describe("API - Builds", () => {
       );
       expect(result).toEqual(response);
     });
+
+    it("should handle no options", async () => {
+      mock.__setResponse(response);
+      const result = await getRecentBuilds(TOKEN);
+      expect(mock.__getMock).toBeCalledWith(
+        "https://circleci.com/api/v1.1/recent-builds"
+      );
+      expect(result).toEqual(response);
+    });
   });
 
   describe("Build Summaries", () => {
@@ -55,7 +69,7 @@ describe("API - Builds", () => {
 
     it("should fetch latest builds with options", async () => {
       mock.__setResponse(response);
-      const result = await circle.builds({ options: { limit: 5 } });
+      const result = await circle.builds(null, { options: { limit: 5 } });
 
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("?limit=5")
@@ -75,9 +89,13 @@ describe("API - Builds", () => {
 
     it("should fetch builds for branch with options", async () => {
       mock.__setResponse(response);
-      const result = await circle.buildsFor("master", {
-        options: { branch: "develop", limit: 5 }
-      });
+      const result = await circle.buildsFor(
+        "master",
+        { limit: 5 },
+        {
+          options: { branch: "develop" }
+        }
+      );
 
       expect(mock.__getMock).toBeCalledWith(
         "https://circleci.com/api/v1.1/project/github/foo/bar/tree/master?limit=5"
@@ -106,6 +124,15 @@ describe("API - Builds", () => {
 
       expect(mock.__getMock).toBeCalledWith(
         "https://circleci.com/api/v1.1/project/github/foo/bar/42"
+      );
+      expect(result).toEqual(response);
+    });
+
+    it("should handle request options", async () => {
+      mock.__setResponse(response);
+      const result = await circle.build(42, { vcs: { owner: "test" } });
+      expect(mock.__getMock).toBeCalledWith(
+        "https://circleci.com/api/v1.1/project/github/test/bar/42"
       );
       expect(result).toEqual(response);
     });

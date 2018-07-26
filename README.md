@@ -1,6 +1,8 @@
 # CircleCi API Wrapper
 
-[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/)
+[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
 
 **Warning:** This is still a work-in-progress, so not all the endpoints are available
 
@@ -36,10 +38,10 @@ Get instance of the factory.
 
 ```typescript
 // Module
-import { CircleCI, GitType } from "circleci-api";
+import { CircleCI, GitType, CircleCIOptions } from "circleci-api";
 
 // Configure the factory with some defaults
-const options: FactoryOptions = {
+const options: CircleCIOptions = {
   // Required for all requests
   token: "", // Set your CircleCi API token
 
@@ -73,7 +75,7 @@ const api = new CircleCI(options)
 export async function getLatestArtifacts(branch: string = "master"): Promise<Artifact[]> {
   try {
     // Will use the repo defined in the options above
-    const result: Aritfact[] = await api.latestArtifacts({ options: { branch, filter: "successful" } })
+    const result: Aritfact[] = await api.latestArtifacts({ branch, filter: "successful" })
     console.log(`Found ${result.length} artifacts`)
     return result
   } catch (error) {
@@ -91,7 +93,13 @@ getLatestArtifacts("develop")
 
 // Or override settings set above
 api
-  .latestArtifacts({ vcs: { repo: "awesome-repo" } })
+  .latestArtifacts(
+    { branch: "develop" },
+    {
+      vcs: { repo: "awesome-repo" },
+      options: { filter: "successful" }
+    }
+  )
   .then((artifacts: Artifact[]) => console.log(`Found ${artifacts.length} artifacts`))
   .catch(error => console.error(error))
 ```
@@ -121,6 +129,28 @@ getLatestArtifacts(CIRCLECI_TOKEN, {
 })
   .then(result => console.log(`Found ${result.length} artifacts`))
   .catch(error => console.error(error));
+```
+
+## Demo
+
+There are three similar demos are available in the `demo` folder.
+
+**Note:** I recommend [VSCode](https://code.visualstudio.com/) for viewing and editing the examples. It will give you great intellisense about the library.
+
+For the browser example, open `index.html` in your favourite browser.
+
+For the TypeScript & JavaScript follow the steps below:
+
+```bash
+# Step 1 - Change into demo folder and install dependencies
+cd demo
+yarn
+
+# Javascript example:
+node ./index.js
+
+# Typescript example:
+npx ts-node --project ../tsconfig.base.json ./index.ts
 ```
 
 ## Supported endpoints

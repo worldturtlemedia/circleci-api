@@ -5,49 +5,70 @@ import camelCase from "lodash.camelcase";
 import typescript from "rollup-plugin-typescript2";
 import json from "rollup-plugin-json";
 import builtins from "rollup-plugin-node-builtins";
+import nodeGlobals from "rollup-plugin-node-globals";
 
 const pkg = require("./package.json");
 
 const libraryName = pkg.name;
 
-export default {
+const browserPlugins = [
+  resolve({ browser: true }),
+  commonjs(),
+  json(),
+  nodeGlobals(),
+  builtins(),
+  typescript({
+    useTsconfigDeclarationDir: true,
+    exclude: ["src/__mocks__/*.ts"]
+  }),
+  sourceMaps()
+];
+
+const nodePlugins = [
+  json(),
+  typescript({ useTsconfigDeclarationDir: true }),
+  commonjs(),
+  resolve(),
+  sourceMaps()
+];
+
+const commonConfig = {
   input: `src/index.ts`,
-  output: [
-    {
-      file: pkg.main,
-      name: camelCase(libraryName),
-      format: "umd",
-      sourcemap: true
-    },
-    { file: pkg.module, format: "es", sourcemap: true }
-  ],
-  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: [],
   watch: {
     include: "src/**"
+  }
+};
+
+const browserConfig = {
+  ...commonConfig,
+  output: {
+    file: pkg.browser,
+    name: camelCase(libraryName),
+    format: "umd",
+    sourcemap: true
   },
-  plugins: [
-    // Allow json resolution
-    json(),
+  plugins: browserPlugins
+};
 
-    // For axios
-    builtins(),
-
-    // Compile TypeScript files
-    typescript({
-      useTsconfigDeclarationDir: true,
-      exclude: ["src/__mocks__/*.ts"]
-    }),
-
-    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
-
-    // Allow node_modules resolution, so you can use 'external' to control
-    // which external modules to include in the bundle
-    // https://github.com/rollup/rollup-plugin-node-resolve#usage
-    resolve(),
-
-    // Resolve source maps to the original source
-    sourceMaps()
+const nodeConfig = {
+  ...commonConfig,
+  output: [
+    { file: pkg.module, format: "es", sourcemap: true },
+    { file: pkg.main, format: "cjs", sourcemap: true }
+  ],
+  plugins: nodePlugins,
+  external: [
+    "os",
+    "http",
+    "https",
+    "url",
+    "assert",
+    "stream",
+    "tty",
+    "util",
+    "zlib"
   ]
 };
+
+export default [browserConfig, nodeConfig];

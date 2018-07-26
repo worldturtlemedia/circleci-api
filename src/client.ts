@@ -5,7 +5,7 @@ function get<T>(
   url: string,
   options: AxiosRequestConfig
 ): AxiosPromise<T> {
-  return axios.get(url, createAuthorizedOptions(token, options));
+  return axios.get(addTokenParam(token, url), options);
 }
 
 function post<T, R>(
@@ -14,20 +14,15 @@ function post<T, R>(
   body: T,
   options: AxiosRequestConfig
 ): AxiosPromise<R> {
-  return axios.post(url, body, createAuthorizedOptions(token, options));
+  return axios.post(addTokenParam(token, url), body, options);
 }
 
-function createAuthorizedOptions(
-  token: string,
-  options: AxiosRequestConfig
-): AxiosRequestConfig {
-  return {
-    auth: {
-      username: token,
-      password: ""
-    },
-    ...options
-  };
+/*
+  TODO
+  Add tests
+*/
+function addTokenParam(token: string, url: string): string {
+  return `${url}${url.includes("?") ? "&" : "?"}circle-token=${token}`;
 }
 
 export function circleGet<T>(

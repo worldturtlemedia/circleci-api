@@ -1,4 +1,4 @@
-import { CircleCI } from "../src/index";
+import { CircleCI } from "../src";
 
 describe("Lib", () => {
   it("should export the circleci wrapper", () => {

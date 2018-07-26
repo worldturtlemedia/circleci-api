@@ -333,7 +333,7 @@ acorn-globals@^4.1.0:
   dependencies:
     acorn "^5.0.0"
 
-acorn@^5.0.0, acorn@^5.3.0:
+acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
@@ -1281,7 +1281,7 @@ btoa-lite@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/btoa-lite/-/btoa-lite-1.0.0.tgz#337766da15801210fdd956c22e9c6891ab9d0337"
 
-buffer-es6@^4.9.2:
+buffer-es6@^4.9.2, buffer-es6@^4.9.3:
   version "4.9.3"
   resolved "https://registry.yarnpkg.com/buffer-es6/-/buffer-es6-4.9.3.tgz#f26347b82df76fd37e18bcb5288c4970cfd5c404"
 
@@ -5366,7 +5366,7 @@ private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
 
-process-es6@^0.11.2:
+process-es6@^0.11.2, process-es6@^0.11.6:
   version "0.11.6"
   resolved "https://registry.yarnpkg.com/process-es6/-/process-es6-0.11.6.tgz#c6bb389f9a951f82bd4eb169600105bd2ff9c778"
 
@@ -5874,6 +5874,17 @@ rollup-plugin-node-builtins@^2.1.2:
     buffer-es6 "^4.9.2"
     crypto-browserify "^3.11.0"
     process-es6 "^0.11.2"
+
+rollup-plugin-node-globals@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-node-globals/-/rollup-plugin-node-globals-1.2.1.tgz#2bd8309c19a0390b54cfac19a3bc13eabf3e5541"
+  dependencies:
+    acorn "^5.5.0"
+    buffer-es6 "^4.9.3"
+    estree-walker "^0.5.1"
+    magic-string "^0.22.4"
+    process-es6 "^0.11.6"
+    rollup-pluginutils "^2.0.1"
 
 rollup-plugin-node-resolve@^3.0.0:
   version "3.3.0"

@@ -29,7 +29,7 @@ describe("CircleCI", () => {
 
       // Override options, they shouldn't save
       circle
-        .latestArtifacts({
+        .latestArtifacts(null, {
           vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
         })
         .catch(jest.fn());
@@ -53,7 +53,7 @@ describe("CircleCI", () => {
       mock.__setResponse({ data: [1, 2, 3] });
 
       expect(() =>
-        circle.latestArtifacts({
+        circle.latestArtifacts(null, {
           token: "new-token",
           vcs: { type: GitType.BITBUCKET, owner: "j", repo: "d" }
         })

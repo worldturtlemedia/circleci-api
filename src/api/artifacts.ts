@@ -43,6 +43,10 @@ export function getLatestArtifacts(
   token: string,
   { vcs, options = {} }: GitRequiredRequest
 ): Promise<ArtifactResponse> {
-  const url = `${createVcsUrl(vcs)}/latest/artifacts${queryParams(options)}`;
+  const { branch, filter } = options;
+  const url = `${createVcsUrl(vcs)}/latest/artifacts${queryParams({
+    branch,
+    filter
+  })}`;
   return client(token).get<ArtifactResponse>(url);
 }
