@@ -38,6 +38,7 @@ describe("Util", () => {
 
     it("should return nothing", () => {
       expect(queryParams({})).toBe("");
+      expect(queryParams()).toBe("");
     });
 
     it("should handle keys with undefined values", () => {

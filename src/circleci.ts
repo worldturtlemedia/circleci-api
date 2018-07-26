@@ -158,22 +158,16 @@ export class CircleCI {
   /**
    * Get full build details for a single build
    * @param buildNumber Target build number
-   * @param reqOptions Optional, request options for filtering, limiting, etc
-   * @param reqOptions.limit Optional, the number of builds to return. Maximum 100, defaults to 30.
-   * @param reqOptions.offset Optional, builds starting from this offset, defaults to 0.
-   * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
    */
   build(
     buildNumber: number,
-    reqOptions: FilterRequestOptions = {},
     opts?: GitRequiredRequest
   ): Promise<BuildWithSteps> {
     const { token, vcs } = this.createRequest({
       ...(opts || {}),
       options: {
-        ...(opts ? opts.options : {}),
-        ...reqOptions
+        ...(opts ? opts.options : {})
       }
     });
     return getFullBuild(token, vcs, buildNumber);
