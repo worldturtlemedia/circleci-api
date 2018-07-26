@@ -12,6 +12,7 @@
   "module": "dist/circleci-api.es5.js",
   "browser": "dist/circleci-api.umd.js",
   "typings": "dist/types/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -91,6 +92,12 @@
     "typedoc": "^0.11.0",
     "typescript": "^2.9.2",
     "watch": "^1.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run lint"
+    }
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [

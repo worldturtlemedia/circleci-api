@@ -42,17 +42,13 @@ export function validateVCSRequest({
  * @param ignoreBranch - Ignore the 'branch' option
  * @returns A string containing url encoded query params
  */
-export function queryParams(
-  { branch = "master", ...opts }: Options = {},
-  ignoreBranch: boolean = false
-) {
-  const map = ignoreBranch ? opts : { ...opts, branch };
-  const params = Object.keys(map)
-    .filter(key => typeof map[key] !== "undefined" && map[key] !== null)
+export function queryParams(opts: Options = {}) {
+  const params = Object.keys(opts)
+    .filter(key => typeof opts[key] !== "undefined" && opts[key] !== null)
     .reduce(
       (prev: string[], key: string, arr) => [
         ...prev,
-        `${key}=${encodeURIComponent(map[key])}`
+        `${key}=${encodeURIComponent(opts[key])}`
       ],
       []
     )

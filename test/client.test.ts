@@ -1,7 +1,6 @@
 import mockAxios from "jest-mock-axios";
 
 import { client, circleGet, circlePost } from "../src/client";
-import { AxiosRequestConfig } from "axios";
 
 /**
  * TODO
@@ -58,6 +57,19 @@ describe("Client", () => {
     it("should handle null options", () => {
       circleGet(TOKEN, URL, undefined).catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
+    });
+
+    it("should add circle-token param with ?", () => {
+      circleGet("foo", "bar.com").catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith("bar.com?circle-token=foo", {});
+    });
+
+    it("should add circle-token param with &", () => {
+      circleGet("foo", "bar.com?fizz=buzz").catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(
+        "bar.com?fizz=buzz&circle-token=foo",
+        {}
+      );
     });
 
     it("should return data after awaiting promise", () => {

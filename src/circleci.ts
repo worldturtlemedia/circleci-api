@@ -9,10 +9,16 @@ import {
   Options,
   BuildActionResponse,
   BuildAction,
-  Me,
   FilterRequestOptions,
   RequestOptions,
-  ArtifactsRequestOptions
+  ArtifactsRequestOptions,
+  Me,
+  Project,
+  FollowNewResult,
+  BuildSummary,
+  BuildWithSteps,
+  Artifact,
+  Build
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -75,14 +81,14 @@ export class CircleCI {
   /**
    * Get the currently authenticated user
    */
-  me() {
+  me(): Promise<Me> {
     return getMe(this.token);
   }
 
   /**
    * Get a list of all the projects the user follows
    */
-  projects() {
+  projects(): Promise<Project[]> {
     return getAllProjects(this.token);
   }
 
@@ -90,7 +96,7 @@ export class CircleCI {
    * Follow a new project. CircleCI will then monitor the project for automatic building of commits.
    * @param opts Project information
    */
-  followProject(opts: GitRequiredRequest) {
+  followProject(opts: GitRequiredRequest): Promise<FollowNewResult> {
     const { token, ...rest } = this.createRequest(opts);
     return postFollowNewProject(token, rest);
   }
@@ -102,7 +108,10 @@ export class CircleCI {
    * @param reqOptions.options.offset Optional, builds starting from this offset
    * @param opts Optional settings
    */
-  recentBuilds(reqOptions: RequestOptions = {}, opts?: Options) {
+  recentBuilds(
+    reqOptions: RequestOptions = {},
+    opts?: Options
+  ): Promise<BuildSummary[]> {
     return getRecentBuilds(this.token, { ...(opts || {}), ...reqOptions });
   }
 
@@ -114,7 +123,10 @@ export class CircleCI {
    * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
    */
-  builds(reqOptions: FilterRequestOptions = {}, opts?: CircleRequest) {
+  builds(
+    reqOptions: FilterRequestOptions = {},
+    opts?: CircleRequest
+  ): Promise<BuildSummary[]> {
     const { token, ...rest } = this.createRequest({
       ...(opts || {}),
       options: { ...(opts ? opts.options : {}), ...reqOptions }
@@ -135,7 +147,7 @@ export class CircleCI {
     branch: string = "master",
     reqOptions: FilterRequestOptions = {},
     opts?: CircleRequest
-  ) {
+  ): Promise<BuildSummary[]> {
     const { token, ...rest } = this.createRequest({
       ...opts,
       options: { ...(opts ? opts.options : {}), ...reqOptions, branch }
@@ -146,22 +158,16 @@ export class CircleCI {
   /**
    * Get full build details for a single build
    * @param buildNumber Target build number
-   * @param reqOptions Optional, request options for filtering, limiting, etc
-   * @param reqOptions.limit Optional, the number of builds to return. Maximum 100, defaults to 30.
-   * @param reqOptions.offset Optional, builds starting from this offset, defaults to 0.
-   * @param reqOptions.filter Optional, restricts which builds are returned. Set to "completed", "successful", "failed", "running"
    * @param opts Optional settings
    */
   build(
     buildNumber: number,
-    reqOptions: FilterRequestOptions = {},
     opts?: GitRequiredRequest
-  ) {
+  ): Promise<BuildWithSteps> {
     const { token, vcs } = this.createRequest({
       ...(opts || {}),
       options: {
-        ...(opts ? opts.options : {}),
-        ...reqOptions
+        ...(opts ? opts.options : {})
       }
     });
     return getFullBuild(token, vcs, buildNumber);
@@ -172,7 +178,7 @@ export class CircleCI {
    * @param buildNumber Target build number
    * @param opts Optional settings to override class defaults
    */
-  artifacts(buildNumber: number, opts?: CircleRequest) {
+  artifacts(buildNumber: number, opts?: CircleRequest): Promise<Artifact[]> {
     const { token, vcs } = this.createRequest(opts);
     return getBuildArtifacts(token, vcs, buildNumber);
   }
@@ -188,7 +194,7 @@ export class CircleCI {
   latestArtifacts(
     reqOptions: ArtifactsRequestOptions = {},
     opts: CircleRequest = {}
-  ) {
+  ): Promise<Artifact[]> {
     const { token, ...rest } = this.createRequest({
       ...opts,
       options: { ...opts.options, ...reqOptions }
@@ -201,7 +207,7 @@ export class CircleCI {
    * @param build Target build number
    * @param opts Optional settings
    */
-  retry(build: number, opts?: CircleRequest) {
+  retry(build: number, opts?: CircleRequest): Promise<BuildSummary> {
     return this.performAction(
       this.createRequest(opts),
       build,
@@ -214,7 +220,7 @@ export class CircleCI {
    * @param build Target build number
    * @param opts Optional settings
    */
-  cancel(build: number, opts?: CircleRequest) {
+  cancel(build: number, opts?: CircleRequest): Promise<BuildSummary> {
     return this.performAction(
       this.createRequest(opts),
       build,
@@ -228,7 +234,7 @@ export class CircleCI {
    * @param opts Optional settings
    * @param opts.options.newBuildOptions Additional build settings
    */
-  triggerBuild(opts?: CircleRequest) {
+  triggerBuild(opts?: CircleRequest): Promise<Build> {
     const { token, ...rest } = this.createRequest(opts);
     return postTriggerNewBuild(token, rest);
   }
@@ -240,7 +246,10 @@ export class CircleCI {
    * @param opts Optional settings
    * @param opts.options.newBuildOptions Additional build settings
    */
-  triggerBuildFor(branch: string = "master", opts?: CircleRequest) {
+  triggerBuildFor(
+    branch: string = "master",
+    opts?: CircleRequest
+  ): Promise<Build> {
     const request = this.createRequest({
       ...opts,
       options: { ...(opts ? opts.options : {}), branch }

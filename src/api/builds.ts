@@ -25,7 +25,7 @@ export function getRecentBuilds(
   token: string,
   { limit, offset }: Options = {}
 ): Promise<BuildSummaryResponse> {
-  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset }, true)}`;
+  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`;
   return client(token).get<BuildSummaryResponse>(url);
 }
 
@@ -54,10 +54,11 @@ export function getRecentBuilds(
  */
 export function getBuildSummaries(
   token: string,
-  { vcs, options: { branch = "", ...opts } = {} }: GitRequiredRequest
+  { vcs, options = {} }: GitRequiredRequest
 ): Promise<BuildSummaryResponse> {
+  const { limit, offset, filter, branch } = options;
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
-  const params = queryParams(opts, true);
+  const params = queryParams({ limit, offset, filter });
   return client(token).get<BuildSummaryResponse>(`${url}${params}`);
 }
 

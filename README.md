@@ -131,6 +131,28 @@ getLatestArtifacts(CIRCLECI_TOKEN, {
   .catch(error => console.error(error));
 ```
 
+## Demo
+
+There are three similar demos are available in the `demo` folder.
+
+**Note:** I recommend [VSCode](https://code.visualstudio.com/) for viewing and editing the examples. It will give you great intellisense about the library.
+
+For the browser example, open `index.html` in your favourite browser.
+
+For the TypeScript & JavaScript follow the steps below:
+
+```bash
+# Step 1 - Change into demo folder and install dependencies
+cd demo
+yarn
+
+# Javascript example:
+node ./index.js
+
+# Typescript example:
+npx ts-node --project ../tsconfig.base.json ./index.ts
+```
+
 ## Supported endpoints
 
 Using factory:

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src="../dist/circleci-api.umd.js"></script>
+  <title>CircleCI-API</title>
+
+  <style>
+    .block {
+      display: block
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <input id="owner" type="text" placeholder="Git Owner">
+    <input id="repo" type="text" placeholder="Git Repo">
+    <input id="branch" type="text" value="master">
+    <button id="demo">Demo</button>
+    <button id="go">Latest Artifacts</button>
+    <span id="error" class="block"></span>
+    <div id="output" class="block"></div>
+  </div>
+  <script>
+    if (window.circleciApi) {
+      console.log("Found in window")
+    } else {
+      console.log("Not found...")
+    }
+
+    const errorSpan = document.getElementById("error")
+    const outputDiv = document.getElementById("output")
+
+    const ownerTxt = document.getElementById("owner")
+    const repoTxt = document.getElementById("repo")
+    const branchTxt = document.getElementById("branch")
+
+    document.getElementById("demo").onclick = () => {
+      ownerTxt.value = "jordond"
+      repoTxt.value = "circleci-api"
+      branchTxt.value = "develop"
+    }
+
+    document.getElementById("go").onclick = () => {
+      const owner = ownerTxt.value
+      const repo = repoTxt.value
+      const branch = branchTxt.value || "master"
+
+      outputDiv.innerHTML = ""
+
+      if (owner && repo) {
+        fetchArtifacts(owner, repo, branch)
+        errorSpan.innerHTML = ""
+      } else {
+        errorSpan.innerHTML = "Missing some fields"
+      }
+    }
+
+    function fetchArtifacts(owner, repo, branch) {
+      new window.circleciApi.CircleCI({
+        token: "not-needed",
+        vcs: { owner, repo }
+      })
+        .latestArtifacts({ branch })
+        .then(artifacts => {
+          const nodes = artifacts
+            .map(artifact => {
+              console.log(`found ${artifact.pretty_path}`)
+              return artifact
+            })
+            .map(x => `
+              <li class="item">
+                <a target="_blank" href="${x.url}">${x.pretty_path}</a>
+              </li>
+            `)
+            .join("\n")
+
+          const ul = document.createElement("ul")
+          ul.innerHTML = nodes
+          outputDiv.appendChild(ul)
+        })
+        .catch(err => {
+          console.error(err)
+          errorSpan.innerHTML = err
+        });
+    }
+
+  </script>
+</body>
+
+</html>
