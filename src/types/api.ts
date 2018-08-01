@@ -147,6 +147,150 @@ export type BuildActionResponse = RetryBuildResponse | CancelBuildResponse;
  */
 export type TriggerBuildResponse = Build;
 
+/**
+ * Clear project cache
+ *
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @example DELETE : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/build-cache
+ * @see https://circleci.com/docs/api/v1-reference/#clear-cache
+ */
+export type ClearCacheResponse = {
+  status: string;
+};
+
+/**
+ * List all of a projects environment variables
+ *
+ * Returns four 'x' characters plus the last four ASCII characters of the value,
+ * consistent with the display of environment variable values in the CircleCI website.
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar
+ * @see https://circleci.com/docs/api/v1-reference/#list-environment-variables
+ */
+export type ListEnvVariablesResponse = EnvVariable[];
+
+/**
+ * Add environment variable to project
+ *
+ * Creates a new environment variable *
+ * Needs "Content-Type" set to "application/json"
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @param {EnvVariable} payload - Variable to create
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar
+ * @see https://circleci.com/docs/api/v1-reference/#add-environment-variable
+ *
+ * Gets the hidden value of environment variable :name
+ *
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} name - Name of the env variable
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar/:name
+ * @see https://circleci.com/docs/api/v1-reference/#get-environment-variable
+ */
+export type EnvVariableResponse = EnvVariable;
+
+/**
+ * Deletes the environment variable named ':name'
+ *
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} name - Name of the env variable
+ * @example DELETE : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar/:name
+ * @see https://circleci.com/docs/api/v1-reference/#delete-environment-variable
+ */
+export type DeleteEnvVarResponse = MessageResponse;
+
+/**
+ * Checkout keys
+ *
+ * Lists the checkout keys for :project
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key
+ * @see https://circleci.com/docs/api/v1-reference/#list-checkout-keys
+ *
+ * Creates a new checkout key. Only usable with a user API token.
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @param {CheckoutKey} payload - The type of key to create. Can be 'deploy-key' or 'github-user-key'.
+ * @example { type: "deploy-key" }
+ * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key
+ * @see https://circleci.com/docs/api/v1-reference/#new-checkout-key
+ *
+ * Gets the checkout key
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} fingerprint - Fingerprint sha for key
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key/:fingerprint
+ * @see https://circleci.com/docs/api/v1-reference/#get-checkout-key
+ */
+export type CheckoutKeyResponse = FullCheckoutKey;
+
+/**
+ * Deletes the checkout key
+ *
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} fingerprint - Fingerprint sha for key
+ * @example DELETE : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key/:fingerprint
+ * @see https://circleci.com/docs/api/v1-reference/#delete-checkout-key
+ */
+export type DeleteCheckoutKeyResponse = MessageResponse;
+
+/**
+ * Provides test metadata for a build
+ *
+ * @property {string} vcstype - Type of VCS of project (github || bitbucket)
+ * @property {string} username - Owner of git repo
+ * @property {string} project - Name of the git repo
+ * @property {string} build_num - Build number
+ * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/:build_num/tests
+ * @see https://circleci.com/docs/api/v1-reference/#test-metadata
+ */
+export type TestMetadataResponse = {
+  tests: TestMetadata[];
+  exceptions?: TestMetadata[];
+};
+
+/**
+ * Creates an ssh key that will be used to access the external system identified by
+ * the hostname parameter for SSH key-based authentication.
+ * @param {SSHKey} payload - SSH key to add
+ * @example { "hostname": "hostname", "private_key": "RSA private key" }
+ * @example POST - https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/ssh-key
+ * @see https://circleci.com/docs/api/v1-reference/#ssh-keys
+ */
+export type AddSSHKeyResponse = never;
+
+/**
+ * Adds your Heroku API key to CircleCI
+ * @param {HerokuKey} payload - Heroku api key
+ * @example { "apikey": "Heroku key" }
+ * @example POST - https://circleci.com/user/heroku-key
+ * @see https://circleci.com/docs/api/v1-reference/#heroku-keys
+ */
+export type AddHerokuResponse = never;
+
+/**
+ * Api objects
+ */
+
+export interface MessageResponse {
+  message: string;
+}
+
 export interface Me {
   enrolled_betas?: string[];
   in_beta_program?: boolean;
@@ -472,4 +616,42 @@ export interface Artifact {
   pretty_path?: string;
   node_index?: number;
   url: string;
+}
+
+export interface EnvVariable {
+  name: string;
+  value: string;
+}
+
+export interface CheckoutKey {
+  type: CheckoutType;
+}
+
+export interface FullCheckoutKey extends CheckoutKey {
+  public_key: string;
+  fingerprint: string;
+  preferred: boolean;
+  time: string;
+  login?: string;
+}
+
+export type CheckoutType = "deploy-key" | "github-user-key";
+
+export interface TestMetadata {
+  message?: string;
+  file?: string;
+  source?: string;
+  run_time?: number;
+  result?: string;
+  name?: string;
+  classname?: string;
+}
+
+export interface SSHKey {
+  hostname: string;
+  private_key: string;
+}
+
+export interface HerokuKey {
+  apikey: string;
 }
