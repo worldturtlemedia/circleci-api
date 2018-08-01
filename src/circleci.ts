@@ -22,7 +22,8 @@ import {
   ListEnvVariablesResponse,
   EnvVariable,
   EnvVariableResponse,
-  DeleteEnvVarResponse
+  DeleteEnvVarResponse,
+  ClearCacheResponse
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -275,7 +276,7 @@ export class CircleCI {
    * @see https://circleci.com/docs/api/v1-reference/#clear-cache
    * @param opts Optional settings
    */
-  clearCache(opts?: CircleRequest) {
+  clearCache(opts?: CircleRequest): Promise<ClearCacheResponse> {
     const { token, vcs } = this.createRequest(opts);
     return clearCache(token, vcs);
   }

@@ -169,41 +169,41 @@ export interface CircleRequest {
 
 Any function with an _optional_ paramater of `CircleRequest` can override any of the values you assigned when using the `circleci()` factory.
 
-| Name                |          Required           |              Optional               |           Returns |
-| ------------------- | :-------------------------: | :---------------------------------: | ----------------: |
-| `me()`              |            none             |                none                 |              `Me` |
-| `projects()`        |            none             |           `CircleRequest`           |       `Project[]` |
-| `followProject()`   |     `{ vcs: GitInfo }`      |                none                 | `FollowNewResult` |
-| `recentBuilds()`    |            none             | `{ limit: number, offset: number }` |  `BuildSummary[]` |
-| `builds()`          |            none             | `{ limit: number, offset: number }` |  `BuildSummary[]` |
-| `buildsFor()`       | `branch: string = "master"` | `{ limit: number, offset: number }` |  `BuildSummary[]` |
-| `build()`           |    `buildNumber: number`    |           `CircleRequest`           |  `BuildWithSteps` |
-| `artifacts()`       |    `buildNumber: number`    |           `CircleRequest`           |      `Artifact[]` |
-| `latestArtifacts()` |            none             |           `CircleRequest`           |      `Artifact[]` |
-| `retry()`           |    `buildNumber: number`    |           `CircleRequest`           |    `BuildSummary` |
-| `cancel()`          |    `buildNumber: number`    |           `CircleRequest`           |    `BuildSummary` |
-| `triggerBuild()`    |            none             |           `CircleRequest`           |           `Build` |
-| `triggerBuildFor()` | `branch: string = "master"` |           `CircleRequest`           |           `Build` |
+| Name                |          Required           |              Optional               |              Returns |
+| ------------------- | :-------------------------: | :---------------------------------: | -------------------: |
+| `me()`              |            none             |                none                 |                 `Me` |
+| `projects()`        |            none             |           `CircleRequest`           |          `Project[]` |
+| `followProject()`   |     `{ vcs: GitInfo }`      |                none                 |    `FollowNewResult` |
+| `recentBuilds()`    |            none             | `{ limit: number, offset: number }` |     `BuildSummary[]` |
+| `builds()`          |            none             | `{ limit: number, offset: number }` |     `BuildSummary[]` |
+| `buildsFor()`       | `branch: string = "master"` | `{ limit: number, offset: number }` |     `BuildSummary[]` |
+| `build()`           |    `buildNumber: number`    |           `CircleRequest`           |     `BuildWithSteps` |
+| `artifacts()`       |    `buildNumber: number`    |           `CircleRequest`           |         `Artifact[]` |
+| `latestArtifacts()` |            none             |           `CircleRequest`           |         `Artifact[]` |
+| `retry()`           |    `buildNumber: number`    |           `CircleRequest`           |       `BuildSummary` |
+| `cancel()`          |    `buildNumber: number`    |           `CircleRequest`           |       `BuildSummary` |
+| `triggerBuild()`    |            none             |           `CircleRequest`           |              `Build` |
+| `triggerBuildFor()` | `branch: string = "master"` |           `CircleRequest`           |              `Build` |
+| `clearCache()`      |            none             |           `CircleRequest`           | `ClearCacheResponse` |
+| `listEnvVars()`     |            none             |           `CircleRequest`           |      `EnvVariable[]` |
+| `addEnvVar()`       |   `variable: EnvVariable`   |           `CircleRequest`           |        `EnvVariable` |
+| `getEnvVar()`       |      `envName: string`      |           `CircleRequest`           |        `EnvVariable` |
+| `deleteEnvVar()`    |      `envName: string`      |           `CircleRequest`           |    `MessageResponse` |
 
 ## Missing endpoints
 
 I am working on adding support for the following remaining endpoints.
 
-| Name                    |                                      Link                                      |
-| ----------------------- | :----------------------------------------------------------------------------: |
-| Clear cache             |         [ref](https://circleci.com/docs/api/v1-reference/#clear-cache)         |
-| List env variable       | [ref](https://circleci.com/docs/api/v1-reference/#list-environment-variables)  |
-| Add env variable        |  [ref](https://circleci.com/docs/api/v1-reference/#add-environment-variable)   |
-| Get single env variable |  [ref](https://circleci.com/docs/api/v1-reference/#get-environment-variable)   |
-| Delete env variable     | [ref](https://circleci.com/docs/api/v1-reference/#delete-environment-variable) |
-| List checkout keys      |     [ref](https://circleci.com/docs/api/v1-reference/#list-checkout-keys)      |
-| New checkout key        |      [ref](https://circleci.com/docs/api/v1-reference/#new-checkout-key)       |
-| Get checkout key        |      [ref](https://circleci.com/docs/api/v1-reference/#get-checkout-key)       |
-| Delete checkout key     |     [ref](https://circleci.com/docs/api/v1-reference/#delete-checkout-key)     |
-| Test metadata           |        [ref](https://circleci.com/docs/api/v1-reference/#test-metadata)        |
-| SSH keys                |          [ref](https://circleci.com/docs/api/v1-reference/#ssh-keys)           |
-| Heroku keys             |         [ref](https://circleci.com/docs/api/v1-reference/#heroku-keys)         |
-| Add user to build       |        [ref](https://circleci.com/docs/api/v1-reference/#add-user-ssh)         |
+| Name                |                                  Link                                  |
+| ------------------- | :--------------------------------------------------------------------: |
+| List checkout keys  | [ref](https://circleci.com/docs/api/v1-reference/#list-checkout-keys)  |
+| New checkout key    |  [ref](https://circleci.com/docs/api/v1-reference/#new-checkout-key)   |
+| Get checkout key    |  [ref](https://circleci.com/docs/api/v1-reference/#get-checkout-key)   |
+| Delete checkout key | [ref](https://circleci.com/docs/api/v1-reference/#delete-checkout-key) |
+| Test metadata       |    [ref](https://circleci.com/docs/api/v1-reference/#test-metadata)    |
+| SSH keys            |      [ref](https://circleci.com/docs/api/v1-reference/#ssh-keys)       |
+| Heroku keys         |     [ref](https://circleci.com/docs/api/v1-reference/#heroku-keys)     |
+| Add user to build   |    [ref](https://circleci.com/docs/api/v1-reference/#add-user-ssh)     |
 
 ## Contributing
 
