@@ -1,9 +1,4 @@
-import {
-  CircleCI,
-  getBuildSummaries,
-  getFullBuild,
-  getRecentBuilds
-} from "../../src";
+import { CircleCI, getBuildSummaries, getRecentBuilds } from "../../src";
 import { BuildSummary } from "../../src/types/api";
 import * as client from "../../src/client";
 
