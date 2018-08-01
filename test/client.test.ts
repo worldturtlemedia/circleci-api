@@ -1,6 +1,10 @@
-import mockAxios from "jest-mock-axios";
+import axios from "axios";
 
-import { client, circleGet, circlePost } from "../src/client";
+import { client, circleGet, circlePost, circleDelete } from "../src/client";
+
+jest.mock("axios");
+
+const mockAxios = axios as any;
 
 /**
  * TODO
@@ -86,7 +90,7 @@ describe("Client", () => {
         {}
       );
 
-      mockAxios.mockResponse({ data: "okay" });
+      mockAxios._setMockResponse({ data: "okay" });
     });
   });
 
@@ -120,7 +124,38 @@ describe("Client", () => {
         {}
       );
 
-      mockAxios.mockResponse({ data: "okay" });
+      mockAxios._setMockResponse({ data: "okay" });
+    });
+  });
+
+  describe("circleDelete", () => {
+    it("should send delete to url", () => {
+      circleDelete("foo", "bar.com").catch(jest.fn());
+      expect(mockAxios.delete).toBeCalledWith("bar.com?circle-token=foo", {});
+    });
+
+    it("should delete url with options", () => {
+      circleDelete(TOKEN, URL, { timeout: 1000 }).catch(jest.fn());
+      expect(mockAxios.delete).toBeCalledWith(URL_WITH_TOKEN, {
+        timeout: 1000
+      });
+    });
+
+    it("should be able to use the factory to delete", () => {
+      const catchFn = jest.fn();
+      const thenFn = jest.fn();
+
+      client(TOKEN)
+        .delete("/biz/baz")
+        .then(thenFn)
+        .catch(catchFn);
+
+      expect(mockAxios.delete).toHaveBeenCalledWith(
+        `/biz/baz?circle-token=${TOKEN}`,
+        {}
+      );
+
+      mockAxios._setMockResponse({ data: "okay" });
     });
   });
 });

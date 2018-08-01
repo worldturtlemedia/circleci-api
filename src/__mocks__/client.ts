@@ -31,9 +31,13 @@ export const __getMock = jest.fn(() => handleResponse());
 /* tslint:disable-next-line:variable-name */
 export const __postMock = jest.fn(() => handleResponse());
 
+/* tslint:disable-next-line:variable-name */
+export const __deleteMock = jest.fn(() => handleResponse());
+
 export const client = jest.fn((token: string) => ({
   get: __getMock,
-  post: __postMock
+  post: __postMock,
+  delete: __deleteMock
 }));
 
 export default mockClient;
