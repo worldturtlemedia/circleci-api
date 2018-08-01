@@ -18,13 +18,20 @@ import {
   BuildSummary,
   BuildWithSteps,
   Artifact,
-  Build
+  Build,
+  ListEnvVariablesResponse,
+  EnvVariable,
+  EnvVariableResponse,
+  DeleteEnvVarResponse,
+  ClearCacheResponse
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
 import { getLatestArtifacts, getBuildArtifacts } from "./api/artifacts";
 import { getMe } from "./api/user";
 import { postBuildActions, postTriggerNewBuild } from "./api";
+import { listEnv, addEnv, getEnv, deleteEnv } from "./api/env";
+import { clearCache } from "./api/cache";
 
 // TODO
 /*
@@ -110,9 +117,13 @@ export class CircleCI {
    */
   recentBuilds(
     reqOptions: RequestOptions = {},
-    opts?: Options
+    opts?: CircleRequest
   ): Promise<BuildSummary[]> {
-    return getRecentBuilds(this.token, { ...(opts || {}), ...reqOptions });
+    const { token, options } = this.createRequest({
+      ...(opts || {}),
+      options: { ...(opts ? opts.options : {}), ...reqOptions }
+    });
+    return getRecentBuilds(token, options);
   }
 
   /**
@@ -166,9 +177,7 @@ export class CircleCI {
   ): Promise<BuildWithSteps> {
     const { token, vcs } = this.createRequest({
       ...(opts || {}),
-      options: {
-        ...(opts ? opts.options : {})
-      }
+      options: { ...(opts ? opts.options : {}) }
     });
     return getFullBuild(token, vcs, buildNumber);
   }
@@ -250,13 +259,100 @@ export class CircleCI {
     branch: string = "master",
     opts?: CircleRequest
   ): Promise<Build> {
-    const request = this.createRequest({
+    const { token, ...request } = this.createRequest({
       ...opts,
       options: { ...(opts ? opts.options : {}), branch }
     });
-    return postTriggerNewBuild(this.token, request);
+    return postTriggerNewBuild(token, request);
   }
 
+  /*
+  * Cache
+  */
+
+  /**
+   * Clear the cache for the project
+   * @see clearCache for implementation
+   * @see https://circleci.com/docs/api/v1-reference/#clear-cache
+   * @param opts Optional settings
+   */
+  clearCache(opts?: CircleRequest): Promise<ClearCacheResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return clearCache(token, vcs);
+  }
+
+  /*
+  * Environment Variables
+  */
+
+  /**
+   * List all of a projects environment variables, values will not be fully shown
+   * @see getEnvVar for accessing full value
+   * @see listEnv
+   * @see https://circleci.com/docs/api/v1-reference/#list-environment-variables
+   * @param opts Optional settings
+   */
+  listEnvVars(opts?: CircleRequest): Promise<ListEnvVariablesResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return listEnv(token, vcs);
+  }
+
+  /**
+   * Add environment variable to project
+   * @see addEnv
+   * @see https://circleci.com/docs/api/v1-reference/#add-environment-variable
+   * @param variable Environment variable to add to project
+   * @param opts Optional settings
+   */
+  addEnvVar(
+    variable: EnvVariable,
+    opts?: CircleRequest
+  ): Promise<EnvVariableResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return addEnv(token, vcs, variable);
+  }
+
+  /**
+   * Get the hidden value of an environment variable
+   * @see getEnv
+   * @see https://circleci.com/docs/api/v1-reference/#get-environment-variable
+   * @param envName Name of the variable to fetch
+   * @param opts Optional settings
+   */
+  getEnvVar(
+    envName: string,
+    opts?: CircleRequest
+  ): Promise<EnvVariableResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return getEnv(token, vcs, envName);
+  }
+
+  /**
+   * Delete an environment variable
+   * @see deleteEnv
+   * @see https://circleci.com/docs/api/v1-reference/#delete-environment-variable
+   * @param envName Name of the variable to delete
+   * @param opts Optional settings
+   */
+  deleteEnvVar(
+    envName: string,
+    opts?: CircleRequest
+  ): Promise<DeleteEnvVarResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return deleteEnv(token, vcs, envName);
+  }
+
+  /*
+  * Private functions
+  */
+
+  /**
+   * Take a request object and merge it with the class properties.
+   * Passed in options always take priority over the class properties
+   * @param opts Optional, request options
+   * @throws If missing a token, or VCS options
+   * @returns Merged request object
+   */
   private createRequest(opts: CircleRequest = {}): FullRequest {
     const request: FullRequest = {
       token: opts.token || this.token,
@@ -269,6 +365,14 @@ export class CircleCI {
     return request;
   }
 
+  /**
+   * Perform a build action on a build
+   * @see BuildAction for list of actions
+   * @see postBuildActions for implementation
+   * @param request Request information
+   * @param build Build number to perform action on
+   * @param action Type of action to perform
+   */
   private performAction(
     request: FullRequest,
     build: number,

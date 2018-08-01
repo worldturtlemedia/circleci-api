@@ -1,4 +1,5 @@
 import { Options, FullRequest, GitType } from "./types";
+import { AxiosRequestConfig } from "../node_modules/axios";
 
 /**
  * Validate a Request object for endpoints that require
@@ -74,4 +75,16 @@ export function getGitType(type: string): GitType {
   }
 
   return GitType.GITHUB;
+}
+
+/**
+ * Create JSON headers for Axios
+ */
+export function createJsonHeader(): AxiosRequestConfig {
+  return {
+    headers: {
+      "Content-Type": "application/json",
+      Accepts: "application/json"
+    }
+  };
 }
