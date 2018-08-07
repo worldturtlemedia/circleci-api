@@ -1,6 +1,6 @@
 # CircleCi API Wrapper
 
-[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
+[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api)
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
 
