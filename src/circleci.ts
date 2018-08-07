@@ -23,7 +23,15 @@ import {
   EnvVariable,
   EnvVariableResponse,
   DeleteEnvVarResponse,
-  ClearCacheResponse
+  ClearCacheResponse,
+  CheckoutKeyResponse,
+  CheckoutType,
+  DeleteCheckoutKeyResponse,
+  TestMetadataResponse,
+  SSHKey,
+  AddSSHKeyResponse,
+  HerokuKey,
+  AddHerokuResponse
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -32,6 +40,14 @@ import { getMe } from "./api/user";
 import { postBuildActions, postTriggerNewBuild } from "./api";
 import { listEnv, addEnv, getEnv, deleteEnv } from "./api/env";
 import { clearCache } from "./api/cache";
+import {
+  getCheckoutKeys,
+  createCheckoutKey,
+  getCheckoutKey,
+  deleteCheckoutKey
+} from "./api/checkout-keys";
+import { getTestMetadata } from "./api/metadata";
+import { addSSHKey, addHerokuKey } from "./api/misc";
 
 // TODO
 /*
@@ -267,8 +283,8 @@ export class CircleCI {
   }
 
   /*
-  * Cache
-  */
+   * Cache
+   */
 
   /**
    * Clear the cache for the project
@@ -282,8 +298,8 @@ export class CircleCI {
   }
 
   /*
-  * Environment Variables
-  */
+   * Environment Variables
+   */
 
   /**
    * List all of a projects environment variables, values will not be fully shown
@@ -343,8 +359,110 @@ export class CircleCI {
   }
 
   /*
-  * Private functions
-  */
+   * Checkout Keys
+   */
+
+  /**
+   * List all the checkout keys for the project
+   * @see getCheckoutKeys
+   * @see https://circleci.com/docs/api/v1-reference/#list-checkout-keys
+   * @param opts Optional request settings
+   */
+  listCheckoutKeys(opts?: CircleRequest): Promise<CheckoutKeyResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return getCheckoutKeys(token, vcs);
+  }
+
+  /**
+   * Create a new checkout key
+   * @see createCheckoutKey
+   * @see https://circleci.com/docs/api/v1-reference/#new-checkout-key
+   * @param type Type of checkout key to create
+   * @param opts Optional request settings
+   */
+  addCheckoutKey(
+    type: CheckoutType,
+    opts?: CircleRequest
+  ): Promise<CheckoutKeyResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return createCheckoutKey(token, vcs, { type });
+  }
+
+  /**
+   * Get a single checkout key from it's fingerprint
+   * @see getCheckoutKey
+   * @see https://circleci.com/docs/api/v1-reference/#get-checkout-key
+   * @param fingerprint Fingerprint of the key to get
+   * @param opts Optional request settings
+   */
+  getCheckoutKey(
+    fingerprint: string,
+    opts?: CircleRequest
+  ): Promise<CheckoutKeyResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return getCheckoutKey(token, vcs, fingerprint);
+  }
+
+  /**
+   * Delete a checkout key
+   * @see deleteCheckoutKey
+   * @see https://circleci.com/docs/api/v1-reference/#delete-checkout-key
+   * @param fingerprint Fingerprint of the key to delete
+   * @param opts Optional request settings
+   */
+  deleteCheckoutKey(
+    fingerprint: string,
+    opts?: CircleRequest
+  ): Promise<DeleteCheckoutKeyResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return deleteCheckoutKey(token, vcs, fingerprint);
+  }
+
+  /**
+   * Get test metadata for a build
+   * @see getTestMetadata
+   * @see https://circleci.com/docs/api/v1-reference/#test-metadata
+   * @param buildNumber Build number to get metadata for
+   * @param opts Optional request settings
+   */
+  getTestMetadata(
+    buildNumber: number,
+    opts?: CircleRequest
+  ): Promise<TestMetadataResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return getTestMetadata(token, vcs, buildNumber);
+  }
+
+  /**
+   * Creates an ssh key that will be used to access the external system identified by
+   * the hostname parameter for SSH key-based authentication.
+   * @see https://circleci.com/docs/api/v1-reference/#ssh-keys
+   * @param token CircleCI API token
+   * @param vcs Git information for project
+   * @param key SSH key details to add to project
+   */
+  addSSHKey(key: SSHKey, opts?: CircleRequest): Promise<AddSSHKeyResponse> {
+    const { token, vcs } = this.createRequest(opts);
+    return addSSHKey(token, vcs, key);
+  }
+
+  /**
+   * Adds your Heroku API key to CircleCI
+   * @see https://circleci.com/docs/api/v1-reference/#ssh-keys
+   * @param token CircleCI API token
+   * @param key Heroku key to add to project
+   */
+  addHerokuKey(
+    key: HerokuKey,
+    opts?: CircleRequest
+  ): Promise<AddHerokuResponse> {
+    const { token } = this.createRequest(opts);
+    return addHerokuKey(token, key);
+  }
+
+  /*
+   * Private functions
+   */
 
   /**
    * Take a request object and merge it with the class properties.
