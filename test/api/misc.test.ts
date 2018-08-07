@@ -1,6 +1,6 @@
 import * as axios from "axios";
 
-import { CircleCI, TestMetadataResponse, HerokuKey } from "../../src";
+import { CircleCI, HerokuKey } from "../../src";
 
 jest.mock("axios");
 
