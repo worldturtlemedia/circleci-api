@@ -6,6 +6,7 @@ import typescript from "rollup-plugin-typescript2";
 import json from "rollup-plugin-json";
 import builtins from "rollup-plugin-node-builtins";
 import nodeGlobals from "rollup-plugin-node-globals";
+import { uglify } from "rollup-plugin-uglify";
 
 const pkg = require("./package.json");
 
@@ -43,12 +44,21 @@ const commonConfig = {
 const browserConfig = {
   ...commonConfig,
   output: {
-    file: pkg.browser,
+    file: pkg.browser.replace(".min.js", ".js"),
     name: camelCase(libraryName),
     format: "umd",
     sourcemap: true
   },
-  plugins: browserPlugins
+  plugins: [...browserPlugins, sourceMaps()]
+};
+
+const minifiedBrowserConfig = {
+  ...commonConfig,
+  output: {
+    ...browserConfig.output,
+    file: pkg.browser
+  },
+  plugins: [...browserPlugins, uglify(), sourceMaps()]
 };
 
 const nodeConfig = {
@@ -71,4 +81,4 @@ const nodeConfig = {
   ]
 };
 
-export default [browserConfig, nodeConfig];
+export default [browserConfig, minifiedBrowserConfig, nodeConfig];

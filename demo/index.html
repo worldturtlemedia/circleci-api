@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <script src="../dist/circleci-api.umd.js"></script>
+  <script src="../dist/circleci-api.umd.min.js"></script>
   <title>CircleCI-API</title>
 
   <style>
@@ -77,13 +77,19 @@
             `)
             .join("\n")
 
+          if (!nodes.length) {
+            errorSpan.innerHTML = "No artifacts found for this project/branch"
+            return
+          }
+
           const ul = document.createElement("ul")
           ul.innerHTML = nodes
           outputDiv.appendChild(ul)
         })
         .catch(err => {
           console.error(err)
-          errorSpan.innerHTML = err
+          const { status, statusText, data: { message } } = err.response
+          errorSpan.innerHTML = `Error -> ${status} : ${statusText} => ${message}`
         });
     }
 

@@ -8,9 +8,23 @@
   dependencies:
     "@babel/highlight" "7.0.0-beta.53"
 
+"@babel/code-frame@^7.0.0-beta.47":
+  version "7.0.0-beta.56"
+  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.56.tgz#09f76300673ac085d3b90e02aafa0ffc2c96846a"
+  dependencies:
+    "@babel/highlight" "7.0.0-beta.56"
+
 "@babel/highlight@7.0.0-beta.53":
   version "7.0.0-beta.53"
   resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0-beta.53.tgz#f4e952dad1787d205e188d3e384cdce49ca368fb"
+  dependencies:
+    chalk "^2.0.0"
+    esutils "^2.0.2"
+    js-tokens "^3.0.0"
+
+"@babel/highlight@7.0.0-beta.56":
+  version "7.0.0-beta.56"
+  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0-beta.56.tgz#f8b0fc8c5c2de53bb2c12f9001ad3d99e573696d"
   dependencies:
     chalk "^2.0.0"
     esutils "^2.0.2"
@@ -1574,7 +1588,7 @@ combined-stream@1.0.6, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.12.1, commander@^2.14.1, commander@^2.9.0:
+commander@^2.12.1, commander@^2.14.1, commander@^2.9.0, commander@~2.16.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.16.0.tgz#f16390593996ceb4f3eeb020b31d78528f7f8a50"
 
@@ -5900,6 +5914,13 @@ rollup-plugin-typescript2@^0.16.0:
     rollup-pluginutils "2.3.0"
     tslib "1.9.3"
 
+rollup-plugin-uglify@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-uglify/-/rollup-plugin-uglify-4.0.0.tgz#6eb471738f1ce9ba7d9d4bc43b71cba02417c8fb"
+  dependencies:
+    "@babel/code-frame" "^7.0.0-beta.47"
+    uglify-js "^3.3.25"
+
 rollup-pluginutils@2.3.0, rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.3.0.tgz#478ace04bd7f6da2e724356ca798214884738fc4"
@@ -5907,9 +5928,9 @@ rollup-pluginutils@2.3.0, rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.2.0:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"
 
-rollup@^0.63.0:
-  version "0.63.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.63.2.tgz#d27619204cd025c948d740972fb1d0da6aa64481"
+rollup@^0.64.0:
+  version "0.64.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.64.0.tgz#8b6865605920bcfae74e4ea7b69799a335a50d01"
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "*"
@@ -6698,6 +6719,13 @@ uglify-js@^2.6:
     yargs "~3.10.0"
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
+
+uglify-js@^3.3.25:
+  version "3.4.6"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.4.6.tgz#bc546d53f3e02b05d97d0ca5a7abfe0fb0384ddb"
+  dependencies:
+    commander "~2.16.0"
+    source-map "~0.6.1"
 
 uglify-to-browserify@~1.0.0:
   version "1.0.2"

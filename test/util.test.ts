@@ -1,4 +1,9 @@
-import { queryParams, validateVCSRequest, getGitType } from "../src/util";
+import {
+  queryParams,
+  validateVCSRequest,
+  getGitType,
+  createJsonHeader
+} from "../src/util";
 import { FullRequest, GitType } from "../src/types/lib";
 
 describe("Util", () => {
@@ -50,5 +55,12 @@ describe("Util", () => {
     expect(getGitType("")).toEqual("github");
     expect(getGitType("bitbucket")).toEqual("bitbucket");
     expect(getGitType("BitB u ckeT ")).toEqual("bitbucket");
+  });
+
+  it("should create a json header object", () => {
+    const { headers } = createJsonHeader();
+    expect(headers).toBeInstanceOf(Object);
+    expect(headers["Content-Type"]).toEqual("application/json");
+    expect(headers.Accepts).toEqual("application/json");
   });
 });

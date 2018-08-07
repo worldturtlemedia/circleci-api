@@ -1,15 +1,25 @@
 import * as axios from "axios";
 
-import { CircleCI } from "../../src";
-import { EnvVariable, DeleteEnvVarResponse } from "../../src/types/api";
+import {
+  CircleCI,
+  FullCheckoutKey,
+  DeleteCheckoutKeyResponse
+} from "../../src";
+import { createJsonHeader } from "../../src/util";
 
 jest.mock("axios");
 
 const mockAxios = axios.default as any;
 
-describe("API - Env", () => {
-  const TOKEN = "test-token";
-  const variable: EnvVariable = { name: "FOO", value: "BAR" };
+describe("API - Checkout Keys", () => {
+  const TOKEN = "token";
+  const variable: FullCheckoutKey = {
+    public_key: "FOO",
+    fingerprint: "foo",
+    preferred: true,
+    time: "bar",
+    type: "deploy-key"
+  };
 
   let circle: CircleCI;
 
@@ -21,60 +31,57 @@ describe("API - Env", () => {
     });
   });
 
-  describe("List Env", () => {
+  describe("List Keys", () => {
     beforeEach(() => {
       mockAxios._setMockResponse({ data: [variable] });
     });
 
-    it("should get all env variables for project", async () => {
-      const result = await circle.listEnvVars();
+    it("should get all checkout keys for project", async () => {
+      const result = await circle.listCheckoutKeys();
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
+        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
         {}
       );
       expect(result[0]).toEqual(variable);
     });
 
     it("should override client settings with custom token", async () => {
-      const result = await circle.listEnvVars({ token: "BUZZ" });
+      const result = await circle.listCheckoutKeys({ token: "BUZZ" });
       expect(mockAxios.get).toBeCalledWith(
-        expect.stringContaining("/github/foo/bar/envvar?circle-token=BUZZ"),
+        expect.stringContaining(
+          "/github/foo/bar/checkout-key?circle-token=BUZZ"
+        ),
         {}
       );
       expect(result[0]).toEqual(variable);
     });
   });
 
-  describe("Add Env", () => {
+  describe("Create checkout key", () => {
     beforeEach(() => {
       mockAxios._setMockResponse({ data: variable });
     });
 
-    it("should hit the add env endpoint with JSON headers", async () => {
-      const result = await circle.addEnvVar(variable);
+    it("should hit the create endpoint with JSON headers", async () => {
+      const result = await circle.addCheckoutKey("deploy-key");
       expect(mockAxios.post).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
-        variable,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accepts: "application/json"
-          }
-        }
+        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
+        { type: "deploy-key" },
+        createJsonHeader()
       );
 
       expect(result).toEqual(variable);
     });
 
     it("should override token and project", async () => {
-      const result = await circle.addEnvVar(variable, {
+      const result = await circle.addCheckoutKey("deploy-key", {
         token: "BAR",
         vcs: { owner: "buzz" }
       });
       expect(mockAxios.post).toBeCalledWith(
-        expect.stringContaining("/buzz/bar/envvar?circle-token=BAR"),
-        variable,
+        expect.stringContaining("/buzz/bar/checkout-key?circle-token=BAR"),
+        { type: "deploy-key" },
         expect.any(Object)
       );
 
@@ -82,36 +89,36 @@ describe("API - Env", () => {
     });
   });
 
-  describe("Get Env", () => {
+  describe("Get Checkout key", () => {
     beforeEach(() => {
       mockAxios._setMockResponse({ data: variable });
     });
 
-    it("should get single environment variable", async () => {
-      const result = await circle.getEnvVar("foo");
+    it("should get single checkout key", async () => {
+      const result = await circle.getCheckoutKey("foo");
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
+        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
         {}
       );
       expect(result).toEqual(variable);
     });
 
     it("should override client settings with custom token", async () => {
-      const result = await circle.getEnvVar("foo", {
+      const result = await circle.getCheckoutKey("foo", {
         token: "BUZZ",
         vcs: { owner: "bar" }
       });
       expect(mockAxios.get).toBeCalledWith(
-        expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
+        expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
         {}
       );
       expect(result).toEqual(variable);
     });
   });
 
-  describe("Delete Env", () => {
-    const response: DeleteEnvVarResponse = {
+  describe("Delete Key", () => {
+    const response: DeleteCheckoutKeyResponse = {
       message: "success"
     };
 
@@ -120,22 +127,22 @@ describe("API - Env", () => {
     });
 
     it("should hit delete endpoint", async () => {
-      const result = await circle.deleteEnvVar("foo");
+      const result = await circle.deleteCheckoutKey("foo");
 
       expect(mockAxios.delete).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
+        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
         {}
       );
       expect(result).toEqual(response);
     });
 
     it("should override client settings with custom token", async () => {
-      const result = await circle.deleteEnvVar("foo", {
+      const result = await circle.deleteCheckoutKey("foo", {
         token: "BUZZ",
         vcs: { owner: "bar" }
       });
       expect(mockAxios.delete).toBeCalledWith(
-        expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
+        expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
         {}
       );
       expect(result).toEqual(response);
