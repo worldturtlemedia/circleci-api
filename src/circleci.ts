@@ -151,12 +151,12 @@ export class CircleCI {
    * @param opts Optional settings
    */
   builds(
-    reqOptions: FilterRequestOptions = {},
+    reqOptions?: FilterRequestOptions,
     opts?: CircleRequest
   ): Promise<BuildSummary[]> {
     const { token, ...rest } = this.createRequest({
       ...(opts || {}),
-      options: { ...(opts ? opts.options : {}), ...reqOptions }
+      options: { ...(opts ? opts.options : {}), ...(reqOptions || {}) }
     });
     return getBuildSummaries(token, rest);
   }
@@ -217,12 +217,12 @@ export class CircleCI {
    * @param opts Optional settings
    */
   latestArtifacts(
-    reqOptions: ArtifactsRequestOptions = {},
+    reqOptions?: ArtifactsRequestOptions,
     opts: CircleRequest = {}
   ): Promise<Artifact[]> {
     const { token, ...rest } = this.createRequest({
       ...opts,
-      options: { ...opts.options, ...reqOptions }
+      options: { ...opts.options, ...(reqOptions || {}) }
     });
     return getLatestArtifacts(token, rest);
   }
