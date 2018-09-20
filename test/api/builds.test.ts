@@ -64,7 +64,7 @@ describe("API - Builds", () => {
 
     it("should fetch latest builds with options", async () => {
       mock.__setResponse(response);
-      const result = await circle.builds(null, { options: { limit: 5 } });
+      const result = await circle.builds(undefined, { options: { limit: 5 } });
 
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("?limit=5")
