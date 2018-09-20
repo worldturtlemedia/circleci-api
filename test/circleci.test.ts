@@ -29,12 +29,12 @@ describe("CircleCI", () => {
 
       // Override options, they shouldn't save
       circle
-        .latestArtifacts(null, {
+        .latestArtifacts(undefined, {
           vcs: { type: GitType.GITHUB, owner: "foo", repo: "bar" }
         })
         .catch(jest.fn());
 
-      expect(circle.defaults().vcs.owner).toBe("test");
+      expect(circle.defaults().vcs!.owner).toBe("test");
     });
 
     it("should add token to url", () => {
@@ -53,7 +53,7 @@ describe("CircleCI", () => {
       mock.__setResponse({ data: [1, 2, 3] });
 
       expect(() =>
-        circle.latestArtifacts(null, {
+        circle.latestArtifacts(undefined, {
           token: "new-token",
           vcs: { type: GitType.BITBUCKET, owner: "j", repo: "d" }
         })

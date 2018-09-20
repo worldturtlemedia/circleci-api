@@ -1,5 +1,5 @@
-let mockError;
-let mockResponse = {};
+let mockError: any;
+let mockResponse: any = {};
 
 const axiosMock: any = jest.genMockFromModule("axios");
 
@@ -32,11 +32,11 @@ axiosMock.put.mockImplementation(req);
 
 axiosMock.delete.mockImplementation(req);
 
-axiosMock._setMockError = err => {
+axiosMock._setMockError = (err: any) => {
   mockError = err;
 };
 
-axiosMock._setMockResponse = response => {
+axiosMock._setMockResponse = (response: any) => {
   mockResponse = { ...mockResponse, ...response };
 };
 

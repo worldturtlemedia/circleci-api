@@ -13,8 +13,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
           name: Install Dependencies
           command: yarn
@@ -24,9 +24,6 @@ jobs:
             - "~/.cache/yarn"
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Update yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-update
-      - run:
           name: Lint & Test
           command: yarn test:prod
       - run:
@@ -35,9 +32,6 @@ jobs:
       - run:
           name: Report Coverage
           command: yarn report-coverage
-      - run:
-          name: Upload yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-upload
       - store_artifacts:
           path: ./dist
           destination: dist
@@ -47,3 +41,5 @@ jobs:
       - store_artifacts:
           path: ./docs
           destination: docs
+      - store_test_results:
+          path: ./coverage
