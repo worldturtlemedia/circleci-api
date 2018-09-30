@@ -47,8 +47,7 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once",
-    "commitmsg": "commitlint -E GIT_PARAMS"
+    "travis-deploy-once": "travis-deploy-once"
   },
   "dependencies": {
     "axios": "^0.18.0"
@@ -96,7 +95,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
+      "pre-push": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
