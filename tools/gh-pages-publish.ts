@@ -24,7 +24,7 @@ exec("git init");
 exec("git add .");
 exec('git config user.name "Jordon de Hoog"');
 exec('git config user.email "jordon.dehoog@gmail.com"');
-exec('git commit -m "docs(docs): update gh-pages [skip-ci]"');
+exec('git commit -m "docs(docs): update gh-pages [skip ci]"');
 exec(
   `git push --force --quiet "https://${ghToken}@${repository}" master:gh-pages`
 );
