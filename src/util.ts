@@ -1,5 +1,5 @@
 import { Options, FullRequest, GitType } from "./types";
-import { AxiosRequestConfig } from "../node_modules/axios";
+import { AxiosRequestConfig } from "axios";
 
 /**
  * Validate a Request object for endpoints that require
