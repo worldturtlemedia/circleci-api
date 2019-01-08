@@ -88,7 +88,7 @@
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.1.0",
     "tslint-config-standard": "^8.0.0",
-    "typedoc": "^0.13.0",
+    "typedoc": "^0.14.0",
     "typescript": "^3.1.1",
     "watch": "^1.0.2"
   },
