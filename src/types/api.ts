@@ -456,17 +456,25 @@ export interface PreviousBuild {
 }
 
 export interface BuildSummary {
+  compare?: string;
+  oss?: boolean;
   body?: string;
   branch?: string;
   build_num?: number;
   build_time_millis?: number;
   build_url?: string;
+  user?: {
+    is_user?: boolean;
+    login?: string;
+    vcs_type?: string;
+  };
   canceled?: boolean;
   committer_email?: string;
   committer_name?: string;
   dont_build?: boolean;
   lifecycle?: string;
   outcome?: string;
+  platform?: string;
   previous?: PreviousBuild;
   queued_at?: string;
   reponame?: string;
@@ -479,6 +487,17 @@ export interface BuildSummary {
   vcs_revision?: string;
   vcs_url?: string;
   why?: string;
+  workflows?: Workflow[];
+}
+
+export interface Workflow {
+  job_name: string;
+  job_id: string;
+  workflow_id: string;
+  workspace_id: string;
+  workflow_name: string;
+  upstream_job_ids?: any[];
+  upstream_concurrency_map?: any;
 }
 
 export interface Build extends BuildSummary {
@@ -538,11 +557,18 @@ export interface Build extends BuildSummary {
 
 export interface BuildWithSteps extends Build {
   steps: BuildStep[];
+  pull_requests: PullRequest[];
 }
 
 export interface BuildStep {
   name: string;
   actions: BuildStepAction[];
+}
+
+export interface PullRequest {
+  head_sha: string;
+  url: string;
+  [key: string]: any;
 }
 
 export interface BuildStepAction {

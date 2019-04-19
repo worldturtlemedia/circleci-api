@@ -1,14 +1,20 @@
 # CircleCi API Wrapper
 
-[![CircleCI](https://circleci.com/gh/jordond/circleci-api.svg?style=svg)](https://circleci.com/gh/jordond/circleci-api) [![Build Status](https://travis-ci.org/jordond/circleci-api.svg?branch=master)](https://travis-ci.org/jordond/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master) [![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api)
+![CircleCI branch](https://img.shields.io/circleci/project/github/jordond/circleci-api/master.svg?label=release%20build) ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/jordond/circleci-api.svg) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/jordond/circleci-api.svg)](https://greenkeeper.io/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
+[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/jordond/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
+
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
 
 A wrapper around the [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
 I recommend using this library if you are writing a tool or website in TypeScript. I have created definitions for each of the CircleCi endpoints. There may still be some errors, but I am open to contributions on making them better.
 
 If there are any features you would like, please feel free to open up an issue.
+
+## Note
+
+I did my best to correctly add types for all of the supported endpoints. However if you notice an incorrect payload type, or some missing properties, _please_ open up an issue, or submit a pull request.
 
 ## Installation
 
@@ -206,15 +212,15 @@ The last remaining endpoint probably won't be added unless there is demand.
 
 ## Contributing
 
-This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.  
+This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.
 
 This library uses [commitizen](https://github.com/commitizen/cz-cli) for commit messages, so be sure to use `yarn commit` when commiting your changes,
 
-1.  Fork this repo
-1.  Add your awesome feature
-1.  If adding functionality, add tests for your feature
-1.  Commit using [commitizen](https://github.com/commitizen/cz-cli): `yarn commit`
-1.  Submit a PR
+1. Fork this repo
+1. Add your awesome feature
+1. If adding functionality, add tests for your feature
+1. Commit using [commitizen](https://github.com/commitizen/cz-cli): `yarn commit`
+1. Submit a PR
 
 Example:
 
@@ -241,7 +247,7 @@ yarn commit
 
 ## License
 
-```
+```text
 Copyright 2018 Jordon de Hoog
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
