@@ -2,11 +2,11 @@
 
 A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript.
 
-![CircleCI branch](https://img.shields.io/circleci/project/github/jordond/circleci-api/master.svg?label=release%20build) ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/jordond/circleci-api.svg) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build)](https://circleci.com/gh/worldturtlemedia/circleci-api/tree/master) [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg)](https://circleci.com/gh/worldturtlemedia/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
 
-[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/jordond/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
+[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
 
-[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/status.svg)](https://david-dm.org/worldturtlemedia/circleci-api) [![devDependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/dev-status.svg)](https://david-dm.org/worldturtlemedia/circleci-api?type=dev)
 
 Usable in node and the browser. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
