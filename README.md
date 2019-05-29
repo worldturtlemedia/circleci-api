@@ -214,38 +214,7 @@ The last remaining endpoint probably won't be added unless there is demand.
 
 ## Contributing
 
-This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.
-
-This library uses [commitizen](https://github.com/commitizen/cz-cli) for commit messages, so be sure to use `yarn commit` when commiting your changes,
-
-1. Fork this repo
-1. Add your awesome feature
-1. If adding functionality, add tests for your feature
-1. Commit using [commitizen](https://github.com/commitizen/cz-cli): `yarn commit`
-1. Submit a PR
-
-Example:
-
-```bash
-# Setup
-git clone https://github.com/jordond/circleci-api
-cd circleci-api
-
-yarn
-
-# Make some changes
-
-...
-
-# Run tests then build
-yarn test:prod
-yarn build
-
-# Use commitzen to commit
-yarn commit
-
-# If all is good, open a PR!
-```
+See [CONTRIBUTING](https://github.com/worldturtlemedia/circlci-api/blob/master/CONTRIBUTING.md).
 
 ## License
 

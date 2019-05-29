@@ -29,6 +29,7 @@
     "lint:lib": "tslint --project ./tsconfig.json -t codeFrame 'src/**/*.ts'",
     "lint:tests": "tslint --project ./tsconfig.test.json -t codeFrame 'test/**/*.ts'",
     "lint": "npm run lint:lib && npm run lint:tests",
+    "format": "prettier --write '{src,test}/**/*.{ts,json}' '*.md'",
     "clean": "rimraf dist",
     "predocs": "rimraf docs",
     "docs": "typedoc --out docs --exclude '**/__mocks__/**' --excludeExternals --target es6 --includeDeclarations --excludePrivate --mode modules src",
@@ -46,8 +47,7 @@
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
-    "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "axios": "^0.18.0"
@@ -82,7 +82,6 @@
     "rollup-plugin-uglify": "6.0.2",
     "semantic-release": "15.13.12",
     "source-map-support": "0.5.12",
-    "travis-deploy-once": "5.0.11",
     "ts-jest": "24.0.2",
     "ts-node": "8.2.0",
     "tslint": "5.16.0",
