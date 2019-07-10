@@ -2,7 +2,7 @@
 
 A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript.
 
-![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build) ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build)](https://circleci.com/gh/worldturtlemedia/circleci-api/tree/master) [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg)](https://circleci.com/gh/worldturtlemedia/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
 
 [![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
 
@@ -245,6 +245,7 @@ The last remaining endpoint probably won't be added unless there is demand.
 
 ## Contributing
 
+<<<<<<< HEAD
 This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.
 
 This library uses [commitizen](https://github.com/commitizen/cz-cli) for commit messages, so be sure to use `yarn commit` when commiting your changes,
@@ -277,6 +278,11 @@ yarn commit
 
 # If all is good, open a PR!
 ```
+
+=======
+See [CONTRIBUTING](https://github.com/worldturtlemedia/circlci-api/blob/master/CONTRIBUTING.md).
+
+> > > > > > > develop
 
 ## License
 
