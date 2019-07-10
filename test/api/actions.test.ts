@@ -31,9 +31,9 @@ describe("API - Actions", () => {
         mock.__setResponse(response);
         const result = await circle.retry(5);
 
-        expect(mock.client).toBeCalledWith(TOKEN);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined);
         expect(mock.__postMock).toBeCalledWith(
-          "https://circleci.com/api/v1.1/project/github/test/repotest/5/retry"
+          "/project/github/test/repotest/5/retry"
         );
         expect(result).toEqual(response);
       });
@@ -41,13 +41,13 @@ describe("API - Actions", () => {
       it("should use passed in options", async () => {
         mock.__setResponse(response);
         const result = await circle.retry(5, {
-          token: "test",
+          token: TOKEN,
           vcs: { type: GitType.BITBUCKET, repo: "square" }
         });
 
-        expect(mock.client).toBeCalledWith(TOKEN);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined);
         expect(mock.__postMock).toBeCalledWith(
-          "https://circleci.com/api/v1.1/project/bitbucket/test/square/5/retry"
+          "/project/bitbucket/test/square/5/retry"
         );
         expect(result).toEqual(response);
       });
@@ -65,9 +65,9 @@ describe("API - Actions", () => {
         mock.__setResponse(response);
         const result = await circle.cancel(5);
 
-        expect(mock.client).toBeCalledWith(TOKEN);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined);
         expect(mock.__postMock).toBeCalledWith(
-          "https://circleci.com/api/v1.1/project/github/test/repotest/5/cancel"
+          "/project/github/test/repotest/5/cancel"
         );
         expect(result).toEqual(response);
       });
@@ -75,15 +75,26 @@ describe("API - Actions", () => {
       it("should use passed in options", async () => {
         mock.__setResponse(response);
         const result = await circle.cancel(5, {
-          token: "test",
+          token: TOKEN,
           vcs: { type: GitType.BITBUCKET, repo: "square" }
         });
 
-        expect(mock.client).toBeCalledWith(TOKEN);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined);
         expect(mock.__postMock).toBeCalledWith(
-          "https://circleci.com/api/v1.1/project/bitbucket/test/square/5/cancel"
+          "/project/bitbucket/test/square/5/cancel"
         );
         expect(result).toEqual(response);
+      });
+
+      it("should use the custom CircleCI url", async () => {
+        mock.__setResponse(response);
+        await new CircleCI({
+          token: TOKEN,
+          circleHost: "foo.bar/api",
+          vcs: { type: GitType.BITBUCKET, repo: "square", owner: "bar" }
+        }).cancel(5);
+
+        expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
       });
     });
   });
@@ -99,9 +110,9 @@ describe("API - Actions", () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuild();
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__postMock).toBeCalledWith(
-        "https://circleci.com/api/v1.1/project/github/test/repotest",
+        "/project/github/test/repotest",
         expect.any(Object)
       );
       expect(result).toEqual(response);
@@ -110,14 +121,14 @@ describe("API - Actions", () => {
     it("should use passed in options", async () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuild({
-        token: "test",
+        token: TOKEN,
         vcs: { type: GitType.BITBUCKET, repo: "square" },
         options: { branch: "develop" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__postMock).toBeCalledWith(
-        "https://circleci.com/api/v1.1/project/bitbucket/test/square/tree/develop",
+        "/project/bitbucket/test/square/tree/develop",
         expect.any(Object)
       );
       expect(result).toEqual(response);
@@ -135,9 +146,9 @@ describe("API - Actions", () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuildFor();
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__postMock).toBeCalledWith(
-        "https://circleci.com/api/v1.1/project/github/test/repotest/tree/master",
+        "/project/github/test/repotest/tree/master",
         expect.any(Object)
       );
       expect(result).toEqual(response);
@@ -146,14 +157,14 @@ describe("API - Actions", () => {
     it("should use passed in options", async () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuildFor("feat", {
-        token: "test",
+        token: TOKEN,
         vcs: { type: GitType.BITBUCKET, repo: "square" },
         options: { newBuildOptions: { tag: "foo" } }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__postMock).toBeCalledWith(
-        "https://circleci.com/api/v1.1/project/bitbucket/test/square/tree/feat",
+        "/project/bitbucket/test/square/tree/feat",
         expect.objectContaining({
           tag: "foo"
         })
@@ -167,7 +178,7 @@ describe("API - Actions", () => {
         vcs: { owner: "foo", repo: "bar" }
       });
       expect(mock.__postMock).toBeCalledWith(
-        "https://circleci.com/api/v1.1/project/github/foo/bar",
+        "/project/github/foo/bar",
         expect.any(Object)
       );
       expect(result).toEqual(response);

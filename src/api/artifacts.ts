@@ -2,7 +2,8 @@ import {
   GitInfo,
   ArtifactResponse,
   GitRequiredRequest,
-  createVcsUrl
+  createVcsUrl,
+  CircleOptions
 } from "../types";
 import { client } from "../client";
 import { queryParams } from "../util";
@@ -14,17 +15,18 @@ import { queryParams } from "../util";
  * @example /project/:vcs-type/:username/:project/:build_num/artifacts
  *
  * @param token - CircleCI API token
- * @param vcs - Project's git information
  * @param buildNumber - Target build number
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs - Project's git information
  * @returns Promise of an array of build artifacs
  */
 export function getBuildArtifacts(
   token: string,
-  vcs: GitInfo,
-  buildNumber: number
+  buildNumber: number,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<ArtifactResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}/artifacts`;
-  return client(token).get<ArtifactResponse>(url);
+  return client(token, circleHost).get<ArtifactResponse>(url);
 }
 
 /**
@@ -38,15 +40,16 @@ export function getBuildArtifacts(
  * @param token - CircleCI API token
  * @param vcs - Project's git information
  * @param options - Query parameters
+ * @param circleHost Provide custom url for CircleCI
  */
 export function getLatestArtifacts(
   token: string,
-  { vcs, options = {} }: GitRequiredRequest
+  { vcs, options = {}, circleHost }: GitRequiredRequest
 ): Promise<ArtifactResponse> {
   const { branch, filter } = options;
   const url = `${createVcsUrl(vcs)}/latest/artifacts${queryParams({
     branch,
     filter
   })}`;
-  return client(token).get<ArtifactResponse>(url);
+  return client(token, circleHost).get<ArtifactResponse>(url);
 }

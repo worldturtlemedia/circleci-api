@@ -1,4 +1,5 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
+import { API_BASE } from "./types";
 
 function get<T>(
   token: string,
@@ -29,28 +30,46 @@ function addTokenParam(token: string, url: string): string {
   return `${url}${url.includes("?") ? "&" : "?"}circle-token=${token}`;
 }
 
+/**
+ * Create a custom GET request for CircleCI
+ *
+ * @deprecated In favour of using the [client] instead.
+ */
 export function circleGet<T>(
   token: string,
   url: string,
   options?: AxiosRequestConfig
 ): AxiosPromise<T> {
+  console.warn("circleGet is deprecated, use `client('token').get(...)`");
   return client(token).get(url, options);
 }
 
+/**
+ * Create a custom POST request for CircleCI
+ *
+ * @deprecated In favour of using the [client] instead.
+ */
 export function circlePost<T>(
   token: string,
   url: string,
   body?: any,
   options?: AxiosRequestConfig
 ): AxiosPromise<T> {
+  console.warn("circlePost is deprecated, use `client('token').post(...)`");
   return client(token).post(url, body, options);
 }
 
+/**
+ * Create a custom DELETE request for CircleCI
+ *
+ * @deprecated In favour of using the [client] instead.
+ */
 export function circleDelete<T>(
   token: string,
   url: string,
   options?: AxiosRequestConfig
 ): AxiosPromise<T> {
+  console.warn("circleDelete is deprecated, use `client('token').delete(...)`");
   return client(token).delete(url, options);
 }
 
@@ -64,26 +83,37 @@ export interface ClientFactory {
   delete: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>;
 }
 
-export function client(token: string) {
+/**
+ * Create a client for interacting with the CircleCI API.
+ *
+ * @param token CircleCI API token
+ * @param circleHost Custom host address for CircleCI
+ */
+export function client(token: string, circleHost: string = API_BASE) {
+  const baseOptions: AxiosRequestConfig = { baseURL: circleHost };
   const factory: ClientFactory = {
     get: async <T>(
       url: string,
       options: AxiosRequestConfig = {}
     ): Promise<T> => {
-      return (await get<T>(token, url, options)).data;
+      return (await get<T>(token, url, { ...baseOptions, ...options })).data;
     },
     post: async <T>(
       url: string,
       body?: any,
       options: AxiosRequestConfig = {}
     ): Promise<T> => {
-      return (await post<any, T>(token, url, body, options)).data;
+      return (await post<any, T>(token, url, body, {
+        ...baseOptions,
+        ...options
+      })).data;
     },
     delete: async <T>(
       url: string,
       options: AxiosRequestConfig = {}
     ): Promise<T> => {
-      return (await doDelete<T>(token, url, options)).data;
+      return (await doDelete<T>(token, url, { ...baseOptions, ...options }))
+        .data;
     }
   };
 

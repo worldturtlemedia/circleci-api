@@ -30,8 +30,8 @@ describe("API - Env", () => {
       const result = await circle.listEnvVars();
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result[0]).toEqual(variable);
     });
@@ -40,7 +40,7 @@ describe("API - Env", () => {
       const result = await circle.listEnvVars({ token: "BUZZ" });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/github/foo/bar/envvar?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result[0]).toEqual(variable);
     });
@@ -54,14 +54,14 @@ describe("API - Env", () => {
     it("should hit the add env endpoint with JSON headers", async () => {
       const result = await circle.addEnvVar(variable);
       expect(mockAxios.post).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
+        `/project/github/foo/bar/envvar?circle-token=${TOKEN}`,
         variable,
-        {
+        expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
             Accepts: "application/json"
           }
-        }
+        })
       );
 
       expect(result).toEqual(variable);
@@ -80,6 +80,20 @@ describe("API - Env", () => {
 
       expect(result).toEqual(variable);
     });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).addEnvVar(variable);
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
+    });
   });
 
   describe("Get Env", () => {
@@ -91,8 +105,8 @@ describe("API - Env", () => {
       const result = await circle.getEnvVar("foo");
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result).toEqual(variable);
     });
@@ -104,9 +118,22 @@ describe("API - Env", () => {
       });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result).toEqual(variable);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).getEnvVar("foo");
+
+      expect(mockAxios.get).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 
@@ -123,8 +150,8 @@ describe("API - Env", () => {
       const result = await circle.deleteEnvVar("foo");
 
       expect(mockAxios.delete).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/envvar/foo?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result).toEqual(response);
     });
@@ -136,9 +163,22 @@ describe("API - Env", () => {
       });
       expect(mockAxios.delete).toBeCalledWith(
         expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result).toEqual(response);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).deleteEnvVar("foo");
+
+      expect(mockAxios.delete).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 });

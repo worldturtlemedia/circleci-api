@@ -26,8 +26,8 @@ describe("API - Cache", () => {
       const result = await circle.clearCache();
 
       expect(mockAxios.delete).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/build-cache?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/build-cache?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result).toEqual(response);
     });
@@ -39,9 +39,22 @@ describe("API - Cache", () => {
       });
       expect(mockAxios.delete).toBeCalledWith(
         expect.stringContaining("/foo/foo/build-cache?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result).toEqual(response);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).clearCache();
+
+      expect(mockAxios.delete).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 });

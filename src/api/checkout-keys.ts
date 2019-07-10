@@ -3,7 +3,8 @@ import {
   CheckoutKeyResponse,
   createVcsUrl,
   CheckoutKey,
-  DeleteCheckoutKeyResponse
+  DeleteCheckoutKeyResponse,
+  CircleOptions
 } from "../types";
 import { client } from "../client";
 import { createJsonHeader } from "../util";
@@ -15,14 +16,15 @@ import { createJsonHeader } from "../util";
  * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key
  *
  * @param token CircleCI API token
+ * @param circleHost Provide custom url for CircleCI
  * @param vcs Git information for project
  * @returns list of checkout keys for a specific project
  */
 export function getCheckoutKeys(
   token: string,
-  vcs: GitInfo
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<CheckoutKeyResponse> {
-  return client(token).get<CheckoutKeyResponse>(createUrl(vcs));
+  return client(token, circleHost).get<CheckoutKeyResponse>(createUrl(vcs));
 }
 
 /**
@@ -32,16 +34,17 @@ export function getCheckoutKeys(
  * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param key Key to create for project
+ * @param vcs Git information for project
+ * @param circleHost Provide custom url for CircleCI
  * @returns New checkout key
  */
 export function createCheckoutKey(
   token: string,
-  vcs: GitInfo,
-  key: CheckoutKey
+  key: CheckoutKey,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<CheckoutKeyResponse> {
-  return client(token).post<CheckoutKeyResponse>(
+  return client(token, circleHost).post<CheckoutKeyResponse>(
     createUrl(vcs),
     key,
     createJsonHeader()
@@ -55,16 +58,19 @@ export function createCheckoutKey(
  * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param fingerprint Fingerprint of the key to fetch
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs Git information for project
  * @returns list of checkout keys for a specific project
  */
 export function getCheckoutKey(
   token: string,
-  vcs: GitInfo,
-  fingerprint: string
+  fingerprint: string,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<CheckoutKeyResponse> {
-  return client(token).get<CheckoutKeyResponse>(createUrl(vcs, fingerprint));
+  return client(token, circleHost).get<CheckoutKeyResponse>(
+    createUrl(vcs, fingerprint)
+  );
 }
 
 /**
@@ -74,16 +80,17 @@ export function getCheckoutKey(
  * @example DELETE : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/checkout-key/:fingerprint
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param fingerprint Fingerprint of the key to delete
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs Git information for project
  * @returns Status message of deletion
  */
 export function deleteCheckoutKey(
   token: string,
-  vcs: GitInfo,
-  fingerprint: string
+  fingerprint: string,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<DeleteCheckoutKeyResponse> {
-  return client(token).delete<DeleteCheckoutKeyResponse>(
+  return client(token, circleHost).delete<DeleteCheckoutKeyResponse>(
     createUrl(vcs, fingerprint)
   );
 }

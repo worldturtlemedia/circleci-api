@@ -3,7 +3,7 @@ import { CircleCI } from "circleci-api";
 const api = new CircleCI({
   token: " ", // Not needed for latest artifacts endpoint
   vcs: {
-    owner: "jordond",
+    owner: "worldturtlemedia",
     repo: "circleci-api"
   }
 });

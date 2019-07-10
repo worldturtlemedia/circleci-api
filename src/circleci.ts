@@ -31,7 +31,8 @@ import {
   SSHKey,
   AddSSHKeyResponse,
   HerokuKey,
-  AddHerokuResponse
+  AddHerokuResponse,
+  CircleOptions
 } from "./types";
 import { getAllProjects, postFollowNewProject } from "./api/projects";
 import { getRecentBuilds, getBuildSummaries, getFullBuild } from "./api/builds";
@@ -65,6 +66,7 @@ export class CircleCI {
   private token: string;
   private vcs: GitInfo;
   private options: Options;
+  private circleOptions: CircleOptions;
 
   /**
    *
@@ -79,11 +81,13 @@ export class CircleCI {
   constructor({
     token,
     vcs: { type = GitType.GITHUB, owner = "", repo = "" } = {},
-    options = {}
+    options = {},
+    circleHost
   }: CircleCIOptions) {
     this.token = token;
     this.vcs = { type, owner, repo };
     this.options = options;
+    this.circleOptions = { circleHost };
   }
 
   /**
@@ -105,14 +109,14 @@ export class CircleCI {
    * Get the currently authenticated user
    */
   me(): Promise<Me> {
-    return getMe(this.token);
+    return getMe(this.token, this.circleOptions);
   }
 
   /**
    * Get a list of all the projects the user follows
    */
   projects(): Promise<Project[]> {
-    return getAllProjects(this.token);
+    return getAllProjects(this.token, this.circleOptions);
   }
 
   /**
@@ -121,7 +125,7 @@ export class CircleCI {
    */
   followProject(opts: GitRequiredRequest): Promise<FollowNewResult> {
     const { token, ...rest } = this.createRequest(opts);
-    return postFollowNewProject(token, rest);
+    return postFollowNewProject(token, { ...rest, ...this.circleOptions });
   }
 
   /**
@@ -139,7 +143,7 @@ export class CircleCI {
       ...(opts || {}),
       options: { ...(opts ? opts.options : {}), ...reqOptions }
     });
-    return getRecentBuilds(token, options);
+    return getRecentBuilds(token, { ...options, ...this.circleOptions });
   }
 
   /**
@@ -158,7 +162,7 @@ export class CircleCI {
       ...(opts || {}),
       options: { ...(opts ? opts.options : {}), ...(reqOptions || {}) }
     });
-    return getBuildSummaries(token, rest);
+    return getBuildSummaries(token, { ...rest, ...this.circleOptions });
   }
 
   /**
@@ -179,7 +183,7 @@ export class CircleCI {
       ...opts,
       options: { ...(opts ? opts.options : {}), ...reqOptions, branch }
     });
-    return getBuildSummaries(token, rest);
+    return getBuildSummaries(token, { ...rest, ...this.circleOptions });
   }
 
   /**
@@ -195,7 +199,7 @@ export class CircleCI {
       ...(opts || {}),
       options: { ...(opts ? opts.options : {}) }
     });
-    return getFullBuild(token, vcs, buildNumber);
+    return getFullBuild(token, buildNumber, { ...vcs, ...this.circleOptions });
   }
 
   /**
@@ -205,7 +209,10 @@ export class CircleCI {
    */
   artifacts(buildNumber: number, opts?: CircleRequest): Promise<Artifact[]> {
     const { token, vcs } = this.createRequest(opts);
-    return getBuildArtifacts(token, vcs, buildNumber);
+    return getBuildArtifacts(token, buildNumber, {
+      ...vcs,
+      ...this.circleOptions
+    });
   }
 
   /**
@@ -224,7 +231,7 @@ export class CircleCI {
       ...opts,
       options: { ...opts.options, ...(reqOptions || {}) }
     });
-    return getLatestArtifacts(token, rest);
+    return getLatestArtifacts(token, { ...rest, ...this.circleOptions });
   }
 
   /**
@@ -234,7 +241,7 @@ export class CircleCI {
    */
   retry(build: number, opts?: CircleRequest): Promise<BuildSummary> {
     return this.performAction(
-      this.createRequest(opts),
+      { ...this.createRequest(opts), ...this.circleOptions },
       build,
       BuildAction.RETRY
     );
@@ -247,7 +254,7 @@ export class CircleCI {
    */
   cancel(build: number, opts?: CircleRequest): Promise<BuildSummary> {
     return this.performAction(
-      this.createRequest(opts),
+      { ...this.createRequest(opts), ...this.circleOptions },
       build,
       BuildAction.CANCEL
     );
@@ -261,7 +268,7 @@ export class CircleCI {
    */
   triggerBuild(opts?: CircleRequest): Promise<Build> {
     const { token, ...rest } = this.createRequest(opts);
-    return postTriggerNewBuild(token, rest);
+    return postTriggerNewBuild(token, { ...rest, ...this.circleOptions });
   }
 
   /**
@@ -279,7 +286,7 @@ export class CircleCI {
       ...opts,
       options: { ...(opts ? opts.options : {}), branch }
     });
-    return postTriggerNewBuild(token, request);
+    return postTriggerNewBuild(token, { ...request, ...this.circleOptions });
   }
 
   /*
@@ -294,7 +301,7 @@ export class CircleCI {
    */
   clearCache(opts?: CircleRequest): Promise<ClearCacheResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return clearCache(token, vcs);
+    return clearCache(token, { ...vcs, ...this.circleOptions });
   }
 
   /*
@@ -310,7 +317,7 @@ export class CircleCI {
    */
   listEnvVars(opts?: CircleRequest): Promise<ListEnvVariablesResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return listEnv(token, vcs);
+    return listEnv(token, { ...vcs, ...this.circleOptions });
   }
 
   /**
@@ -325,7 +332,7 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<EnvVariableResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return addEnv(token, vcs, variable);
+    return addEnv(token, variable, { ...vcs, ...this.circleOptions });
   }
 
   /**
@@ -340,7 +347,7 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<EnvVariableResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return getEnv(token, vcs, envName);
+    return getEnv(token, envName, { ...vcs, ...this.circleOptions });
   }
 
   /**
@@ -355,7 +362,7 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<DeleteEnvVarResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return deleteEnv(token, vcs, envName);
+    return deleteEnv(token, envName, { ...vcs, ...this.circleOptions });
   }
 
   /*
@@ -370,7 +377,7 @@ export class CircleCI {
    */
   listCheckoutKeys(opts?: CircleRequest): Promise<CheckoutKeyResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return getCheckoutKeys(token, vcs);
+    return getCheckoutKeys(token, { ...vcs, ...this.circleOptions });
   }
 
   /**
@@ -385,7 +392,11 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<CheckoutKeyResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return createCheckoutKey(token, vcs, { type });
+    return createCheckoutKey(
+      token,
+      { type },
+      { ...vcs, ...this.circleOptions }
+    );
   }
 
   /**
@@ -400,7 +411,10 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<CheckoutKeyResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return getCheckoutKey(token, vcs, fingerprint);
+    return getCheckoutKey(token, fingerprint, {
+      ...vcs,
+      ...this.circleOptions
+    });
   }
 
   /**
@@ -415,7 +429,10 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<DeleteCheckoutKeyResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return deleteCheckoutKey(token, vcs, fingerprint);
+    return deleteCheckoutKey(token, fingerprint, {
+      ...vcs,
+      ...this.circleOptions
+    });
   }
 
   /**
@@ -430,7 +447,10 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<TestMetadataResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return getTestMetadata(token, vcs, buildNumber);
+    return getTestMetadata(token, buildNumber, {
+      ...vcs,
+      ...this.circleOptions
+    });
   }
 
   /**
@@ -443,7 +463,7 @@ export class CircleCI {
    */
   addSSHKey(key: SSHKey, opts?: CircleRequest): Promise<AddSSHKeyResponse> {
     const { token, vcs } = this.createRequest(opts);
-    return addSSHKey(token, vcs, key);
+    return addSSHKey(token, vcs, key, this.circleOptions);
   }
 
   /**
@@ -457,7 +477,7 @@ export class CircleCI {
     opts?: CircleRequest
   ): Promise<AddHerokuResponse> {
     const { token } = this.createRequest(opts);
-    return addHerokuKey(token, key);
+    return addHerokuKey(token, key, this.circleOptions);
   }
 
   /*
@@ -471,8 +491,8 @@ export class CircleCI {
    * @throws If missing a token, or VCS options
    * @returns Merged request object
    */
-  private createRequest(opts: CircleRequest = {}): FullRequest {
-    const request: FullRequest = {
+  private createRequest(opts: CircleRequest = {}): FullRequest & CircleOptions {
+    const request: FullRequest & CircleOptions = {
       token: opts.token || this.token,
       options: { ...this.options, ...opts.options },
       vcs: { ...this.vcs, ...opts.vcs }
@@ -492,11 +512,11 @@ export class CircleCI {
    * @param action Type of action to perform
    */
   private performAction(
-    request: FullRequest,
+    request: FullRequest & CircleOptions,
     build: number,
     action: BuildAction
   ): Promise<BuildActionResponse> {
-    const { token, vcs } = request;
-    return postBuildActions(token, vcs, build, action);
+    const { token, vcs, circleHost } = request;
+    return postBuildActions(token, build, action, { ...vcs, circleHost });
   }
 }
