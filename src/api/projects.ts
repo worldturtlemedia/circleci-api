@@ -4,7 +4,8 @@ import {
   GitRequiredRequest,
   FollowProjectResponse,
   API_ALL_PROJECTS,
-  createVcsUrl
+  createVcsUrl,
+  CircleOptions
 } from "../types";
 
 /**
@@ -12,8 +13,11 @@ import {
  * @see https://circleci.com/docs/api/v1-reference/#projects
  * @example GET - /projects
  */
-export function getAllProjects(token: string): Promise<AllProjectsResponse> {
-  return client(token).get<AllProjectsResponse>(API_ALL_PROJECTS);
+export function getAllProjects(
+  token: string,
+  { circleHost }: CircleOptions = {}
+): Promise<AllProjectsResponse> {
+  return client(token, circleHost).get<AllProjectsResponse>(API_ALL_PROJECTS);
 }
 
 /**
@@ -23,8 +27,8 @@ export function getAllProjects(token: string): Promise<AllProjectsResponse> {
  */
 export function postFollowNewProject(
   token: string,
-  { vcs }: GitRequiredRequest
+  { vcs, circleHost }: GitRequiredRequest
 ): Promise<FollowProjectResponse> {
   const url = `${createVcsUrl(vcs)}/follow`;
-  return client(token).post<FollowProjectResponse>(url);
+  return client(token, circleHost).post<FollowProjectResponse>(url);
 }

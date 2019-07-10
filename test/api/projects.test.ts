@@ -1,4 +1,4 @@
-import { CircleCI, API_ALL_PROJECTS } from "../../src";
+import { CircleCI, API_ALL_PROJECTS, getAllProjects } from "../../src";
 import { AllProjectsResponse, FollowNewResult } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -34,7 +34,7 @@ describe("API - Projects", () => {
       mock.__setResponse(response);
       const result = await circle.projects();
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__getMock).toBeCalledWith(API_ALL_PROJECTS);
       expect(result).toEqual(response);
     });
@@ -44,6 +44,24 @@ describe("API - Projects", () => {
 
       const check = circle.projects();
       await expect(check).rejects.toEqual({ code: 404 });
+    });
+
+    it("should use the default circleci host", async () => {
+      mock.__setResponse(response);
+      await getAllProjects(TOKEN);
+
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+    });
+
+    it("should use a custom circleci host", async () => {
+      mock.__setResponse(response);
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).projects();
+
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
     });
   });
 
@@ -64,7 +82,7 @@ describe("API - Projects", () => {
         }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__postMock).toBeCalledWith(
         expect.stringContaining("johnsmith/tinker/follow")
       );
@@ -75,6 +93,17 @@ describe("API - Projects", () => {
 
       const check = circle.followProject({ vcs: { owner: "t", repo: "t" } });
       await expect(check).rejects.toEqual({ code: 404 });
+    });
+
+    it("should use a custom circleci host", async () => {
+      mock.__setResponse(response);
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).followProject({} as any);
+
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
     });
   });
 });

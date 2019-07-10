@@ -1,4 +1,9 @@
-import { ClearCacheResponse, GitInfo, createVcsUrl } from "../types";
+import {
+  ClearCacheResponse,
+  GitInfo,
+  createVcsUrl,
+  CircleOptions
+} from "../types";
 import { client } from "../client";
 
 /**
@@ -8,13 +13,14 @@ import { client } from "../client";
  * @example DELETE : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/build-cache
  *
  * @param token CircleCI API token
+ * @param circleHost Provide custom url for CircleCI
  * @param vcs Git info for project
  * @returns status message of request
  */
 export function clearCache(
   token: string,
-  vcs: GitInfo
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<ClearCacheResponse> {
   const url = `${createVcsUrl(vcs)}/build-cache`;
-  return client(token).delete(url);
+  return client(token, circleHost).delete(url);
 }

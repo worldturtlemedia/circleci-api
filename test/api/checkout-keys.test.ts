@@ -40,8 +40,8 @@ describe("API - Checkout Keys", () => {
       const result = await circle.listCheckoutKeys();
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result[0]).toEqual(variable);
     });
@@ -52,9 +52,22 @@ describe("API - Checkout Keys", () => {
         expect.stringContaining(
           "/github/foo/bar/checkout-key?circle-token=BUZZ"
         ),
-        {}
+        expect.anything()
       );
       expect(result[0]).toEqual(variable);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).listCheckoutKeys();
+
+      expect(mockAxios.get).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 
@@ -66,9 +79,9 @@ describe("API - Checkout Keys", () => {
     it("should hit the create endpoint with JSON headers", async () => {
       const result = await circle.addCheckoutKey("deploy-key");
       expect(mockAxios.post).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
+        `/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
         { type: "deploy-key" },
-        createJsonHeader()
+        expect.objectContaining(createJsonHeader())
       );
 
       expect(result).toEqual(variable);
@@ -87,6 +100,20 @@ describe("API - Checkout Keys", () => {
 
       expect(result).toEqual(variable);
     });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).addCheckoutKey("deploy-key");
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
+    });
   });
 
   describe("Get Checkout key", () => {
@@ -98,8 +125,8 @@ describe("API - Checkout Keys", () => {
       const result = await circle.getCheckoutKey("foo");
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result).toEqual(variable);
     });
@@ -111,9 +138,22 @@ describe("API - Checkout Keys", () => {
       });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result).toEqual(variable);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).getCheckoutKey("test");
+
+      expect(mockAxios.get).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 
@@ -130,8 +170,8 @@ describe("API - Checkout Keys", () => {
       const result = await circle.deleteCheckoutKey("foo");
 
       expect(mockAxios.delete).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/checkout-key/foo?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result).toEqual(response);
     });
@@ -143,9 +183,22 @@ describe("API - Checkout Keys", () => {
       });
       expect(mockAxios.delete).toBeCalledWith(
         expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result).toEqual(response);
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).deleteCheckoutKey("foo");
+
+      expect(mockAxios.delete).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 });

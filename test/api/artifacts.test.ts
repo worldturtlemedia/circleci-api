@@ -45,6 +45,17 @@ describe("API - Artifacts", () => {
     expect(result).toEqual(artifact);
   });
 
+  it("should use a custom circleci host", async () => {
+    mock.__setResponse(artifact);
+    await new CircleCI({
+      token: TOKEN,
+      vcs: { owner: "test", repo: "proj" },
+      circleHost: "foo.bar/api"
+    }).artifacts(42);
+
+    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+  });
+
   describe("Latest Artifacts", () => {
     it("should fetch latest artifact for project", async () => {
       mock.__setResponse(artifact);
@@ -52,7 +63,7 @@ describe("API - Artifacts", () => {
         vcs: { owner: "t", repo: "r" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("t/r/latest/artifacts")
       );
@@ -65,7 +76,7 @@ describe("API - Artifacts", () => {
         vcs: { owner: "test2" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("test2/proj/latest/artifacts")
       );
@@ -79,11 +90,22 @@ describe("API - Artifacts", () => {
         options: { branch: "develop" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("branch=develop")
       );
       expect(result).toEqual(artifact);
+    });
+
+    it("should use a custom circleci host", async () => {
+      mock.__setResponse(artifact);
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).latestArtifacts();
+
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
     });
 
     it("should throw an error if request fails", async () => {

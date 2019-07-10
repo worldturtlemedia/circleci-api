@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { client, circleGet, circlePost, circleDelete } from "../src/client";
+import { API_BASE } from "../src";
 
 jest.mock("axios");
 
@@ -21,58 +22,104 @@ describe("Client", () => {
   });
 
   describe("Factory", () => {
+    it("should call the default Circle URL", () => {
+      client(TOKEN)
+        .get(URL)
+        .catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
+        baseURL: API_BASE
+      });
+    });
+
+    it("should call a custom Circle URL", () => {
+      client(TOKEN, "foo.bar/api")
+        .get(URL)
+        .catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
+        baseURL: "foo.bar/api"
+      });
+    });
+
+    it("should override the custom url with another url", () => {
+      client(TOKEN, "foo.bar/api")
+        .get(URL, { baseURL: "biz.baz/api" })
+        .catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
+        baseURL: "biz.baz/api"
+      });
+    });
+
     it("should add token param to url for get", () => {
       client(TOKEN)
         .get(URL)
         .catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, expect.anything());
     });
 
     it("should add token param to url for post", () => {
       client(TOKEN)
         .post(URL, null)
         .catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, null, {});
+      expect(mockAxios.post).toBeCalledWith(
+        URL_WITH_TOKEN,
+        null,
+        expect.anything()
+      );
     });
 
     it("should use options", () => {
       client(TOKEN)
         .post(URL, "test", { timeout: 1000 })
         .catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, "test", {
-        timeout: 1000
-      });
+      expect(mockAxios.post).toBeCalledWith(
+        URL_WITH_TOKEN,
+        "test",
+        expect.objectContaining({
+          timeout: 1000
+        })
+      );
     });
   });
 
   describe("circleGet", () => {
     it("should get url with auth token", () => {
+      /* tslint:disable-next-line:deprecation */
       circleGet(TOKEN, URL).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, expect.anything());
     });
 
     it("should get url with options", () => {
+      /* tslint:disable-next-line:deprecation */
       circleGet(TOKEN, URL, { timeout: 1000 }).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
-        timeout: 1000
-      });
+      expect(mockAxios.get).toBeCalledWith(
+        URL_WITH_TOKEN,
+        expect.objectContaining({
+          timeout: 1000
+        })
+      );
     });
 
     it("should handle null options", () => {
+      /* tslint:disable-next-line:deprecation */
       circleGet(TOKEN, URL, undefined).catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {});
+      expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, expect.anything());
     });
 
     it("should add circle-token param with ?", () => {
+      /* tslint:disable-next-line:deprecation */
       circleGet("foo", "bar.com").catch(jest.fn());
-      expect(mockAxios.get).toBeCalledWith("bar.com?circle-token=foo", {});
+      expect(mockAxios.get).toBeCalledWith(
+        "bar.com?circle-token=foo",
+        expect.anything()
+      );
     });
 
     it("should add circle-token param with &", () => {
+      /* tslint:disable-next-line:deprecation */
       circleGet("foo", "bar.com?fizz=buzz").catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(
         "bar.com?fizz=buzz&circle-token=foo",
-        {}
+        expect.anything()
       );
     });
 
@@ -87,7 +134,7 @@ describe("Client", () => {
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         `/biz/baz?circle-token=${TOKEN}`,
-        {}
+        expect.anything()
       );
 
       mockAxios._setMockResponse({ data: "okay" });
@@ -96,16 +143,22 @@ describe("Client", () => {
 
   describe("circlePost", () => {
     it("should post url", () => {
+      /* tslint:disable-next-line:deprecation */
       circlePost(TOKEN, URL, null).catch(jest.fn());
-      expect(mockAxios.post).toBeCalledWith(URL_WITH_TOKEN, null, {});
+      expect(mockAxios.post).toBeCalledWith(
+        URL_WITH_TOKEN,
+        null,
+        expect.anything()
+      );
     });
 
     it("should post url with options", () => {
+      /* tslint:disable-next-line:deprecation */
       circlePost(TOKEN, URL, { cat: "meow" }, { timeout: 1 }).catch(jest.fn());
       expect(mockAxios.post).toBeCalledWith(
         URL_WITH_TOKEN,
         { cat: "meow" },
-        { timeout: 1 }
+        expect.objectContaining({ timeout: 1 })
       );
     });
 
@@ -121,7 +174,7 @@ describe("Client", () => {
       expect(mockAxios.post).toHaveBeenCalledWith(
         `/biz/baz?circle-token=${TOKEN}`,
         { foo: "bar" },
-        {}
+        expect.anything()
       );
 
       mockAxios._setMockResponse({ data: "okay" });
@@ -130,15 +183,23 @@ describe("Client", () => {
 
   describe("circleDelete", () => {
     it("should send delete to url", () => {
+      /* tslint:disable-next-line:deprecation */
       circleDelete("foo", "bar.com").catch(jest.fn());
-      expect(mockAxios.delete).toBeCalledWith("bar.com?circle-token=foo", {});
+      expect(mockAxios.delete).toBeCalledWith(
+        "bar.com?circle-token=foo",
+        expect.anything()
+      );
     });
 
     it("should delete url with options", () => {
+      /* tslint:disable-next-line:deprecation */
       circleDelete(TOKEN, URL, { timeout: 1000 }).catch(jest.fn());
-      expect(mockAxios.delete).toBeCalledWith(URL_WITH_TOKEN, {
-        timeout: 1000
-      });
+      expect(mockAxios.delete).toBeCalledWith(
+        URL_WITH_TOKEN,
+        expect.objectContaining({
+          timeout: 1000
+        })
+      );
     });
 
     it("should be able to use the factory to delete", () => {
@@ -152,7 +213,7 @@ describe("Client", () => {
 
       expect(mockAxios.delete).toHaveBeenCalledWith(
         `/biz/baz?circle-token=${TOKEN}`,
-        {}
+        expect.anything()
       );
 
       mockAxios._setMockResponse({ data: "okay" });

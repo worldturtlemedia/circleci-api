@@ -5,7 +5,8 @@ import {
   createVcsUrl,
   HerokuKey,
   AddHerokuResponse,
-  API_BASE
+  CircleOptions,
+  API_USER
 } from "../types";
 import { client } from "../client";
 
@@ -19,15 +20,17 @@ import { client } from "../client";
  * @param token CircleCI API token
  * @param vcs Git information for project
  * @param key SSH key details to add to project
+ * @param circleHost Provide custom url for CircleCI
  * @returns nothing unless error
  */
 export function addSSHKey(
   token: string,
   vcs: GitInfo,
-  key: SSHKey
+  key: SSHKey,
+  { circleHost }: CircleOptions = {}
 ): Promise<AddSSHKeyResponse> {
   const url = `${createVcsUrl(vcs)}/ssh-key`;
-  return client(token).post<AddSSHKeyResponse>(url, key);
+  return client(token, circleHost).post<AddSSHKeyResponse>(url, key);
 }
 
 /**
@@ -38,12 +41,14 @@ export function addSSHKey(
  *
  * @param token CircleCI API token
  * @param key Heroku key to add to project
+ * @param circleHost Provide custom url for CircleCI
  * @returns nothing unless error
  */
 export function addHerokuKey(
   token: string,
-  key: HerokuKey
+  key: HerokuKey,
+  { circleHost }: CircleOptions = {}
 ): Promise<AddHerokuResponse> {
-  const url = `${API_BASE}/user/heroku-key`;
-  return client(token).post<AddHerokuResponse>(url, key);
+  const url = `${API_USER}/heroku-key`;
+  return client(token, circleHost).post<AddHerokuResponse>(url, key);
 }

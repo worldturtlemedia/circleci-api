@@ -1,4 +1,4 @@
-import { MeResponse, API_ME } from "../types";
+import { MeResponse, API_ME, CircleOptions } from "../types";
 import { client } from "../client";
 
 /**
@@ -6,6 +6,9 @@ import { client } from "../client";
  * @see https://circleci.com/docs/api/v1-reference/#getting-started
  * @example GET - /me
  */
-export function getMe(token: string): Promise<MeResponse> {
-  return client(token).get<MeResponse>(API_ME);
+export function getMe(
+  token: string,
+  { circleHost }: CircleOptions = {}
+): Promise<MeResponse> {
+  return client(token, circleHost).get<MeResponse>(API_ME);
 }
