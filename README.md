@@ -14,9 +14,19 @@ I recommend using this library if you are writing a tool or website in TypeScrip
 
 If there are any features you would like, please feel free to open up an issue.
 
-## Note
+## Notes
 
-I did my best to correctly add types for all of the supported endpoints. However if you notice an incorrect payload type, or some missing properties, _please_ open up an issue, or submit a pull request.
+### Types
+
+I did my best to correctly add types for all of the supported endpoints. However if you notice an incorrect payload type, or some missing properties, **please** open up an issue, or submit a pull request.
+
+### CircleCI API v2
+
+CircleCI is going to be rolling out a new version of their api (see [here](https://github.com/CircleCI-Public/api-preview-docs)). Currently this library **does not** support v2, but I will update it in the future, see #228 for updates.
+
+## Migrating from v3 to v4
+
+There have been some breaking changes, please see [MIGRATING.md](https://github.com/worldturtlemedia/circleci-api/blob/master/MIGRATING.md) for more info.
 
 ## Installation
 
@@ -55,7 +65,7 @@ const options: CircleCIOptions = {
   // Git information is required for project/build/etc endpoints
   vcs: {
     type: GitType.GITHUB, // default: github
-    owner: "jordond",
+    owner: "worldturtlemedia",
     repo: "circleci-api"
   }
 
@@ -134,6 +144,27 @@ getLatestArtifacts(CIRCLECI_TOKEN, {
   .then(result => console.log(`Found ${result.length} artifacts`))
   .catch(error => console.error(error));
 ```
+
+## Self-hosted CircleCI
+
+You can supply a custom `baseURL` to override the default `https://circleci.com/api/v1.1`.
+
+```typescript
+// Using the CircleCi class
+new CircleCI({
+  token: "my-token",
+  vcs: { owner: "worldturtlemedia", repo = "circleci-api" },
+  circleHost: "https://my-selfhosted-circleci.com/"
+}).getLatestArtifacts()
+
+// Using the standalone functions
+getLatestArtifacts("my-token", {
+  ...
+  circleHost: "https://my-selfhosted-circleci.com/"
+})
+```
+
+All of the standalone functions support a custom `circleHost` property. Using the `CircleCI` class you _must_ specify it in the constructor.
 
 ## Demo
 
@@ -214,23 +245,67 @@ The last remaining endpoint probably won't be added unless there is demand.
 
 ## Contributing
 
+<<<<<<< HEAD
+This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.
+
+This library uses [commitizen](https://github.com/commitizen/cz-cli) for commit messages, so be sure to use `yarn commit` when commiting your changes,
+
+1. Fork this repo
+1. Add your awesome feature
+1. If adding functionality, add tests for your feature
+1. Commit using [commitizen](https://github.com/commitizen/cz-cli): `yarn commit`
+1. Submit a PR
+
+Example:
+
+```bash
+# Setup
+git clone https://github.com/worldturtlemedia/circleci-api
+cd circleci-api
+
+yarn
+
+# Make some changes
+
+...
+
+# Run tests then build
+yarn test:prod
+yarn build
+
+# Use commitzen to commit
+yarn commit
+
+# If all is good, open a PR!
+```
+
+=======
 See [CONTRIBUTING](https://github.com/worldturtlemedia/circlci-api/blob/master/CONTRIBUTING.md).
+
+> > > > > > > develop
 
 ## License
 
 ```text
-Copyright 2018 Jordon de Hoog
+MIT License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+Copyright (c) 2019 WorldTurtleMedia
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
-Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```

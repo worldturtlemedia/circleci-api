@@ -5,7 +5,8 @@ import {
   BuildSummaryResponse,
   GitRequiredRequest,
   API_RECENT_BUILDS,
-  createVcsUrl
+  createVcsUrl,
+  CircleOptions
 } from "../types";
 import { client } from "../client";
 import { queryParams } from "../util";
@@ -19,14 +20,15 @@ import { queryParams } from "../util";
  * @param token - CircleCI API token
  * @param limit - optional - Limit the number of builds returned, max=100
  * @param offset - optional -builds starting from this offset
+ * @param circleHost Provide custom url for CircleCI
  * @returns List of recent build summaries
  */
 export function getRecentBuilds(
   token: string,
-  { limit, offset }: Options = {}
+  { limit, offset, circleHost }: Options & CircleOptions = {}
 ): Promise<BuildSummaryResponse> {
   const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`;
-  return client(token).get<BuildSummaryResponse>(url);
+  return client(token, circleHost).get<BuildSummaryResponse>(url);
 }
 
 /**
@@ -48,18 +50,18 @@ export function getRecentBuilds(
  * @see FullRequest
  * @param token - CircleCI API token
  * @param vcs - Get builds for this project
- * @param branch - Optional - Get builds for single branch
- * @param opts - Optional - Query parameters
+ * @param options - Optional - Query parameters
+ * @param circleHost Provide custom url for CircleCI
  * @returns A list of build summaries
  */
 export function getBuildSummaries(
   token: string,
-  { vcs, options = {} }: GitRequiredRequest
+  { vcs, options = {}, circleHost }: GitRequiredRequest
 ): Promise<BuildSummaryResponse> {
   const { limit, offset, filter, branch } = options;
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
   const params = queryParams({ limit, offset, filter });
-  return client(token).get<BuildSummaryResponse>(`${url}${params}`);
+  return client(token, circleHost).get<BuildSummaryResponse>(`${url}${params}`);
 }
 
 /**
@@ -69,15 +71,16 @@ export function getBuildSummaries(
  * @example /project/:vcs-type/:username/:project/:build_num
  *
  * @param token - CircleCI API token
- * @param vcs - Project's git information
  * @param buildNumber - Target build number
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs - Project's git information
  * @returns Full build details including build steps
  */
 export function getFullBuild(
   token: string,
-  vcs: GitInfo,
-  buildNumber: number
+  buildNumber: number,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<FetchBuildResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}`;
-  return client(token).get<FetchBuildResponse>(url);
+  return client(token, circleHost).get<FetchBuildResponse>(url);
 }

@@ -1,8 +1,9 @@
 export const API_BASE = "https://circleci.com/api/v1.1";
-export const API_ME = `${API_BASE}/me`;
-export const API_PROJECT = `${API_BASE}/project`;
-export const API_ALL_PROJECTS = `${API_BASE}/projects`;
-export const API_RECENT_BUILDS = `${API_BASE}/recent-builds`;
+export const API_ME = "/me";
+export const API_PROJECT = "/project";
+export const API_ALL_PROJECTS = "/projects";
+export const API_RECENT_BUILDS = "/recent-builds";
+export const API_USER = "/user";
 
 /**
  * @description Currently supported VCS types
@@ -76,11 +77,13 @@ export interface FilterRequestOptions extends RequestOptions {
  * @property {string} [token] - CircleCI API key
  * @property {GitInfo} [vcs] - Git information required for project related endpoints
  * @property {Options} [options] - Extra query parameters for build endpoints
+ * @property {string} circleHost - Override the default host for CircleCI [API_BASE]
  */
 export interface CircleRequest {
   token?: string;
   vcs?: GitInfo;
   options?: Options;
+  circleHost?: string;
 }
 
 /**
@@ -106,6 +109,10 @@ export interface GitRequiredRequest extends CircleRequest {
 export interface FullRequest extends CircleRequest {
   token: string;
   vcs: GitInfo;
+}
+
+export interface CircleOptions {
+  circleHost?: string;
 }
 
 /**

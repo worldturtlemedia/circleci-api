@@ -1,6 +1,6 @@
-import { Options, FullRequest, GitType } from "./types";
 import { AxiosRequestConfig } from "axios";
 
+import { Options, FullRequest, GitType } from "./types";
 /**
  * Validate a Request object for endpoints that require
  * certain information

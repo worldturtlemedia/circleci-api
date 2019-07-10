@@ -4,7 +4,8 @@ import {
   createVcsUrl,
   EnvVariable,
   EnvVariableResponse,
-  DeleteEnvVarResponse
+  DeleteEnvVarResponse,
+  CircleOptions
 } from "../types";
 import { client } from "../client";
 import { createJsonHeader } from "../util";
@@ -19,14 +20,17 @@ import { createJsonHeader } from "../util";
  * @example GET : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar
  *
  * @param token CircleCI API token
+ * @param circleHost Provide custom url for CircleCI
  * @param vcs Git information for project
  * @returns list of env variables for a specific project
  */
 export function listEnv(
   token: string,
-  vcs: GitInfo
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<ListEnvVariablesResponse> {
-  return client(token).get<ListEnvVariablesResponse>(createUrl(vcs));
+  return client(token, circleHost).get<ListEnvVariablesResponse>(
+    createUrl(vcs)
+  );
 }
 
 /**
@@ -36,16 +40,17 @@ export function listEnv(
  * @example POST : https://circleci.com/api/v1.1/project/:vcs-type/:username/:project/envvar
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param payload Environment variable object to add to project
+ * @param vcs Git information for project
+ * @param circleHost Provide custom url for CircleCI
  * @returns newly created environment variable
  */
 export function addEnv(
   token: string,
-  vcs: GitInfo,
-  payload: EnvVariable
+  payload: EnvVariable,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<EnvVariableResponse> {
-  return client(token).post<EnvVariableResponse>(
+  return client(token, circleHost).post<EnvVariableResponse>(
     createUrl(vcs),
     payload,
     createJsonHeader()
@@ -59,16 +64,17 @@ export function addEnv(
  * @see https://circleci.com/docs/api/v1-reference/#get-environment-variable
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param envName Name of variable to fetch value
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs Git information for project
  * @returns Full hidden value of environment variable
  */
 export function getEnv(
   token: string,
-  vcs: GitInfo,
-  envName: string
+  envName: string,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<EnvVariableResponse> {
-  return client(token).get<EnvVariableResponse>(createUrl(vcs, envName));
+  return client(token, circleHost).get(createUrl(vcs, envName));
 }
 
 /**
@@ -78,16 +84,17 @@ export function getEnv(
  * @see https://circleci.com/docs/api/v1-reference/#delete-environment-variable
  *
  * @param token CircleCI API token
- * @param vcs Git information for project
  * @param envName Name of variable to fetch value
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs Git information for project
  * @returns Status message result of operation
  */
 export function deleteEnv(
   token: string,
-  vcs: GitInfo,
-  envName: string
+  envName: string,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<DeleteEnvVarResponse> {
-  return client(token).delete<DeleteEnvVarResponse>(createUrl(vcs, envName));
+  return client(token, circleHost).delete(createUrl(vcs, envName));
 }
 
 /**

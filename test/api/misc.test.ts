@@ -1,6 +1,12 @@
 import * as axios from "axios";
 
-import { CircleCI, HerokuKey } from "../../src";
+import {
+  CircleCI,
+  HerokuKey,
+  addSSHKey,
+  API_BASE,
+  addHerokuKey
+} from "../../src";
 
 jest.mock("axios");
 
@@ -29,7 +35,7 @@ describe("API - Misc", () => {
       await circle.addSSHKey(testKey);
 
       expect(mockAxios.post).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/ssh-key?circle-token=${TOKEN}`,
+        `/project/github/foo/bar/ssh-key?circle-token=${TOKEN}`,
         testKey,
         expect.any(Object)
       );
@@ -43,6 +49,30 @@ describe("API - Misc", () => {
         expect.any(Object)
       );
     });
+
+    it("should use default CircleCI host", async () => {
+      await addSSHKey(TOKEN, { owner: "test", repo: "proj" }, testKey as any);
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: API_BASE })
+      );
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).addSSHKey(testKey);
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
+    });
   });
 
   describe("Add Heroku key", () => {
@@ -51,7 +81,7 @@ describe("API - Misc", () => {
     it("should add heroku key to project", async () => {
       await circle.addHerokuKey(testKey);
       expect(mockAxios.post).toBeCalledWith(
-        `https://circleci.com/api/v1.1/user/heroku-key?circle-token=${TOKEN}`,
+        `/user/heroku-key?circle-token=${TOKEN}`,
         testKey,
         expect.any(Object)
       );
@@ -63,6 +93,30 @@ describe("API - Misc", () => {
         expect.stringContaining("/user/heroku-key?circle-token=BUZZ"),
         testKey,
         expect.any(Object)
+      );
+    });
+
+    it("should use default CircleCI host", async () => {
+      await addHerokuKey(TOKEN, testKey as any);
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: API_BASE })
+      );
+    });
+
+    it("should use a custom circleci host using wrapper", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).addHerokuKey(testKey);
+
+      expect(mockAxios.post).toBeCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
       );
     });
   });

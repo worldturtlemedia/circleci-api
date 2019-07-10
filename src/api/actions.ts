@@ -4,7 +4,8 @@ import {
   TriggerBuildResponse,
   GitRequiredRequest,
   BuildAction,
-  createVcsUrl
+  createVcsUrl,
+  CircleOptions
 } from "../types";
 import { client } from "../client";
 
@@ -20,18 +21,19 @@ import { client } from "../client";
  * @example POST - /project/:vcs-type/:username/:project/:build_num/cancel
  *
  * @param token - CircleCI API token
- * @param vcs - Project's git information that you'd like to retry
  * @param buildNumber - Target build number to retry
  * @param action - Action to perform on the build
+ * @param circleHost Provide custom url for CircleCI
+ * @param vcs - Project's git information that you'd like to retry
  */
 export function postBuildActions(
   token: string,
-  vcs: GitInfo,
   buildNumber: number,
-  action: BuildAction
+  action: BuildAction,
+  { circleHost, ...vcs }: GitInfo & CircleOptions
 ): Promise<BuildActionResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}/${action}`;
-  return client(token).post(url);
+  return client(token, circleHost).post(url);
 }
 
 /**
@@ -46,10 +48,14 @@ export function postBuildActions(
 export function postTriggerNewBuild(
   token: string,
   {
+    circleHost,
     vcs,
     options: { branch = "", newBuildOptions = {} } = {}
   }: GitRequiredRequest
 ): Promise<TriggerBuildResponse> {
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
-  return client(token).post<TriggerBuildResponse>(url, newBuildOptions);
+  return client(token, circleHost).post<TriggerBuildResponse>(
+    url,
+    newBuildOptions
+  );
 }

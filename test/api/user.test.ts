@@ -1,4 +1,4 @@
-import { CircleCI, API_ME } from "../../src";
+import { CircleCI, API_ME, getMe } from "../../src";
 import { Me } from "../../src/types/api";
 import * as client from "../../src/client";
 
@@ -25,7 +25,7 @@ describe("API - Me", () => {
     mock.__setResponse(me);
     const result = await circle.me();
 
-    expect(mock.client).toBeCalledWith(TOKEN);
+    expect(mock.client).toBeCalledWith(TOKEN, undefined);
     expect(mock.__getMock).toBeCalledWith(API_ME);
     expect(result).toEqual(me);
   });
@@ -35,5 +35,22 @@ describe("API - Me", () => {
 
     const check = circle.me();
     await expect(check).rejects.toEqual({ code: 404 });
+  });
+
+  it("should use the default circleci host", async () => {
+    mock.__setResponse(me);
+    await getMe(TOKEN);
+
+    expect(mock.client).toBeCalledWith(TOKEN, undefined);
+  });
+
+  it("should use a custom circleci host", async () => {
+    mock.__setResponse(me);
+    await new CircleCI({
+      token: TOKEN,
+      circleHost: "foo.bar/api"
+    }).projects();
+
+    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
   });
 });

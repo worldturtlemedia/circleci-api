@@ -35,8 +35,8 @@ describe("API - Test Metadata", () => {
       const result = await circle.getTestMetadata(42);
 
       expect(mockAxios.get).toBeCalledWith(
-        `https://circleci.com/api/v1.1/project/github/foo/bar/42/tests?circle-token=${TOKEN}`,
-        {}
+        `/project/github/foo/bar/42/tests?circle-token=${TOKEN}`,
+        expect.anything()
       );
       expect(result.tests[0].message).toEqual("ok");
     });
@@ -45,9 +45,22 @@ describe("API - Test Metadata", () => {
       const result = await circle.getTestMetadata(42, { token: "BUZZ" });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/github/foo/bar/42/tests?circle-token=BUZZ"),
-        {}
+        expect.anything()
       );
       expect(result.tests[0].message).toEqual("ok");
+    });
+
+    it("should use a custom circleci host", async () => {
+      await new CircleCI({
+        token: TOKEN,
+        vcs: { owner: "test", repo: "proj" },
+        circleHost: "foo.bar/api"
+      }).getTestMetadata(42);
+
+      expect(mockAxios.get).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({ baseURL: "foo.bar/api" })
+      );
     });
   });
 });
