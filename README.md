@@ -24,6 +24,10 @@ I did my best to correctly add types for all of the supported endpoints. However
 
 CircleCI is going to be rolling out a new version of their api (see [here](https://github.com/CircleCI-Public/api-preview-docs)). Currently this library **does not** support v2, but I will update it in the future, see #228 for updates.
 
+## Migrating from v3 to v4
+
+There have been some breaking changes, please see [MIGRATING.md](https://github.com/worldturtlemedia/circleci-api/blob/master/MIGRATING.md) for more info.
+
 ## Installation
 
 Add using yarn or npm
