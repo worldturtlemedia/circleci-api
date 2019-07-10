@@ -2,11 +2,11 @@
 
 A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript.
 
-![CircleCI branch](https://img.shields.io/circleci/project/github/jordond/circleci-api/master.svg?label=release%20build) ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/jordond/circleci-api.svg) [![Coverage Status](https://coveralls.io/repos/github/jordond/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/jordond/circleci-api?branch=master)
+![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build) ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
 
-[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/jordond/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
+[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
 
-[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/jordond/circleci-api/status.svg)](https://david-dm.org/jordond/circleci-api) [![devDependencies Status](https://david-dm.org/jordond/circleci-api/dev-status.svg)](https://david-dm.org/jordond/circleci-api?type=dev)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/status.svg)](https://david-dm.org/worldturtlemedia/circleci-api) [![devDependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/dev-status.svg)](https://david-dm.org/worldturtlemedia/circleci-api?type=dev)
 
 Usable in node and the browser. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
 
@@ -14,9 +14,15 @@ I recommend using this library if you are writing a tool or website in TypeScrip
 
 If there are any features you would like, please feel free to open up an issue.
 
-## Note
+## Notes
 
-I did my best to correctly add types for all of the supported endpoints. However if you notice an incorrect payload type, or some missing properties, _please_ open up an issue, or submit a pull request.
+### Types
+
+I did my best to correctly add types for all of the supported endpoints. However if you notice an incorrect payload type, or some missing properties, **please** open up an issue, or submit a pull request.
+
+### CircleCI API v2
+
+CircleCI is going to be rolling out a new version of their api (see [here](https://github.com/CircleCI-Public/api-preview-docs)). Currently this library **does not** support v2, but I will update it in the future, see #228 for updates.
 
 ## Installation
 
@@ -55,7 +61,7 @@ const options: CircleCIOptions = {
   // Git information is required for project/build/etc endpoints
   vcs: {
     type: GitType.GITHUB, // default: github
-    owner: "jordond",
+    owner: "worldturtlemedia",
     repo: "circleci-api"
   }
 
@@ -134,6 +140,27 @@ getLatestArtifacts(CIRCLECI_TOKEN, {
   .then(result => console.log(`Found ${result.length} artifacts`))
   .catch(error => console.error(error));
 ```
+
+## Self-hosted CircleCI
+
+You can supply a custom `baseURL` to override the default `https://circleci.com/api/v1.1`.
+
+```typescript
+// Using the CircleCi class
+new CircleCI({
+  token: "my-token",
+  vcs: { owner: "worldturtlemedia", repo = "circleci-api" },
+  circleHost: "https://my-selfhosted-circleci.com/"
+}).getLatestArtifacts()
+
+// Using the standalone functions
+getLatestArtifacts("my-token", {
+  ...
+  circleHost: "https://my-selfhosted-circleci.com/"
+})
+```
+
+All of the standalone functions support a custom `circleHost` property. Using the `CircleCI` class you _must_ specify it in the constructor.
 
 ## Demo
 
@@ -228,7 +255,7 @@ Example:
 
 ```bash
 # Setup
-git clone https://github.com/jordond/circleci-api
+git clone https://github.com/worldturtlemedia/circleci-api
 cd circleci-api
 
 yarn
@@ -250,18 +277,25 @@ yarn commit
 ## License
 
 ```text
-Copyright 2018 Jordon de Hoog
+MIT License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+Copyright (c) 2019 WorldTurtleMedia
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
-Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
