@@ -4,7 +4,7 @@ A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) writte
 
 [![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build)](https://circleci.com/gh/worldturtlemedia/circleci-api/tree/master) [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg)](https://circleci.com/gh/worldturtlemedia/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
 
-[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://badge.fury.io/js/circleci-api) ![GitHub](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg)
+[![npm version](https://badge.fury.io/js/circleci-api.svg)](https://www.npmjs.com/package/circleci-api) [![Downloads](https://img.shields.io/npm/dw/circleci-api)](https://www.npmjs.com/package/circleci-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg) ![License](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg)
 
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/status.svg)](https://david-dm.org/worldturtlemedia/circleci-api) [![devDependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/dev-status.svg)](https://david-dm.org/worldturtlemedia/circleci-api?type=dev)
 
@@ -22,7 +22,7 @@ I did my best to correctly add types for all of the supported endpoints. However
 
 ### CircleCI API v2
 
-CircleCI is going to be rolling out a new version of their api (see [here](https://github.com/CircleCI-Public/api-preview-docs)). Currently this library **does not** support v2, but I will update it in the future, see #228 for updates.
+CircleCI is going to be rolling out a new version of their api (see [here](https://github.com/CircleCI-Public/api-preview-docs)). Currently this library **does not** support v2, but I will update it in the future, see [#228](https://github.com/worldturtlemedia/circleci-api/issues/228) for updates.
 
 ## Migrating from v3 to v4
 
