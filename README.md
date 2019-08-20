@@ -1,6 +1,6 @@
-# CircleCi API Wrapper
+# CircleCi API Client
 
-A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) written in TypeScript.
+A Node and Browser client for the CircleCI API, written in TypeScript.
 
 [![CircleCI branch](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api/master.svg?label=release%20build)](https://circleci.com/gh/worldturtlemedia/circleci-api/tree/master) [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/worldturtlemedia/circleci-api.svg)](https://circleci.com/gh/worldturtlemedia/circleci-api) [![Coverage Status](https://coveralls.io/repos/github/worldturtlemedia/circleci-api/badge.svg?branch=master)](https://coveralls.io/github/worldturtlemedia/circleci-api?branch=master)
 
@@ -8,9 +8,9 @@ A wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/) writte
 
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/status.svg)](https://david-dm.org/worldturtlemedia/circleci-api) [![devDependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/dev-status.svg)](https://david-dm.org/worldturtlemedia/circleci-api?type=dev)
 
-Usable in node and the browser. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation. Will work in Node or the browser!
+API wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/), usable in node and the browser. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation.
 
-I recommend using this library if you are writing a tool or website in TypeScript. I have created definitions for each of the CircleCi endpoints. There may still be some errors, but I am open to contributions on making them better.
+I recommend using this library if you are writing a tool or website in TypeScript. I have created definitions for each of the CircleCI endpoints. There may still be some errors, but I am open to contributions on making them better.
 
 If there are any features you would like, please feel free to open up an issue.
 
@@ -147,7 +147,7 @@ getLatestArtifacts(CIRCLECI_TOKEN, {
 
 ## Self-hosted CircleCI
 
-You can supply a custom `baseURL` to override the default `https://circleci.com/api/v1.1`.
+To override the default API base url `https://circleci.com/api/v1.1`, you can pass a `circleHost` to the `CircleCI` constructor, or to the standalone functions.
 
 ```typescript
 // Using the CircleCi class
@@ -164,7 +164,7 @@ getLatestArtifacts("my-token", {
 })
 ```
 
-All of the standalone functions support a custom `circleHost` property. Using the `CircleCI` class you _must_ specify it in the constructor.
+While all of the standalone functions support a custom `circleHost` property. Using the `CircleCI` class you _must_ specify it in the constructor.
 
 ## Demo
 
@@ -245,44 +245,7 @@ The last remaining endpoint probably won't be added unless there is demand.
 
 ## Contributing
 
-<<<<<<< HEAD
-This library uses boilerplate [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter). So see that repo for more information about the setup, and layout of the files.
-
-This library uses [commitizen](https://github.com/commitizen/cz-cli) for commit messages, so be sure to use `yarn commit` when commiting your changes,
-
-1. Fork this repo
-1. Add your awesome feature
-1. If adding functionality, add tests for your feature
-1. Commit using [commitizen](https://github.com/commitizen/cz-cli): `yarn commit`
-1. Submit a PR
-
-Example:
-
-```bash
-# Setup
-git clone https://github.com/worldturtlemedia/circleci-api
-cd circleci-api
-
-yarn
-
-# Make some changes
-
-...
-
-# Run tests then build
-yarn test:prod
-yarn build
-
-# Use commitzen to commit
-yarn commit
-
-# If all is good, open a PR!
-```
-
-=======
-See [CONTRIBUTING](https://github.com/worldturtlemedia/circlci-api/blob/master/CONTRIBUTING.md).
-
-> > > > > > > develop
+See [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 ## License
 
