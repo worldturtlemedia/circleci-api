@@ -59,7 +59,7 @@
     "@types/node": "11.13.22",
     "colors": "1.4.0",
     "commitizen": "4.0.3",
-    "coveralls": "3.0.6",
+    "coveralls": "3.0.7",
     "cross-env": "6.0.3",
     "cz-conventional-changelog": "3.0.2",
     "greenkeeper-lockfile": "1.15.1",
