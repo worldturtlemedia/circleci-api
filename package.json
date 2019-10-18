@@ -80,7 +80,7 @@
     "rollup-plugin-sourcemaps": "0.4.2",
     "rollup-plugin-typescript2": "0.24.3",
     "rollup-plugin-uglify": "6.0.3",
-    "semantic-release": "15.13.24",
+    "semantic-release": "15.13.27",
     "source-map-support": "0.5.13",
     "ts-jest": "24.1.0",
     "ts-node": "8.4.1",
