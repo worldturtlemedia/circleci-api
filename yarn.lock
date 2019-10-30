@@ -752,10 +752,10 @@
   version "10.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.7.tgz#0e75ca9357d646ca754016ca1d68a127ad7e7300"
 
-"@types/node@11.15.0":
-  version "11.15.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.15.0.tgz#1a0974a5bfdf5eee1b85945790a03bcea2f63fa5"
-  integrity sha512-JRq4kw1GQZrF90YRrp3C1kIoioAEj9PweNF2Qgp/6XZYVgXPl7OWKdggFNtRxlBPyl40Fz/bOhCnXuKMFaJ06w==
+"@types/node@11.15.2":
+  version "11.15.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.15.2.tgz#998b9cacc5f26e441d8396340818fde8e08aada5"
+  integrity sha512-BqCU9uIFkUH9Sgo2uLYbmIiFB1T+VBiM8AI/El3LIAI5KzwtckeSG+3WOYZr9aMoX4UIvRFBWBeSaOu6hFue2Q==
 
 "@types/node@^12.0.2":
   version "12.6.3"
