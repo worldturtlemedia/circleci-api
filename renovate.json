@@ -2,6 +2,9 @@
   "extends": [
     "config:base"
   ],
+  "baseBranches": [
+    "next"
+  ],
   "automerge": true,
   "major": {
     "automerge": false
