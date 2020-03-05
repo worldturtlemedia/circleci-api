@@ -60,7 +60,7 @@
     "colors": "1.4.0",
     "commitizen": "4.0.3",
     "coveralls": "3.0.9",
-    "cross-env": "7.0.1",
+    "cross-env": "7.0.2",
     "cz-conventional-changelog": "3.1.0",
     "greenkeeper-lockfile": "1.15.1",
     "husky": "4.2.3",
