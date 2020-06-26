@@ -71,7 +71,7 @@
     "prompt": "1.0.0",
     "replace-in-file": "6.1.0",
     "rimraf": "3.0.2",
-    "rollup": "2.18.0",
+    "rollup": "2.18.1",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-builtins": "2.1.2",
