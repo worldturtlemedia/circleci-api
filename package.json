@@ -55,7 +55,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.0.1",
     "@commitlint/config-conventional": "9.0.1",
-    "@types/jest": "26.0.3",
+    "@types/jest": "26.0.4",
     "@types/node": "11.15.17",
     "colors": "1.4.0",
     "commitizen": "4.1.2",
