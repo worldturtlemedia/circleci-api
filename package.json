@@ -53,8 +53,8 @@
     "axios": "^0.19.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "9.0.1",
-    "@commitlint/config-conventional": "9.0.1",
+    "@commitlint/cli": "9.1.1",
+    "@commitlint/config-conventional": "9.1.1",
     "@types/jest": "26.0.4",
     "@types/node": "11.15.18",
     "colors": "1.4.0",
