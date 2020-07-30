@@ -3,9 +3,9 @@ import * as axios from "axios";
 import {
   CircleCI,
   FullCheckoutKey,
-  DeleteCheckoutKeyResponse
+  DeleteCheckoutKeyResponse,
 } from "../../src";
-import { createJsonHeader } from "../../src/util";
+import { createJsonHeader, addUserAgentHeader } from "../../src/util";
 
 jest.mock("axios");
 
@@ -18,7 +18,7 @@ describe("API - Checkout Keys", () => {
     fingerprint: "foo",
     preferred: true,
     time: "bar",
-    type: "deploy-key"
+    type: "deploy-key",
   };
 
   let circle: CircleCI;
@@ -27,7 +27,7 @@ describe("API - Checkout Keys", () => {
     mockAxios.reset();
     circle = new CircleCI({
       token: TOKEN,
-      vcs: { owner: "foo", repo: "bar" }
+      vcs: { owner: "foo", repo: "bar" },
     });
   });
 
@@ -61,7 +61,7 @@ describe("API - Checkout Keys", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).listCheckoutKeys();
 
       expect(mockAxios.get).toBeCalledWith(
@@ -81,7 +81,7 @@ describe("API - Checkout Keys", () => {
       expect(mockAxios.post).toBeCalledWith(
         `/project/github/foo/bar/checkout-key?circle-token=${TOKEN}`,
         { type: "deploy-key" },
-        expect.objectContaining(createJsonHeader())
+        expect.objectContaining(addUserAgentHeader(createJsonHeader()))
       );
 
       expect(result).toEqual(variable);
@@ -90,7 +90,7 @@ describe("API - Checkout Keys", () => {
     it("should override token and project", async () => {
       const result = await circle.addCheckoutKey("deploy-key", {
         token: "BAR",
-        vcs: { owner: "buzz" }
+        vcs: { owner: "buzz" },
       });
       expect(mockAxios.post).toBeCalledWith(
         expect.stringContaining("/buzz/bar/checkout-key?circle-token=BAR"),
@@ -105,7 +105,7 @@ describe("API - Checkout Keys", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).addCheckoutKey("deploy-key");
 
       expect(mockAxios.post).toBeCalledWith(
@@ -134,7 +134,7 @@ describe("API - Checkout Keys", () => {
     it("should override client settings with custom token", async () => {
       const result = await circle.getCheckoutKey("foo", {
         token: "BUZZ",
-        vcs: { owner: "bar" }
+        vcs: { owner: "bar" },
       });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
@@ -147,7 +147,7 @@ describe("API - Checkout Keys", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).getCheckoutKey("test");
 
       expect(mockAxios.get).toBeCalledWith(
@@ -159,7 +159,7 @@ describe("API - Checkout Keys", () => {
 
   describe("Delete Key", () => {
     const response: DeleteCheckoutKeyResponse = {
-      message: "success"
+      message: "success",
     };
 
     beforeEach(() => {
@@ -179,7 +179,7 @@ describe("API - Checkout Keys", () => {
     it("should override client settings with custom token", async () => {
       const result = await circle.deleteCheckoutKey("foo", {
         token: "BUZZ",
-        vcs: { owner: "bar" }
+        vcs: { owner: "bar" },
       });
       expect(mockAxios.delete).toBeCalledWith(
         expect.stringContaining("/bar/bar/checkout-key/foo?circle-token=BUZZ"),
@@ -192,7 +192,7 @@ describe("API - Checkout Keys", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).deleteCheckoutKey("foo");
 
       expect(mockAxios.delete).toBeCalledWith(

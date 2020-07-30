@@ -16,7 +16,7 @@ describe("API - Builds", () => {
     mock.__reset();
     circle = new CircleCI({
       token: TOKEN,
-      vcs: { owner: "foo", repo: "bar" }
+      vcs: { owner: "foo", repo: "bar" },
     });
   });
 
@@ -37,6 +37,17 @@ describe("API - Builds", () => {
       expect(result).toEqual(response);
     });
 
+    it("should use provided optional options", async () => {
+      mock.__setResponse(response);
+      const result = await circle.recentBuilds(
+        { limit: 5 },
+        { token: "foobar" }
+      );
+
+      expect(mock.__getMock).toBeCalledWith("/recent-builds?limit=5&offset=5");
+      expect(result).toEqual(response);
+    });
+
     it("should handle no options", async () => {
       mock.__setResponse(response);
       const result = await getRecentBuilds(TOKEN);
@@ -49,7 +60,7 @@ describe("API - Builds", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).recentBuilds();
 
       expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
@@ -70,7 +81,7 @@ describe("API - Builds", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).builds();
 
       expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
@@ -102,7 +113,7 @@ describe("API - Builds", () => {
         "master",
         { limit: 5 },
         {
-          options: { branch: "develop" }
+          options: { branch: "develop" },
         }
       );
 
@@ -118,7 +129,7 @@ describe("API - Builds", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).buildsFor();
 
       expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
@@ -127,7 +138,7 @@ describe("API - Builds", () => {
     it("should handle no options", async () => {
       mock.__setResponse(response);
       const result = await getBuildSummaries(TOKEN, {
-        vcs: { owner: "foo", repo: "bar" }
+        vcs: { owner: "foo", repo: "bar" },
       });
 
       expect(mock.__getMock).toBeCalledWith("/project/github/foo/bar");
@@ -156,7 +167,7 @@ describe("API - Builds", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).build(1);
 
       expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");

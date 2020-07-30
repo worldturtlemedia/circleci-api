@@ -2,6 +2,7 @@ import * as axios from "axios";
 
 import { CircleCI } from "../../src";
 import { EnvVariable, DeleteEnvVarResponse } from "../../src/types/api";
+import { addUserAgentHeader } from "../../src/util";
 
 jest.mock("axios");
 
@@ -17,7 +18,7 @@ describe("API - Env", () => {
     mockAxios.reset();
     circle = new CircleCI({
       token: TOKEN,
-      vcs: { owner: "foo", repo: "bar" }
+      vcs: { owner: "foo", repo: "bar" },
     });
   });
 
@@ -59,8 +60,9 @@ describe("API - Env", () => {
         expect.objectContaining({
           headers: {
             "Content-Type": "application/json",
-            Accepts: "application/json"
-          }
+            Accepts: "application/json",
+            ...addUserAgentHeader().headers,
+          },
         })
       );
 
@@ -70,7 +72,7 @@ describe("API - Env", () => {
     it("should override token and project", async () => {
       const result = await circle.addEnvVar(variable, {
         token: "BAR",
-        vcs: { owner: "buzz" }
+        vcs: { owner: "buzz" },
       });
       expect(mockAxios.post).toBeCalledWith(
         expect.stringContaining("/buzz/bar/envvar?circle-token=BAR"),
@@ -85,7 +87,7 @@ describe("API - Env", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).addEnvVar(variable);
 
       expect(mockAxios.post).toBeCalledWith(
@@ -114,7 +116,7 @@ describe("API - Env", () => {
     it("should override client settings with custom token", async () => {
       const result = await circle.getEnvVar("foo", {
         token: "BUZZ",
-        vcs: { owner: "bar" }
+        vcs: { owner: "bar" },
       });
       expect(mockAxios.get).toBeCalledWith(
         expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
@@ -127,7 +129,7 @@ describe("API - Env", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).getEnvVar("foo");
 
       expect(mockAxios.get).toBeCalledWith(
@@ -139,7 +141,7 @@ describe("API - Env", () => {
 
   describe("Delete Env", () => {
     const response: DeleteEnvVarResponse = {
-      message: "success"
+      message: "success",
     };
 
     beforeEach(() => {
@@ -159,7 +161,7 @@ describe("API - Env", () => {
     it("should override client settings with custom token", async () => {
       const result = await circle.deleteEnvVar("foo", {
         token: "BUZZ",
-        vcs: { owner: "bar" }
+        vcs: { owner: "bar" },
       });
       expect(mockAxios.delete).toBeCalledWith(
         expect.stringContaining("/bar/bar/envvar/foo?circle-token=BUZZ"),
@@ -172,7 +174,7 @@ describe("API - Env", () => {
       await new CircleCI({
         token: TOKEN,
         vcs: { owner: "test", repo: "proj" },
-        circleHost: "foo.bar/api"
+        circleHost: "foo.bar/api",
       }).deleteEnvVar("foo");
 
       expect(mockAxios.delete).toBeCalledWith(

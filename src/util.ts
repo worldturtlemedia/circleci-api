@@ -1,6 +1,8 @@
 import { AxiosRequestConfig } from "axios";
 
 import { Options, FullRequest, GitType } from "./types";
+import { name, version, organization } from "../package.json";
+
 /**
  * Validate a Request object for endpoints that require
  * certain information
@@ -12,7 +14,7 @@ import { Options, FullRequest, GitType } from "./types";
  */
 export function validateVCSRequest({
   token,
-  vcs: { type, owner, repo }
+  vcs: { type, owner, repo },
 }: FullRequest) {
   if (!token) {
     throw new Error("CircleCiApi - No token was provided");
@@ -45,11 +47,11 @@ export function validateVCSRequest({
  */
 export function queryParams(opts: Options = {}) {
   const params = Object.keys(opts)
-    .filter(key => typeof opts[key] !== "undefined" && opts[key] !== null)
+    .filter((key) => typeof opts[key] !== "undefined" && opts[key] !== null)
     .reduce(
-      (prev: string[], key: string, arr) => [
+      (prev: string[], key: string) => [
         ...prev,
-        `${key}=${encodeURIComponent(opts[key])}`
+        `${key}=${encodeURIComponent(opts[key])}`,
       ],
       []
     )
@@ -66,10 +68,7 @@ export function queryParams(opts: Options = {}) {
  * @param type - Raw string type
  */
 export function getGitType(type: string): GitType {
-  const formatted = type
-    .trim()
-    .replace(/ /g, "")
-    .toLowerCase();
+  const formatted = type.trim().replace(/ /g, "").toLowerCase();
   if (formatted === GitType.BITBUCKET) {
     return formatted as GitType;
   }
@@ -84,7 +83,24 @@ export function createJsonHeader(): AxiosRequestConfig {
   return {
     headers: {
       "Content-Type": "application/json",
-      Accepts: "application/json"
-    }
+      Accepts: "application/json",
+    },
+  };
+}
+
+/**
+ * Modify an existing AxiosRequestConfig object with the user-agent set to
+ * the current version of the library
+ */
+export function addUserAgentHeader({
+  headers = {},
+  ...config
+}: AxiosRequestConfig = {}): AxiosRequestConfig {
+  return {
+    ...config,
+    headers: {
+      ...headers,
+      "User-Agent": `${organization}/${name} ${version}`,
+    },
   };
 }
