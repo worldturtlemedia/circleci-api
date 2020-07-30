@@ -5,7 +5,7 @@
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "declaration": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src"]
 }

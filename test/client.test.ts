@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { client, circleGet, circlePost, circleDelete } from "../src/client";
 import { API_BASE } from "../src";
+import { addUserAgentHeader } from "../src/util";
 
 jest.mock("axios");
 
@@ -17,26 +18,24 @@ const URL = "cats.com";
 const URL_WITH_TOKEN = `${URL}?circle-token=${TOKEN}`;
 
 describe("Client", () => {
-  afterEach(() => {
+  beforeEach(() => {
     mockAxios.reset();
   });
 
   describe("Factory", () => {
     it("should call the default Circle URL", () => {
-      client(TOKEN)
-        .get(URL)
-        .catch(jest.fn());
+      client(TOKEN).get(URL).catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
-        baseURL: API_BASE
+        baseURL: API_BASE,
+        ...addUserAgentHeader(),
       });
     });
 
     it("should call a custom Circle URL", () => {
-      client(TOKEN, "foo.bar/api")
-        .get(URL)
-        .catch(jest.fn());
+      client(TOKEN, "foo.bar/api").get(URL).catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
-        baseURL: "foo.bar/api"
+        baseURL: "foo.bar/api",
+        ...addUserAgentHeader(),
       });
     });
 
@@ -45,21 +44,18 @@ describe("Client", () => {
         .get(URL, { baseURL: "biz.baz/api" })
         .catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, {
-        baseURL: "biz.baz/api"
+        baseURL: "biz.baz/api",
+        ...addUserAgentHeader(),
       });
     });
 
     it("should add token param to url for get", () => {
-      client(TOKEN)
-        .get(URL)
-        .catch(jest.fn());
+      client(TOKEN).get(URL).catch(jest.fn());
       expect(mockAxios.get).toBeCalledWith(URL_WITH_TOKEN, expect.anything());
     });
 
     it("should add token param to url for post", () => {
-      client(TOKEN)
-        .post(URL, null)
-        .catch(jest.fn());
+      client(TOKEN).post(URL, null).catch(jest.fn());
       expect(mockAxios.post).toBeCalledWith(
         URL_WITH_TOKEN,
         null,
@@ -68,15 +64,38 @@ describe("Client", () => {
     });
 
     it("should use options", () => {
-      client(TOKEN)
-        .post(URL, "test", { timeout: 1000 })
-        .catch(jest.fn());
+      client(TOKEN).post(URL, "test", { timeout: 1000 }).catch(jest.fn());
       expect(mockAxios.post).toBeCalledWith(
         URL_WITH_TOKEN,
         "test",
         expect.objectContaining({
-          timeout: 1000
+          timeout: 1000,
         })
+      );
+    });
+
+    it("should add the user-agent to the get request", () => {
+      client(TOKEN).get(URL).catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(
+        URL_WITH_TOKEN,
+        expect.objectContaining(addUserAgentHeader())
+      );
+    });
+
+    it("should add the user-agent to the post request", () => {
+      client(TOKEN).post(URL, "payload").catch(jest.fn());
+      expect(mockAxios.post).toBeCalledWith(
+        URL_WITH_TOKEN,
+        "payload",
+        expect.objectContaining(addUserAgentHeader())
+      );
+    });
+
+    it("should add the user-agent to the delete request", () => {
+      client(TOKEN).delete(URL).catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(
+        URL_WITH_TOKEN,
+        expect.objectContaining(addUserAgentHeader())
       );
     });
   });
@@ -94,7 +113,7 @@ describe("Client", () => {
       expect(mockAxios.get).toBeCalledWith(
         URL_WITH_TOKEN,
         expect.objectContaining({
-          timeout: 1000
+          timeout: 1000,
         })
       );
     });
@@ -127,10 +146,7 @@ describe("Client", () => {
       const catchFn = jest.fn();
       const thenFn = jest.fn();
 
-      client(TOKEN)
-        .get("/biz/baz")
-        .then(thenFn)
-        .catch(catchFn);
+      client(TOKEN).get("/biz/baz").then(thenFn).catch(catchFn);
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         `/biz/baz?circle-token=${TOKEN}`,
@@ -197,7 +213,7 @@ describe("Client", () => {
       expect(mockAxios.delete).toBeCalledWith(
         URL_WITH_TOKEN,
         expect.objectContaining({
-          timeout: 1000
+          timeout: 1000,
         })
       );
     });
@@ -206,10 +222,7 @@ describe("Client", () => {
       const catchFn = jest.fn();
       const thenFn = jest.fn();
 
-      client(TOKEN)
-        .delete("/biz/baz")
-        .then(thenFn)
-        .catch(catchFn);
+      client(TOKEN).delete("/biz/baz").then(thenFn).catch(catchFn);
 
       expect(mockAxios.delete).toHaveBeenCalledWith(
         `/biz/baz?circle-token=${TOKEN}`,
