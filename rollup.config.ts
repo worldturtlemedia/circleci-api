@@ -1,12 +1,12 @@
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import sourceMaps from "rollup-plugin-sourcemaps";
 import camelCase from "lodash.camelcase";
 import typescript from "rollup-plugin-typescript2";
-import json from "rollup-plugin-json";
+import json from "@rollup/plugin-json";
 import builtins from "rollup-plugin-node-builtins";
 import nodeGlobals from "rollup-plugin-node-globals";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 
 const pkg = require("./package.json");
 
@@ -20,9 +20,9 @@ const browserPlugins = [
   builtins(),
   typescript({
     useTsconfigDeclarationDir: true,
-    exclude: ["src/__mocks__/*.ts"]
+    exclude: ["src/__mocks__/*.ts"],
   }),
-  sourceMaps()
+  sourceMaps(),
 ];
 
 const nodePlugins = [
@@ -30,15 +30,15 @@ const nodePlugins = [
   typescript({ useTsconfigDeclarationDir: true }),
   commonjs(),
   resolve(),
-  sourceMaps()
+  sourceMaps(),
 ];
 
 const commonConfig = {
   input: `src/index.ts`,
   external: [],
   watch: {
-    include: "src/**"
-  }
+    include: "src/**",
+  },
 };
 
 const browserConfig = {
@@ -47,25 +47,25 @@ const browserConfig = {
     file: pkg.browser.replace(".min.js", ".js"),
     name: camelCase(libraryName),
     format: "umd",
-    sourcemap: true
+    sourcemap: true,
   },
-  plugins: [...browserPlugins, sourceMaps()]
+  plugins: [...browserPlugins, sourceMaps()],
 };
 
 const minifiedBrowserConfig = {
   ...commonConfig,
   output: {
     ...browserConfig.output,
-    file: pkg.browser
+    file: pkg.browser,
   },
-  plugins: [...browserPlugins, uglify(), sourceMaps()]
+  plugins: [...browserPlugins, terser(), sourceMaps()],
 };
 
 const nodeConfig = {
   ...commonConfig,
   output: [
     { file: pkg.module, format: "es", sourcemap: true },
-    { file: pkg.main, format: "cjs", sourcemap: true }
+    { file: pkg.main, format: "cjs", sourcemap: true },
   ],
   plugins: nodePlugins,
   external: [
@@ -77,8 +77,8 @@ const nodeConfig = {
     "stream",
     "tty",
     "util",
-    "zlib"
-  ]
+    "zlib",
+  ],
 };
 
 export default [browserConfig, minifiedBrowserConfig, nodeConfig];

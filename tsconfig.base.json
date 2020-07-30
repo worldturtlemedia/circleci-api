@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
     "noUnusedLocals": true,
     "typeRoots": ["node_modules/@types"]
   },
