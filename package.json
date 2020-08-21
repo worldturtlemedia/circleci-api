@@ -51,7 +51,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.20.0"
   },
   "devDependencies": {
     "@commitlint/cli": "9.1.2",
