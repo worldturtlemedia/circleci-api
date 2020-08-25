@@ -62,7 +62,7 @@
     "@types/jest": "26.0.10",
     "@types/node": "11.15.20",
     "colors": "1.4.0",
-    "commitizen": "4.2.0",
+    "commitizen": "4.2.1",
     "coveralls": "3.1.0",
     "cross-env": "7.0.2",
     "cz-conventional-changelog": "3.2.1",
