@@ -11,3 +11,4 @@ compiled
 docs
 demo/node_modules
 demo/yarn.lock
+demo/dist

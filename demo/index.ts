@@ -4,11 +4,17 @@ const api = new CircleCI({
   token: " ", // Not needed for latest artifacts endpoint
   vcs: {
     owner: "worldturtlemedia",
-    repo: "circleci-api"
-  }
+    repo: "circleci-api",
+  },
 });
 
 api
   .latestArtifacts()
-  .then(x => x.forEach(y => console.log(`found ${y.pretty_path}`)))
-  .catch(err => console.error(err));
+  .then((x) => {
+    console.log(`Found ${x.length} artifacts!`);
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
