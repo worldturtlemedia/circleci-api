@@ -12,7 +12,7 @@
   "main": "dist/circleci-api.cjs.js",
   "module": "dist/circleci-api.es5.js",
   "browser": "dist/circleci-api.umd.min.js",
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/types/src/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
