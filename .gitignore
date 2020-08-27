@@ -10,4 +10,4 @@ compiled
 .rpt2_cache
 docs
 demo/node_modules
-demo/yarn.lock
+demo/dist

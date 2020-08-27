@@ -4,11 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --outDir dist/ --module commonjs --moduleResolution node --target es5 --strict true index.ts",
+    "pretest": "npm run build",
+    "test": "node dist/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "circleci-api": "../"
+  },
+  "devDependencies": {
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
   }
 }
