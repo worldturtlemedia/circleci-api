@@ -68,7 +68,7 @@
     "cross-env": "7.0.2",
     "cz-conventional-changelog": "3.3.0",
     "greenkeeper-lockfile": "1.15.1",
-    "husky": "4.2.5",
+    "husky": "4.3.0",
     "jest": "26.4.2",
     "lint-staged": "10.3.0",
     "lodash.camelcase": "4.3.0",
