@@ -487,7 +487,7 @@ export interface BuildSummary {
   vcs_revision?: string;
   vcs_url?: string;
   why?: string;
-  workflows?: Workflow[];
+  workflows?: Workflow;
 }
 
 export interface Workflow {
