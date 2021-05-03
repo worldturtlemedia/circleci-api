@@ -6,7 +6,7 @@ A Node and Browser client for the CircleCI API, written in TypeScript.
 
 [![npm version](https://badge.fury.io/js/circleci-api.svg)](https://www.npmjs.com/package/circleci-api) [![Downloads](https://img.shields.io/npm/dw/circleci-api)](https://www.npmjs.com/package/circleci-api) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/circleci-api.svg) ![License](https://img.shields.io/github/license/worldturtlemedia/circleci-api.svg)
 
-[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/) [![dependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/status.svg)](https://david-dm.org/worldturtlemedia/circleci-api) [![devDependencies Status](https://david-dm.org/worldturtlemedia/circleci-api/dev-status.svg)](https://david-dm.org/worldturtlemedia/circleci-api?type=dev)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
 API wrapper for [CircleCi API](https://circleci.com/docs/api/v1-reference/), usable in node and the browser. If used in a TypeScript project, you will get types, and auto-complete for all of the api responses. You will no longer need to tab back and fourth to the API documentation.
 
