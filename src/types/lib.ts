@@ -77,13 +77,13 @@ export interface FilterRequestOptions extends RequestOptions {
  * @property {string} [token] - CircleCI API key
  * @property {GitInfo} [vcs] - Git information required for project related endpoints
  * @property {Options} [options] - Extra query parameters for build endpoints
- * @property {string} circleHost - Override the default host for CircleCI [API_BASE]
+ * @property {string} [circleHost] - Override the default host for CircleCI [API_BASE]
+ * @property {any} [customHeaders] - Custom headers to be attached to each CircleCI request
  */
-export interface CircleRequest {
+export interface CircleRequest extends CircleOptions {
   token?: string;
   vcs?: GitInfo;
   options?: Options;
-  circleHost?: string;
 }
 
 /**
@@ -113,6 +113,7 @@ export interface FullRequest extends CircleRequest {
 
 export interface CircleOptions {
   circleHost?: string;
+  customHeaders?: any;
 }
 
 /**

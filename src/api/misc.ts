@@ -27,10 +27,13 @@ export function addSSHKey(
   token: string,
   vcs: GitInfo,
   key: SSHKey,
-  { circleHost }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {}
 ): Promise<AddSSHKeyResponse> {
   const url = `${createVcsUrl(vcs)}/ssh-key`;
-  return client(token, circleHost).post<AddSSHKeyResponse>(url, key);
+  return client(token, circleHost, customHeaders).post<AddSSHKeyResponse>(
+    url,
+    key
+  );
 }
 
 /**
@@ -47,8 +50,11 @@ export function addSSHKey(
 export function addHerokuKey(
   token: string,
   key: HerokuKey,
-  { circleHost }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {}
 ): Promise<AddHerokuResponse> {
   const url = `${API_USER}/heroku-key`;
-  return client(token, circleHost).post<AddHerokuResponse>(url, key);
+  return client(token, circleHost, customHeaders).post<AddHerokuResponse>(
+    url,
+    key
+  );
 }

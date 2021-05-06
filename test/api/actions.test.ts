@@ -31,7 +31,7 @@ describe("API - Actions", () => {
         mock.__setResponse(response);
         const result = await circle.retry(5);
 
-        expect(mock.client).toBeCalledWith(TOKEN, undefined);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
         expect(mock.__postMock).toBeCalledWith(
           "/project/github/test/repotest/5/retry"
         );
@@ -45,7 +45,7 @@ describe("API - Actions", () => {
           vcs: { type: GitType.BITBUCKET, repo: "square" }
         });
 
-        expect(mock.client).toBeCalledWith(TOKEN, undefined);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
         expect(mock.__postMock).toBeCalledWith(
           "/project/bitbucket/test/square/5/retry"
         );
@@ -65,7 +65,7 @@ describe("API - Actions", () => {
         mock.__setResponse(response);
         const result = await circle.cancel(5);
 
-        expect(mock.client).toBeCalledWith(TOKEN, undefined);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
         expect(mock.__postMock).toBeCalledWith(
           "/project/github/test/repotest/5/cancel"
         );
@@ -79,7 +79,7 @@ describe("API - Actions", () => {
           vcs: { type: GitType.BITBUCKET, repo: "square" }
         });
 
-        expect(mock.client).toBeCalledWith(TOKEN, undefined);
+        expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
         expect(mock.__postMock).toBeCalledWith(
           "/project/bitbucket/test/square/5/cancel"
         );
@@ -94,7 +94,7 @@ describe("API - Actions", () => {
           vcs: { type: GitType.BITBUCKET, repo: "square", owner: "bar" }
         }).cancel(5);
 
-        expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+        expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
       });
     });
   });
@@ -110,7 +110,7 @@ describe("API - Actions", () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuild();
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__postMock).toBeCalledWith(
         "/project/github/test/repotest",
         expect.any(Object)
@@ -126,12 +126,27 @@ describe("API - Actions", () => {
         options: { branch: "develop" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__postMock).toBeCalledWith(
         "/project/bitbucket/test/square/tree/develop",
         expect.any(Object)
       );
       expect(result).toEqual(response);
+    });
+
+    it("should use the custom headers", async () => {
+      mock.__setResponse(response);
+      await postTriggerNewBuild(
+        TOKEN,
+        {
+          vcs: { owner: "test", repo: "repotest" },
+          customHeaders: { someHeader: "some_header_value" },
+        }
+      );
+
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, {
+        someHeader: "some_header_value",
+      });
     });
   });
 
@@ -146,7 +161,7 @@ describe("API - Actions", () => {
       mock.__setResponse(response);
       const result = await circle.triggerBuildFor();
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__postMock).toBeCalledWith(
         "/project/github/test/repotest/tree/master",
         expect.any(Object)
@@ -162,7 +177,7 @@ describe("API - Actions", () => {
         options: { newBuildOptions: { tag: "foo" } }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__postMock).toBeCalledWith(
         "/project/bitbucket/test/square/tree/feat",
         expect.objectContaining({

@@ -63,6 +63,18 @@ describe("Client", () => {
       );
     });
 
+    it("should use custom headers", () => {
+      client(TOKEN, undefined, { someHeader: "some_header_value" })
+        .get(URL)
+        .catch(jest.fn());
+      expect(mockAxios.get).toBeCalledWith(
+        URL_WITH_TOKEN,
+        expect.objectContaining({
+          headers: expect.objectContaining({ someHeader: "some_header_value" }),
+        })
+      );
+    });
+
     it("should use options", () => {
       client(TOKEN).post(URL, "test", { timeout: 1000 }).catch(jest.fn());
       expect(mockAxios.post).toBeCalledWith(

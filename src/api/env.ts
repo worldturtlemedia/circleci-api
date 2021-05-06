@@ -26,9 +26,9 @@ import { createJsonHeader } from "../util";
  */
 export function listEnv(
   token: string,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<ListEnvVariablesResponse> {
-  return client(token, circleHost).get<ListEnvVariablesResponse>(
+  return client(token, circleHost, customHeaders).get<ListEnvVariablesResponse>(
     createUrl(vcs)
   );
 }
@@ -48,9 +48,9 @@ export function listEnv(
 export function addEnv(
   token: string,
   payload: EnvVariable,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<EnvVariableResponse> {
-  return client(token, circleHost).post<EnvVariableResponse>(
+  return client(token, circleHost, customHeaders).post<EnvVariableResponse>(
     createUrl(vcs),
     payload,
     createJsonHeader()
@@ -72,9 +72,9 @@ export function addEnv(
 export function getEnv(
   token: string,
   envName: string,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<EnvVariableResponse> {
-  return client(token, circleHost).get(createUrl(vcs, envName));
+  return client(token, circleHost, customHeaders).get(createUrl(vcs, envName));
 }
 
 /**
@@ -92,9 +92,11 @@ export function getEnv(
 export function deleteEnv(
   token: string,
   envName: string,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<DeleteEnvVarResponse> {
-  return client(token, circleHost).delete(createUrl(vcs, envName));
+  return client(token, circleHost, customHeaders).delete(
+    createUrl(vcs, envName)
+  );
 }
 
 /**

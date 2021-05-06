@@ -25,10 +25,12 @@ import { queryParams } from "../util";
  */
 export function getRecentBuilds(
   token: string,
-  { limit, offset, circleHost }: Options & CircleOptions = {}
+  { limit, offset, circleHost, customHeaders }: Options & CircleOptions = {}
 ): Promise<BuildSummaryResponse> {
   const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`;
-  return client(token, circleHost).get<BuildSummaryResponse>(url);
+  return client(token, circleHost, customHeaders).get<BuildSummaryResponse>(
+    url
+  );
 }
 
 /**
@@ -56,12 +58,14 @@ export function getRecentBuilds(
  */
 export function getBuildSummaries(
   token: string,
-  { vcs, options = {}, circleHost }: GitRequiredRequest
+  { vcs, options = {}, circleHost, customHeaders }: GitRequiredRequest
 ): Promise<BuildSummaryResponse> {
   const { limit, offset, filter, branch } = options;
   const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
   const params = queryParams({ limit, offset, filter });
-  return client(token, circleHost).get<BuildSummaryResponse>(`${url}${params}`);
+  return client(token, circleHost, customHeaders).get<BuildSummaryResponse>(
+    `${url}${params}`
+  );
 }
 
 /**
@@ -79,8 +83,8 @@ export function getBuildSummaries(
 export function getFullBuild(
   token: string,
   buildNumber: number,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<FetchBuildResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}`;
-  return client(token, circleHost).get<FetchBuildResponse>(url);
+  return client(token, circleHost, customHeaders).get<FetchBuildResponse>(url);
 }

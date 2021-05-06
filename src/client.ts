@@ -90,8 +90,14 @@ export interface ClientFactory {
  * @param token CircleCI API token
  * @param circleHost Custom host address for CircleCI
  */
-export function client(token: string, circleHost: string = API_BASE) {
-  const baseOptions: AxiosRequestConfig = { baseURL: circleHost };
+export function client(
+  token: string,
+  circleHost: string = API_BASE,
+  headers?: any
+) {
+  const baseOptions: AxiosRequestConfig = headers
+    ? { headers, baseURL: circleHost }
+    : { baseURL: circleHost };
   const factory: ClientFactory = {
     get: async <T>(
       url: string,

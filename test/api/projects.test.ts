@@ -34,7 +34,7 @@ describe("API - Projects", () => {
       mock.__setResponse(response);
       const result = await circle.projects();
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__getMock).toBeCalledWith(API_ALL_PROJECTS);
       expect(result).toEqual(response);
     });
@@ -50,7 +50,7 @@ describe("API - Projects", () => {
       mock.__setResponse(response);
       await getAllProjects(TOKEN);
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
     });
 
     it("should use a custom circleci host", async () => {
@@ -61,7 +61,7 @@ describe("API - Projects", () => {
         circleHost: "foo.bar/api"
       }).projects();
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
     });
   });
 
@@ -82,7 +82,7 @@ describe("API - Projects", () => {
         }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__postMock).toBeCalledWith(
         expect.stringContaining("johnsmith/tinker/follow")
       );
@@ -103,7 +103,7 @@ describe("API - Projects", () => {
         circleHost: "foo.bar/api"
       }).followProject({} as any);
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
     });
   });
 });

@@ -8,7 +8,7 @@ import { client } from "../client";
  */
 export function getMe(
   token: string,
-  { circleHost }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {}
 ): Promise<MeResponse> {
-  return client(token, circleHost).get<MeResponse>(API_ME);
+  return client(token, circleHost, customHeaders).get<MeResponse>(API_ME);
 }
