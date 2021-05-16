@@ -6,9 +6,9 @@ import {
   HerokuKey,
   AddHerokuResponse,
   CircleOptions,
-  API_USER
-} from "../types";
-import { client } from "../client";
+  API_USER,
+} from "../types"
+import { client } from "../client"
 
 /**
  * Creates an ssh key that will be used to access the external system identified by
@@ -27,13 +27,13 @@ export function addSSHKey(
   token: string,
   vcs: GitInfo,
   key: SSHKey,
-  { circleHost, customHeaders }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {},
 ): Promise<AddSSHKeyResponse> {
-  const url = `${createVcsUrl(vcs)}/ssh-key`;
+  const url = `${createVcsUrl(vcs)}/ssh-key`
   return client(token, circleHost, customHeaders).post<AddSSHKeyResponse>(
     url,
-    key
-  );
+    key,
+  )
 }
 
 /**
@@ -50,11 +50,11 @@ export function addSSHKey(
 export function addHerokuKey(
   token: string,
   key: HerokuKey,
-  { circleHost, customHeaders }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {},
 ): Promise<AddHerokuResponse> {
-  const url = `${API_USER}/heroku-key`;
+  const url = `${API_USER}/heroku-key`
   return client(token, circleHost, customHeaders).post<AddHerokuResponse>(
     url,
-    key
-  );
+    key,
+  )
 }

@@ -1,12 +1,12 @@
-import { client } from "../client";
+import { client } from "../client"
 import {
   AllProjectsResponse,
   GitRequiredRequest,
   FollowProjectResponse,
   API_ALL_PROJECTS,
   createVcsUrl,
-  CircleOptions
-} from "../types";
+  CircleOptions,
+} from "../types"
 
 /**
  * All followed projects:
@@ -15,11 +15,11 @@ import {
  */
 export function getAllProjects(
   token: string,
-  { circleHost, customHeaders }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {},
 ): Promise<AllProjectsResponse> {
   return client(token, circleHost, customHeaders).get<AllProjectsResponse>(
-    API_ALL_PROJECTS
-  );
+    API_ALL_PROJECTS,
+  )
 }
 
 /**
@@ -29,10 +29,10 @@ export function getAllProjects(
  */
 export function postFollowNewProject(
   token: string,
-  { vcs, circleHost, customHeaders }: GitRequiredRequest
+  { vcs, circleHost, customHeaders }: GitRequiredRequest,
 ): Promise<FollowProjectResponse> {
-  const url = `${createVcsUrl(vcs)}/follow`;
+  const url = `${createVcsUrl(vcs)}/follow`
   return client(token, circleHost, customHeaders).post<FollowProjectResponse>(
-    url
-  );
+    url,
+  )
 }

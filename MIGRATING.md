@@ -17,8 +17,8 @@ Before the restructure:
 getBuildArtifacts(
   "my-token",
   { circleHost: "https://mycircleci.com/", owner: "foo", repo: "bar" },
-  42
-);
+  42,
+)
 ```
 
 The `buildNumber` parameter is at the end, and if the line is formatted:
@@ -29,10 +29,10 @@ getBuildArtifacts(
   {
     circleHost: "https://mycircleci.com/",
     owner: "foo",
-    repo: "bar"
+    repo: "bar",
   },
-  42
-);
+  42,
+)
 ```
 
 It can look a bit weird since the final parameter is at the end. The restructuring allows for better readability:
@@ -41,8 +41,8 @@ It can look a bit weird since the final parameter is at the end. The restructuri
 getBuildArtifacts("my-token", 42, {
   circleHost: "https://mycircleci.com/",
   owner: "foo",
-  repo: "bar"
-});
+  repo: "bar",
+})
 ```
 
 You are **not** affected if you use the `CircleCI` class, only if you use the standalone functions.
@@ -126,11 +126,11 @@ You just need to replace them with calls to the `client`:
 // Old
 circleGet("my-token", "/projects", {
   timeout: 1000,
-  baseURL: "https://my-circleci.com"
-});
+  baseURL: "https://my-circleci.com",
+})
 
 // New
 client("my-token", "https://my-circleci.com").get("/projects", {
-  timeout: 1000
-});
+  timeout: 1000,
+})
 ```

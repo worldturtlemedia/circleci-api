@@ -6,10 +6,10 @@ import {
   GitRequiredRequest,
   API_RECENT_BUILDS,
   createVcsUrl,
-  CircleOptions
-} from "../types";
-import { client } from "../client";
-import { queryParams } from "../util";
+  CircleOptions,
+} from "../types"
+import { client } from "../client"
+import { queryParams } from "../util"
 
 /**
  * Get all recent builds for CircleCI user
@@ -25,12 +25,10 @@ import { queryParams } from "../util";
  */
 export function getRecentBuilds(
   token: string,
-  { limit, offset, circleHost, customHeaders }: Options & CircleOptions = {}
+  { limit, offset, circleHost, customHeaders }: Options & CircleOptions = {},
 ): Promise<BuildSummaryResponse> {
-  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`;
-  return client(token, circleHost, customHeaders).get<BuildSummaryResponse>(
-    url
-  );
+  const url = `${API_RECENT_BUILDS}${queryParams({ limit, offset })}`
+  return client(token, circleHost, customHeaders).get<BuildSummaryResponse>(url)
 }
 
 /**
@@ -58,14 +56,14 @@ export function getRecentBuilds(
  */
 export function getBuildSummaries(
   token: string,
-  { vcs, options = {}, circleHost, customHeaders }: GitRequiredRequest
+  { vcs, options = {}, circleHost, customHeaders }: GitRequiredRequest,
 ): Promise<BuildSummaryResponse> {
-  const { limit, offset, filter, branch } = options;
-  const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
-  const params = queryParams({ limit, offset, filter });
+  const { limit, offset, filter, branch } = options
+  const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`
+  const params = queryParams({ limit, offset, filter })
   return client(token, circleHost, customHeaders).get<BuildSummaryResponse>(
-    `${url}${params}`
-  );
+    `${url}${params}`,
+  )
 }
 
 /**
@@ -83,8 +81,8 @@ export function getBuildSummaries(
 export function getFullBuild(
   token: string,
   buildNumber: number,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<FetchBuildResponse> {
-  const url = `${createVcsUrl(vcs)}/${buildNumber}`;
-  return client(token, circleHost, customHeaders).get<FetchBuildResponse>(url);
+  const url = `${createVcsUrl(vcs)}/${buildNumber}`
+  return client(token, circleHost, customHeaders).get<FetchBuildResponse>(url)
 }

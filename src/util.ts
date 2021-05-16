@@ -1,7 +1,7 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios"
 
-import { Options, FullRequest, GitType } from "./types";
-import { name, version, organization } from "../package.json";
+import { Options, FullRequest, GitType } from "./types"
+import { name, version, organization } from "../package.json"
 
 /**
  * Validate a Request object for endpoints that require
@@ -17,24 +17,24 @@ export function validateVCSRequest({
   vcs: { type, owner, repo },
 }: FullRequest) {
   if (!token) {
-    throw new Error("CircleCiApi - No token was provided");
+    throw new Error("CircleCiApi - No token was provided")
   }
 
-  const missing = [];
+  const missing = []
   if (!type) {
-    missing.push("type");
+    missing.push("type")
   }
 
   if (!owner) {
-    missing.push("owner");
+    missing.push("owner")
   }
 
   if (!repo) {
-    missing.push("repo");
+    missing.push("repo")
   }
 
   if (missing.length) {
-    throw new Error(`CircleCiApi - Missing options ${missing}`);
+    throw new Error(`CircleCiApi - Missing options ${missing}`)
   }
 }
 
@@ -53,11 +53,11 @@ export function queryParams(opts: Options = {}) {
         ...prev,
         `${key}=${encodeURIComponent(opts[key])}`,
       ],
-      []
+      [],
     )
-    .join("&");
+    .join("&")
 
-  return params.length ? `?${params}` : "";
+  return params.length ? `?${params}` : ""
 }
 
 /**
@@ -68,12 +68,12 @@ export function queryParams(opts: Options = {}) {
  * @param type - Raw string type
  */
 export function getGitType(type: string): GitType {
-  const formatted = type.trim().replace(/ /g, "").toLowerCase();
+  const formatted = type.trim().replace(/ /g, "").toLowerCase()
   if (formatted === GitType.BITBUCKET) {
-    return formatted as GitType;
+    return formatted as GitType
   }
 
-  return GitType.GITHUB;
+  return GitType.GITHUB
 }
 
 /**
@@ -85,7 +85,7 @@ export function createJsonHeader(): AxiosRequestConfig {
       "Content-Type": "application/json",
       Accepts: "application/json",
     },
-  };
+  }
 }
 
 /**
@@ -102,5 +102,5 @@ export function addUserAgentHeader({
       ...headers,
       "User-Agent": `${organization}/${name} ${version}`,
     },
-  };
+  }
 }

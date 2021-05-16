@@ -5,10 +5,10 @@ import {
   EnvVariable,
   EnvVariableResponse,
   DeleteEnvVarResponse,
-  CircleOptions
-} from "../types";
-import { client } from "../client";
-import { createJsonHeader } from "../util";
+  CircleOptions,
+} from "../types"
+import { client } from "../client"
+import { createJsonHeader } from "../util"
 
 /**
  * List all of a projects environment variables, part of the
@@ -26,11 +26,11 @@ import { createJsonHeader } from "../util";
  */
 export function listEnv(
   token: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<ListEnvVariablesResponse> {
   return client(token, circleHost, customHeaders).get<ListEnvVariablesResponse>(
-    createUrl(vcs)
-  );
+    createUrl(vcs),
+  )
 }
 
 /**
@@ -48,13 +48,13 @@ export function listEnv(
 export function addEnv(
   token: string,
   payload: EnvVariable,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<EnvVariableResponse> {
   return client(token, circleHost, customHeaders).post<EnvVariableResponse>(
     createUrl(vcs),
     payload,
-    createJsonHeader()
-  );
+    createJsonHeader(),
+  )
 }
 
 /**
@@ -72,9 +72,9 @@ export function addEnv(
 export function getEnv(
   token: string,
   envName: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<EnvVariableResponse> {
-  return client(token, circleHost, customHeaders).get(createUrl(vcs, envName));
+  return client(token, circleHost, customHeaders).get(createUrl(vcs, envName))
 }
 
 /**
@@ -92,11 +92,11 @@ export function getEnv(
 export function deleteEnv(
   token: string,
   envName: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<DeleteEnvVarResponse> {
   return client(token, circleHost, customHeaders).delete(
-    createUrl(vcs, envName)
-  );
+    createUrl(vcs, envName),
+  )
 }
 
 /**
@@ -106,5 +106,5 @@ export function deleteEnv(
  * @param name Optional, Name of the environment variable
  */
 function createUrl(vcs: GitInfo, name: string = ""): string {
-  return `${createVcsUrl(vcs)}/envvar${name ? `/${name}` : ""}`;
+  return `${createVcsUrl(vcs)}/envvar${name ? `/${name}` : ""}`
 }

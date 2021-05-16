@@ -1,34 +1,34 @@
-import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
-import { API_BASE } from "./types";
-import { addUserAgentHeader } from "./util";
+import axios, { AxiosPromise, AxiosRequestConfig } from "axios"
+import { API_BASE } from "./types"
+import { addUserAgentHeader } from "./util"
 
 function get<T>(
   token: string,
   url: string,
-  options: AxiosRequestConfig
+  options: AxiosRequestConfig,
 ): AxiosPromise<T> {
-  return axios.get(addTokenParam(token, url), options);
+  return axios.get(addTokenParam(token, url), options)
 }
 
 function post<T, R>(
   token: string,
   url: string,
   body: T,
-  options: AxiosRequestConfig
+  options: AxiosRequestConfig,
 ): AxiosPromise<R> {
-  return axios.post(addTokenParam(token, url), body, options);
+  return axios.post(addTokenParam(token, url), body, options)
 }
 
 function doDelete<T>(
   token: string,
   url: string,
-  options: AxiosRequestConfig
+  options: AxiosRequestConfig,
 ): AxiosPromise<T> {
-  return axios.delete(addTokenParam(token, url), options);
+  return axios.delete(addTokenParam(token, url), options)
 }
 
 function addTokenParam(token: string, url: string): string {
-  return `${url}${url.includes("?") ? "&" : "?"}circle-token=${token}`;
+  return `${url}${url.includes("?") ? "&" : "?"}circle-token=${token}`
 }
 
 /**
@@ -39,10 +39,10 @@ function addTokenParam(token: string, url: string): string {
 export function circleGet<T>(
   token: string,
   url: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): AxiosPromise<T> {
-  console.warn("circleGet is deprecated, use `client('token').get(...)`");
-  return client(token).get(url, addUserAgentHeader(options));
+  console.warn("circleGet is deprecated, use `client('token').get(...)`")
+  return client(token).get(url, addUserAgentHeader(options))
 }
 
 /**
@@ -54,10 +54,10 @@ export function circlePost<T>(
   token: string,
   url: string,
   body?: any,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): AxiosPromise<T> {
-  console.warn("circlePost is deprecated, use `client('token').post(...)`");
-  return client(token).post(url, body, addUserAgentHeader(options));
+  console.warn("circlePost is deprecated, use `client('token').post(...)`")
+  return client(token).post(url, body, addUserAgentHeader(options))
 }
 
 /**
@@ -68,20 +68,16 @@ export function circlePost<T>(
 export function circleDelete<T>(
   token: string,
   url: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): AxiosPromise<T> {
-  console.warn("circleDelete is deprecated, use `client('token').delete(...)`");
-  return client(token).delete(url, addUserAgentHeader(options));
+  console.warn("circleDelete is deprecated, use `client('token').delete(...)`")
+  return client(token).delete(url, addUserAgentHeader(options))
 }
 
 export interface ClientFactory {
-  get: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>;
-  post: <T>(
-    url: string,
-    body?: any,
-    options?: AxiosRequestConfig
-  ) => Promise<T>;
-  delete: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>;
+  get: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>
+  post: <T>(url: string, body?: any, options?: AxiosRequestConfig) => Promise<T>
+  delete: <T>(url: string, options?: AxiosRequestConfig) => Promise<T>
 }
 
 /**
@@ -93,45 +89,45 @@ export interface ClientFactory {
 export function client(
   token: string,
   circleHost: string = API_BASE,
-  headers?: any
+  headers?: any,
 ) {
   const baseOptions: AxiosRequestConfig = headers
     ? { headers, baseURL: circleHost }
-    : { baseURL: circleHost };
+    : { baseURL: circleHost }
   const factory: ClientFactory = {
     get: async <T>(
       url: string,
-      options: AxiosRequestConfig = {}
+      options: AxiosRequestConfig = {},
     ): Promise<T> => {
-      const config = addUserAgentHeader(mergeOptions(baseOptions, options));
-      return (await get<T>(token, url, config)).data;
+      const config = addUserAgentHeader(mergeOptions(baseOptions, options))
+      return (await get<T>(token, url, config)).data
     },
     post: async <T>(
       url: string,
       body?: any,
-      options: AxiosRequestConfig = {}
+      options: AxiosRequestConfig = {},
     ): Promise<T> => {
-      const config = addUserAgentHeader(mergeOptions(baseOptions, options));
-      return (await post<any, T>(token, url, body, config)).data;
+      const config = addUserAgentHeader(mergeOptions(baseOptions, options))
+      return (await post<any, T>(token, url, body, config)).data
     },
     delete: async <T>(
       url: string,
-      options: AxiosRequestConfig = {}
+      options: AxiosRequestConfig = {},
     ): Promise<T> => {
-      const config = addUserAgentHeader(mergeOptions(baseOptions, options));
-      return (await doDelete<T>(token, url, config)).data;
+      const config = addUserAgentHeader(mergeOptions(baseOptions, options))
+      return (await doDelete<T>(token, url, config)).data
     },
-  };
+  }
 
-  return factory;
+  return factory
 }
 
 function mergeOptions(
   base: AxiosRequestConfig,
-  provided: AxiosRequestConfig
+  provided: AxiosRequestConfig,
 ): AxiosRequestConfig {
   return {
     ...base,
     ...provided,
-  };
+  }
 }

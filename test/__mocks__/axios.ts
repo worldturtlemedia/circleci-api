@@ -1,43 +1,43 @@
-let mockError: any;
-let mockResponse: any = {};
+let mockError: any
+let mockResponse: any = {}
 
-const axiosMock: any = jest.genMockFromModule("axios");
+const axiosMock: any = jest.genMockFromModule("axios")
 
 function req() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (mockError) {
-      reject(mockError);
+      reject(mockError)
     } else {
-      resolve(mockResponse);
+      resolve(mockResponse)
     }
-  });
+  })
 }
 
 axiosMock.reset = () => {
-  mockError = null;
+  mockError = null
   mockResponse = {
     data: {},
     status: 200,
     statusText: "OK",
     headers: {},
-    config: {}
-  };
-};
+    config: {},
+  }
+}
 
-axiosMock.get.mockImplementation(req);
+axiosMock.get.mockImplementation(req)
 
-axiosMock.post.mockImplementation(req);
+axiosMock.post.mockImplementation(req)
 
-axiosMock.put.mockImplementation(req);
+axiosMock.put.mockImplementation(req)
 
-axiosMock.delete.mockImplementation(req);
+axiosMock.delete.mockImplementation(req)
 
 axiosMock._setMockError = (err: any) => {
-  mockError = err;
-};
+  mockError = err
+}
 
 axiosMock._setMockResponse = (response: any) => {
-  mockResponse = { ...mockResponse, ...response };
-};
+  mockResponse = { ...mockResponse, ...response }
+}
 
-export default axiosMock;
+export default axiosMock

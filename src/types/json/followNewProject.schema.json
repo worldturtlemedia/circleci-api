@@ -89,8 +89,7 @@
           "type": "object",
           "properties": {
             "is_user": {
-              "$id":
-                "/properties/first_build/properties/user/properties/is_user",
+              "$id": "/properties/first_build/properties/user/properties/is_user",
               "type": "boolean"
             },
             "login": {
@@ -98,8 +97,7 @@
               "type": "string"
             },
             "avatar_url": {
-              "$id":
-                "/properties/first_build/properties/user/properties/avatar_url",
+              "$id": "/properties/first_build/properties/user/properties/avatar_url",
               "type": "string"
             },
             "name": {
@@ -107,8 +105,7 @@
               "type": "string"
             },
             "vcs_type": {
-              "$id":
-                "/properties/first_build/properties/user/properties/vcs_type",
+              "$id": "/properties/first_build/properties/user/properties/vcs_type",
               "type": "string"
             },
             "id": {

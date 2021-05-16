@@ -4,10 +4,10 @@ import {
   createVcsUrl,
   CheckoutKey,
   DeleteCheckoutKeyResponse,
-  CircleOptions
-} from "../types";
-import { client } from "../client";
-import { createJsonHeader } from "../util";
+  CircleOptions,
+} from "../types"
+import { client } from "../client"
+import { createJsonHeader } from "../util"
 
 /**
  * Lists the checkout keys for a project
@@ -22,11 +22,11 @@ import { createJsonHeader } from "../util";
  */
 export function getCheckoutKeys(
   token: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<CheckoutKeyResponse> {
   return client(token, circleHost, customHeaders).get<CheckoutKeyResponse>(
-    createUrl(vcs)
-  );
+    createUrl(vcs),
+  )
 }
 
 /**
@@ -44,13 +44,13 @@ export function getCheckoutKeys(
 export function createCheckoutKey(
   token: string,
   key: CheckoutKey,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<CheckoutKeyResponse> {
   return client(token, circleHost, customHeaders).post<CheckoutKeyResponse>(
     createUrl(vcs),
     key,
-    createJsonHeader()
-  );
+    createJsonHeader(),
+  )
 }
 
 /**
@@ -68,11 +68,11 @@ export function createCheckoutKey(
 export function getCheckoutKey(
   token: string,
   fingerprint: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<CheckoutKeyResponse> {
   return client(token, circleHost, customHeaders).get<CheckoutKeyResponse>(
-    createUrl(vcs, fingerprint)
-  );
+    createUrl(vcs, fingerprint),
+  )
 }
 
 /**
@@ -90,11 +90,11 @@ export function getCheckoutKey(
 export function deleteCheckoutKey(
   token: string,
   fingerprint: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<DeleteCheckoutKeyResponse> {
   return client(token, circleHost, customHeaders).delete<
     DeleteCheckoutKeyResponse
-  >(createUrl(vcs, fingerprint));
+  >(createUrl(vcs, fingerprint))
 }
 
 /**
@@ -106,5 +106,5 @@ export function deleteCheckoutKey(
 function createUrl(vcs: GitInfo, fingerprint?: string): string {
   return `${createVcsUrl(vcs)}/checkout-key${
     fingerprint ? `/${fingerprint}` : ""
-  }`;
+  }`
 }

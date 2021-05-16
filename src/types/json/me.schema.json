@@ -117,13 +117,11 @@
           "type": "object",
           "properties": {
             "avatar_url": {
-              "$id":
-                "/properties/identities/properties/github/properties/avatar_url",
+              "$id": "/properties/identities/properties/github/properties/avatar_url",
               "type": "string"
             },
             "external_id": {
-              "$id":
-                "/properties/identities/properties/github/properties/external_id",
+              "$id": "/properties/identities/properties/github/properties/external_id",
               "type": "integer"
             },
             "id": {
@@ -135,13 +133,11 @@
               "type": "string"
             },
             "user?": {
-              "$id":
-                "/properties/identities/properties/github/properties/user?",
+              "$id": "/properties/identities/properties/github/properties/user?",
               "type": "boolean"
             },
             "domain": {
-              "$id":
-                "/properties/identities/properties/github/properties/domain",
+              "$id": "/properties/identities/properties/github/properties/domain",
               "type": "string"
             },
             "type": {
@@ -149,18 +145,15 @@
               "type": "string"
             },
             "authorized?": {
-              "$id":
-                "/properties/identities/properties/github/properties/authorized?",
+              "$id": "/properties/identities/properties/github/properties/authorized?",
               "type": "boolean"
             },
             "provider_id": {
-              "$id":
-                "/properties/identities/properties/github/properties/provider_id",
+              "$id": "/properties/identities/properties/github/properties/provider_id",
               "type": "string"
             },
             "login": {
-              "$id":
-                "/properties/identities/properties/github/properties/login",
+              "$id": "/properties/identities/properties/github/properties/login",
               "type": "string"
             }
           }
@@ -176,13 +169,11 @@
           "type": "object",
           "properties": {
             "on_dashboard": {
-              "$id":
-                "/properties/projects/properties/https://github.com/test/repo/properties/on_dashboard",
+              "$id": "/properties/projects/properties/https://github.com/test/repo/properties/on_dashboard",
               "type": "boolean"
             },
             "emails": {
-              "$id":
-                "/properties/projects/properties/https://github.com/test/repo/properties/emails",
+              "$id": "/properties/projects/properties/https://github.com/test/repo/properties/emails",
               "type": "string"
             }
           }
@@ -202,13 +193,11 @@
           "type": "object",
           "properties": {
             "RoomRoster": {
-              "$id":
-                "/properties/organization_prefs/properties/github/properties/RoomRoster",
+              "$id": "/properties/organization_prefs/properties/github/properties/RoomRoster",
               "type": "object",
               "properties": {
                 "email": {
-                  "$id":
-                    "/properties/organization_prefs/properties/github/properties/RoomRoster/properties/email",
+                  "$id": "/properties/organization_prefs/properties/github/properties/RoomRoster/properties/email",
                   "type": "string"
                 }
               }

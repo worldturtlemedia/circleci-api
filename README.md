@@ -123,26 +123,26 @@ api
 The individual functions can also be imported if you only need one or two. To help with tree-shaking.
 
 ```typescript
-import { getMe, getLatestArtifacts } from "circleci-api";
+import { getMe, getLatestArtifacts } from "circleci-api"
 
-const CIRCLECI_TOKEN: string = "circle-ci-token";
+const CIRCLECI_TOKEN: string = "circle-ci-token"
 
 getMe(CIRCLECI_TOKEN)
-  .then(me => console.log("token is valid"))
-  .catch(error => console.error("invalid token"));
+  .then((me) => console.log("token is valid"))
+  .catch((error) => console.error("invalid token"))
 
 getLatestArtifacts(CIRCLECI_TOKEN, {
   vcs: {
     owner: "billyBob",
-    repo: "super-cool-app"
+    repo: "super-cool-app",
   },
   options: {
     filter: "failed",
-    branch: "feature-smith2"
-  }
+    branch: "feature-smith2",
+  },
 })
-  .then(result => console.log(`Found ${result.length} artifacts`))
-  .catch(error => console.error(error));
+  .then((result) => console.log(`Found ${result.length} artifacts`))
+  .catch((error) => console.error(error))
 ```
 
 ## Self-hosted CircleCI
@@ -199,9 +199,9 @@ Optional properties:
 
 ```typescript
 export interface CircleRequest {
-  token?: string;
-  vcs?: GitInfo;
-  options?: Options;
+  token?: string
+  vcs?: GitInfo
+  options?: Options
 }
 ```
 

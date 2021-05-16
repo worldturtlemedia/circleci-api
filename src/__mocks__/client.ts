@@ -1,43 +1,43 @@
-const mockClient: any = jest.genMockFromModule("./client");
+const mockClient: any = jest.genMockFromModule("./client")
 
-let mockResponse: any | null;
-let mockErrorResponse: any | null;
+let mockResponse: any | null
+let mockErrorResponse: any | null
 
 export function __reset() {
-  mockResponse = null;
-  mockErrorResponse = null;
+  mockResponse = null
+  mockErrorResponse = null
 }
 
 /* tslint:disable-next-line:function-name */
 export function __setResponse(result: any) {
-  mockResponse = result;
+  mockResponse = result
 }
 
 /* tslint:disable-next-line:function-name */
 export function __setError(result: any) {
-  mockErrorResponse = result;
+  mockErrorResponse = result
 }
 
 function handleResponse() {
   if (mockResponse !== null) {
-    return Promise.resolve(mockResponse);
+    return Promise.resolve(mockResponse)
   }
-  return Promise.reject(mockErrorResponse || mockResponse);
+  return Promise.reject(mockErrorResponse || mockResponse)
 }
 
 /* tslint:disable-next-line:variable-name */
-export const __getMock = jest.fn(() => handleResponse());
+export const __getMock = jest.fn(() => handleResponse())
 
 /* tslint:disable-next-line:variable-name */
-export const __postMock = jest.fn(() => handleResponse());
+export const __postMock = jest.fn(() => handleResponse())
 
 /* tslint:disable-next-line:variable-name */
-export const __deleteMock = jest.fn(() => handleResponse());
+export const __deleteMock = jest.fn(() => handleResponse())
 
 export const client = jest.fn((token: string) => ({
   get: __getMock,
   post: __postMock,
-  delete: __deleteMock
-}));
+  delete: __deleteMock,
+}))
 
-export default mockClient;
+export default mockClient

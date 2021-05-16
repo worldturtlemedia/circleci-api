@@ -5,9 +5,9 @@ import {
   GitRequiredRequest,
   BuildAction,
   createVcsUrl,
-  CircleOptions
-} from "../types";
-import { client } from "../client";
+  CircleOptions,
+} from "../types"
+import { client } from "../client"
 
 /**
  * Commit a build action, returns a summary of the new build.
@@ -30,10 +30,10 @@ export function postBuildActions(
   token: string,
   buildNumber: number,
   action: BuildAction,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<BuildActionResponse> {
-  const url = `${createVcsUrl(vcs)}/${buildNumber}/${action}`;
-  return client(token, circleHost, customHeaders).post(url);
+  const url = `${createVcsUrl(vcs)}/${buildNumber}/${action}`
+  return client(token, circleHost, customHeaders).post(url)
 }
 
 /**
@@ -51,12 +51,12 @@ export function postTriggerNewBuild(
     circleHost,
     customHeaders,
     vcs,
-    options: { branch = "", newBuildOptions = {} } = {}
-  }: GitRequiredRequest
+    options: { branch = "", newBuildOptions = {} } = {},
+  }: GitRequiredRequest,
 ): Promise<TriggerBuildResponse> {
-  const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`;
+  const url = `${createVcsUrl(vcs)}${branch ? `/tree/${branch}` : ""}`
   return client(token, circleHost, customHeaders).post<TriggerBuildResponse>(
     url,
-    newBuildOptions
-  );
+    newBuildOptions,
+  )
 }

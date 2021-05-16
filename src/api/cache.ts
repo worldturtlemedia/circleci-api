@@ -2,9 +2,9 @@ import {
   ClearCacheResponse,
   GitInfo,
   createVcsUrl,
-  CircleOptions
-} from "../types";
-import { client } from "../client";
+  CircleOptions,
+} from "../types"
+import { client } from "../client"
 
 /**
  * Clear project cache
@@ -19,8 +19,8 @@ import { client } from "../client";
  */
 export function clearCache(
   token: string,
-  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions,
 ): Promise<ClearCacheResponse> {
-  const url = `${createVcsUrl(vcs)}/build-cache`;
-  return client(token, circleHost, customHeaders).delete(url);
+  const url = `${createVcsUrl(vcs)}/build-cache`
+  return client(token, circleHost, customHeaders).delete(url)
 }

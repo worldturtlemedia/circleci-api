@@ -2,6 +2,5 @@
   "path": "apk/release/app-release.apk",
   "pretty_path": "apk/release/app-release.apk",
   "node_index": 0,
-  "url":
-    "https://000000000-gh.circle-artifacts.com/0/apk/release/app-release.apk"
+  "url": "https://000000000-gh.circle-artifacts.com/0/apk/release/app-release.apk"
 }

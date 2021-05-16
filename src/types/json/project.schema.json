@@ -21,105 +21,85 @@
           "type": "object",
           "properties": {
             "pusher_logins": {
-              "$id":
-                "/properties/branches/properties/master/properties/pusher_logins",
+              "$id": "/properties/branches/properties/master/properties/pusher_logins",
               "type": "array",
               "items": {
-                "$id":
-                  "/properties/branches/properties/master/properties/pusher_logins/items",
+                "$id": "/properties/branches/properties/master/properties/pusher_logins/items",
                 "type": "string"
               }
             },
             "running_builds": {
-              "$id":
-                "/properties/branches/properties/master/properties/running_builds",
+              "$id": "/properties/branches/properties/master/properties/running_builds",
               "type": "array"
             },
             "recent_builds": {
-              "$id":
-                "/properties/branches/properties/master/properties/recent_builds",
+              "$id": "/properties/branches/properties/master/properties/recent_builds",
               "type": "array",
               "items": {
-                "$id":
-                  "/properties/branches/properties/master/properties/recent_builds/items",
+                "$id": "/properties/branches/properties/master/properties/recent_builds/items",
                 "type": "object",
                 "properties": {
                   "outcome": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/outcome",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/outcome",
                     "type": "string"
                   },
                   "status": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/status",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/status",
                     "type": "string"
                   },
                   "build_num": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/build_num",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/build_num",
                     "type": "integer"
                   },
                   "vcs_revision": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/vcs_revision",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/vcs_revision",
                     "type": "string"
                   },
                   "pushed_at": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/pushed_at",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/pushed_at",
                     "type": "string"
                   },
                   "is_workflow_job": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/is_workflow_job",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/is_workflow_job",
                     "type": "boolean"
                   },
                   "added_at": {
-                    "$id":
-                      "/properties/branches/properties/master/properties/recent_builds/items/properties/added_at",
+                    "$id": "/properties/branches/properties/master/properties/recent_builds/items/properties/added_at",
                     "type": "string"
                   }
                 }
               }
             },
             "last_non_success": {
-              "$id":
-                "/properties/branches/properties/master/properties/last_non_success",
+              "$id": "/properties/branches/properties/master/properties/last_non_success",
               "type": "object",
               "properties": {
                 "outcome": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/outcome",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/outcome",
                   "type": "string"
                 },
                 "status": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/status",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/status",
                   "type": "string"
                 },
                 "build_num": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/build_num",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/build_num",
                   "type": "integer"
                 },
                 "vcs_revision": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/vcs_revision",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/vcs_revision",
                   "type": "string"
                 },
                 "pushed_at": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/pushed_at",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/pushed_at",
                   "type": "string"
                 },
                 "is_workflow_job": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/is_workflow_job",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/is_workflow_job",
                   "type": "boolean"
                 },
                 "added_at": {
-                  "$id":
-                    "/properties/branches/properties/master/properties/last_non_success/properties/added_at",
+                  "$id": "/properties/branches/properties/master/properties/last_non_success/properties/added_at",
                   "type": "string"
                 }
               }
@@ -271,8 +251,7 @@
           "type": "boolean"
         },
         "forks-receive-secret-env-vars": {
-          "$id":
-            "/properties/feature_flags/properties/forks-receive-secret-env-vars",
+          "$id": "/properties/feature_flags/properties/forks-receive-secret-env-vars",
           "type": "boolean"
         },
         "fleet": {

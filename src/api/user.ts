@@ -1,5 +1,5 @@
-import { MeResponse, API_ME, CircleOptions } from "../types";
-import { client } from "../client";
+import { MeResponse, API_ME, CircleOptions } from "../types"
+import { client } from "../client"
 
 /**
  * Get authenticated user
@@ -8,7 +8,7 @@ import { client } from "../client";
  */
 export function getMe(
   token: string,
-  { circleHost, customHeaders }: CircleOptions = {}
+  { circleHost, customHeaders }: CircleOptions = {},
 ): Promise<MeResponse> {
-  return client(token, circleHost, customHeaders).get<MeResponse>(API_ME);
+  return client(token, circleHost, customHeaders).get<MeResponse>(API_ME)
 }

@@ -1,9 +1,9 @@
-export const API_BASE = "https://circleci.com/api/v1.1";
-export const API_ME = "/me";
-export const API_PROJECT = "/project";
-export const API_ALL_PROJECTS = "/projects";
-export const API_RECENT_BUILDS = "/recent-builds";
-export const API_USER = "/user";
+export const API_BASE = "https://circleci.com/api/v1.1"
+export const API_ME = "/me"
+export const API_PROJECT = "/project"
+export const API_ALL_PROJECTS = "/projects"
+export const API_RECENT_BUILDS = "/recent-builds"
+export const API_USER = "/user"
 
 /**
  * @description Currently supported VCS types
@@ -11,7 +11,7 @@ export const API_USER = "/user";
  */
 export enum GitType {
   GITHUB = "github",
-  BITBUCKET = "bitbucket"
+  BITBUCKET = "bitbucket",
 }
 
 /**
@@ -21,12 +21,12 @@ export enum GitType {
  * @param repo - Target repository
  */
 export function createVcsUrl({ type = GitType.GITHUB, owner, repo }: GitInfo) {
-  return `${API_PROJECT}/${type}/${owner}/${repo}`;
+  return `${API_PROJECT}/${type}/${owner}/${repo}`
 }
 
 export enum BuildAction {
   RETRY = "retry",
-  CANCEL = "cancel"
+  CANCEL = "cancel",
 }
 
 /**
@@ -37,13 +37,13 @@ export enum BuildAction {
  * @property {repo} [repo] - Target repository name
  */
 export interface GitInfo {
-  type?: GitType;
-  owner?: string;
-  repo?: string;
+  type?: GitType
+  owner?: string
+  repo?: string
 }
 
 // TODO change to enum
-export type Filter = "completed" | "successful" | "failed" | "running";
+export type Filter = "completed" | "successful" | "failed" | "running"
 
 /**
  * @description Additional options used as query params
@@ -51,25 +51,25 @@ export type Filter = "completed" | "successful" | "failed" | "running";
  * @property {Filter} [filter] - Filters to grab selected builds, such as completed
  */
 export interface Options {
-  branch?: string;
-  filter?: Filter;
-  limit?: number;
-  offset?: number;
-  newBuildOptions?: NewBuildOptions;
+  branch?: string
+  filter?: Filter
+  limit?: number
+  offset?: number
+  newBuildOptions?: NewBuildOptions
 }
 
 export interface RequestOptions {
-  readonly limit?: number;
-  readonly offset?: number;
+  readonly limit?: number
+  readonly offset?: number
 }
 
 export interface ArtifactsRequestOptions {
-  readonly filter?: Filter;
-  readonly branch?: string;
+  readonly filter?: Filter
+  readonly branch?: string
 }
 
 export interface FilterRequestOptions extends RequestOptions {
-  readonly filter?: Filter;
+  readonly filter?: Filter
 }
 
 /**
@@ -81,9 +81,9 @@ export interface FilterRequestOptions extends RequestOptions {
  * @property {any} [customHeaders] - Custom headers to be attached to each CircleCI request
  */
 export interface CircleRequest extends CircleOptions {
-  token?: string;
-  vcs?: GitInfo;
-  options?: Options;
+  token?: string
+  vcs?: GitInfo
+  options?: Options
 }
 
 /**
@@ -91,7 +91,7 @@ export interface CircleRequest extends CircleOptions {
  * @property {string} token - CircleCI API key
  */
 export interface CircleCIOptions extends CircleRequest {
-  token: string;
+  token: string
 }
 
 /**
@@ -99,7 +99,7 @@ export interface CircleCIOptions extends CircleRequest {
  * @property {GitInfo} vcs - Git information
  */
 export interface GitRequiredRequest extends CircleRequest {
-  vcs: GitInfo;
+  vcs: GitInfo
 }
 
 /**
@@ -107,13 +107,13 @@ export interface GitRequiredRequest extends CircleRequest {
  * @see {@link CircleRequest}
  */
 export interface FullRequest extends CircleRequest {
-  token: string;
-  vcs: GitInfo;
+  token: string
+  vcs: GitInfo
 }
 
 export interface CircleOptions {
-  circleHost?: string;
-  customHeaders?: any;
+  circleHost?: string
+  customHeaders?: any
 }
 
 /**
@@ -124,15 +124,15 @@ export interface CircleOptions {
  * @property build_parameters - Additional environment variables to inject into the build environment. A map of names to values.
  */
 export interface NewBuildOptions {
-  revision?: string;
-  tag?: string;
-  parallel?: number;
-  build_parameters?: BuildParameters;
+  revision?: string
+  tag?: string
+  parallel?: number
+  build_parameters?: BuildParameters
 }
 
 /**
  * Additional ENV parameters to pass to the build
  */
 export interface BuildParameters {
-  [param: string]: string;
+  [param: string]: string
 }
