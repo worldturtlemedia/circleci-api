@@ -21,8 +21,10 @@ import { client } from "../client";
 export function getTestMetadata(
   token: string,
   buildNumber: number,
-  { circleHost, ...vcs }: GitInfo & CircleOptions
+  { circleHost, customHeaders, ...vcs }: GitInfo & CircleOptions
 ): Promise<TestMetadataResponse> {
   const url = `${createVcsUrl(vcs)}/${buildNumber}/tests`;
-  return client(token, circleHost).get<TestMetadataResponse>(url);
+  return client(token, circleHost, customHeaders).get<TestMetadataResponse>(
+    url
+  );
 }

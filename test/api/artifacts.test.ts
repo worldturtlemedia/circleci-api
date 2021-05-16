@@ -53,7 +53,7 @@ describe("API - Artifacts", () => {
       circleHost: "foo.bar/api"
     }).artifacts(42);
 
-    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
   });
 
   describe("Latest Artifacts", () => {
@@ -63,7 +63,7 @@ describe("API - Artifacts", () => {
         vcs: { owner: "t", repo: "r" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("t/r/latest/artifacts")
       );
@@ -76,7 +76,7 @@ describe("API - Artifacts", () => {
         vcs: { owner: "test2" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("test2/proj/latest/artifacts")
       );
@@ -90,7 +90,7 @@ describe("API - Artifacts", () => {
         options: { branch: "develop" }
       });
 
-      expect(mock.client).toBeCalledWith(TOKEN, undefined);
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
       expect(mock.__getMock).toBeCalledWith(
         expect.stringContaining("branch=develop")
       );
@@ -105,7 +105,22 @@ describe("API - Artifacts", () => {
         circleHost: "foo.bar/api"
       }).latestArtifacts();
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
+    });
+
+    it("should use the custom headers", async () => {
+      mock.__setResponse(artifact);
+      await getLatestArtifacts(
+        TOKEN,
+        {
+          vcs: { owner: "test", repo: "proj" },
+          customHeaders: { someHeader: "some_header_value" },
+        }
+      );
+
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, {
+        someHeader: "some_header_value",
+      });
     });
 
     it("should throw an error if request fails", async () => {

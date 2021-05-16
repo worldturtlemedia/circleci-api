@@ -63,7 +63,18 @@ describe("API - Builds", () => {
         circleHost: "foo.bar/api",
       }).recentBuilds();
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
+    });
+
+    it("should use the custom headers", async () => {
+      mock.__setResponse(response);
+      await getRecentBuilds(TOKEN, {
+        customHeaders: { someHeader: "some_header_value" }
+      });
+
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, {
+        someHeader: "some_header_value",
+      });
     });
   });
 
@@ -84,7 +95,7 @@ describe("API - Builds", () => {
         circleHost: "foo.bar/api",
       }).builds();
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
     });
 
     it("should fetch latest builds with options", async () => {
@@ -132,7 +143,7 @@ describe("API - Builds", () => {
         circleHost: "foo.bar/api",
       }).buildsFor();
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
     });
 
     it("should handle no options", async () => {
@@ -143,6 +154,21 @@ describe("API - Builds", () => {
 
       expect(mock.__getMock).toBeCalledWith("/project/github/foo/bar");
       expect(result).toEqual(response);
+    });
+
+    it("should use the custom headers", async () => {
+      mock.__setResponse(response);
+      await getBuildSummaries(
+        TOKEN,
+        {
+          vcs: { owner: "foo", repo: "bar" },
+          customHeaders: { someHeader: "some_header_value", },
+        }
+      );
+
+      expect(mock.client).toBeCalledWith(TOKEN, undefined, {
+        someHeader: "some_header_value",
+      });
     });
   });
 
@@ -170,7 +196,7 @@ describe("API - Builds", () => {
         circleHost: "foo.bar/api",
       }).build(1);
 
-      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+      expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
     });
   });
 });

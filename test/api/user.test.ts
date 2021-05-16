@@ -25,7 +25,7 @@ describe("API - Me", () => {
     mock.__setResponse(me);
     const result = await circle.me();
 
-    expect(mock.client).toBeCalledWith(TOKEN, undefined);
+    expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
     expect(mock.__getMock).toBeCalledWith(API_ME);
     expect(result).toEqual(me);
   });
@@ -41,7 +41,7 @@ describe("API - Me", () => {
     mock.__setResponse(me);
     await getMe(TOKEN);
 
-    expect(mock.client).toBeCalledWith(TOKEN, undefined);
+    expect(mock.client).toBeCalledWith(TOKEN, undefined, undefined);
   });
 
   it("should use a custom circleci host", async () => {
@@ -51,6 +51,6 @@ describe("API - Me", () => {
       circleHost: "foo.bar/api"
     }).projects();
 
-    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api");
+    expect(mock.client).toBeCalledWith(TOKEN, "foo.bar/api", undefined);
   });
 });
