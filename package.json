@@ -60,7 +60,7 @@
     "@rollup/plugin-commonjs": "15.1.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "13.0.0",
-    "@types/jest": "26.0.23",
+    "@types/jest": "26.0.24",
     "@types/node": "11.15.54",
     "colors": "1.4.0",
     "commitizen": "4.2.4",
