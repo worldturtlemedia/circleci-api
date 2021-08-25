@@ -73,7 +73,7 @@
     "lint-staged": "11.1.2",
     "lodash.camelcase": "4.3.0",
     "prettier": "2.3.2",
-    "prompt": "1.1.0",
+    "prompt": "1.2.0",
     "replace-in-file": "6.2.0",
     "rimraf": "3.0.2",
     "rollup": "2.56.3",
