@@ -14,7 +14,7 @@
     "circleci-api": "../"
   },
   "devDependencies": {
-    "ts-node": "9.1.1",
+    "ts-node": "10.2.1",
     "typescript": "4.4.2"
   }
 }
