@@ -76,7 +76,7 @@
     "prompt": "1.2.0",
     "replace-in-file": "6.3.2",
     "rimraf": "3.0.2",
-    "rollup": "2.58.0",
+    "rollup": "2.58.3",
     "rollup-plugin-node-builtins": "2.1.2",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-sourcemaps": "0.6.3",
