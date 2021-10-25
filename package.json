@@ -70,7 +70,7 @@
     "greenkeeper-lockfile": "1.15.1",
     "husky": "7.0.2",
     "jest": "27.3.1",
-    "lint-staged": "11.2.3",
+    "lint-staged": "11.2.4",
     "lodash.camelcase": "4.3.0",
     "prettier": "2.4.1",
     "prompt": "1.2.0",
