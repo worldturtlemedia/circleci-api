@@ -74,7 +74,7 @@
     "lodash.camelcase": "4.3.0",
     "prettier": "2.5.0",
     "prompt": "1.2.1",
-    "replace-in-file": "6.3.2",
+    "replace-in-file": "6.3.5",
     "rimraf": "3.0.2",
     "rollup": "2.67.0",
     "rollup-plugin-node-builtins": "2.1.2",
